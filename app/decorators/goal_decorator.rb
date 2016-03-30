@@ -6,7 +6,7 @@ class GoalDecorator < Draper::Decorator
   end
 
   def kudos
-    h.number_to_kudos(object.target_kudos)
+    h.number_to_kudos(object.amount)
   end
 
 end

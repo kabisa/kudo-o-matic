@@ -6,8 +6,8 @@ class BalanceDecorator < Draper::Decorator
   end
 
   def percentage
-    current = (object.amount - Goal.previous.target_kudos).to_f
-    target  = (Goal.next.target_kudos - Goal.previous.target_kudos).to_f
+    current = (object.amount - Goal.previous.amount).to_f
+    target  = (Goal.next.amount - Goal.previous.amount).to_f
 
     (current / target * 100.0).round
   end

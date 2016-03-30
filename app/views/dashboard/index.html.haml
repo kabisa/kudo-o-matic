@@ -19,7 +19,7 @@
     .col-md-12
       .progress
         .progress-bar.progress-bar-info{ role: 'progressbar', style: "width: #{@balance.percentage}%",
-          aria: { valuenow: @balance.amount, valuemin: @previous.target_kudos, valuemax: @next.target_kudos } }
+          aria: { valuenow: @balance.amount, valuemin: @previous.amount, valuemax: @next.amount } }
           %span.sr-only= @balance.kudos
 
       #progress-label

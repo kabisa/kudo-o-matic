@@ -25,11 +25,11 @@ ActiveRecord::Schema.define(version: 20160330081300) do
   end
 
   create_table "goals", force: :cascade do |t|
-    t.string   "name",         limit: 32
-    t.integer  "target_kudos"
+    t.string   "name",        limit: 32
+    t.integer  "amount"
     t.date     "achieved_on"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
 end
