@@ -5,21 +5,21 @@ class DashboardTest < Capybara::Rails::TestCase
     visit root_path
 
     within '#most-recent' do
-      assert_content page, "50𝕂 van JOEP aan HENK voor HET GEVEN VAN EEN LEZING"
+      assert_content page, "50 ₭ van JOEP aan HENK voor HET GEVEN VAN EEN LEZING"
     end
 
     within '#previous-goal' do
       assert_content page, "TENNISSEN"
-      assert_content page, "1.000K"
+      assert_content page, "1.000 ₭"
     end
 
     within '#next-goal' do
       assert_content page, "KARTEN"
-      assert_content page, "1.500K"
+      assert_content page, "1.500 ₭"
     end
 
-    within '#progress' do
-      assert_content page, "1.324K"
+    within '#progress-label' do
+      assert_content page, "1.324 ₭"
     end
   end
 end
