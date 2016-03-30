@@ -7,13 +7,13 @@
   .row
     .col-md-6
       #previous-goal
-        .title TENNISSEN
-        .balance= number_to_kudos(1000)
+        .title= @previous.name
+        .balance= @previous.kudos
 
     .col-md-6
       #next-goal
-        .title KARTEN
-        .balance= number_to_kudos(1500)
+        .title= @next.name
+        .balance= @next.kudos
 
   .row
     .col-md-12

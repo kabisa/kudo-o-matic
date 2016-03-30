@@ -1,0 +1,19 @@
+beer:
+  name: Beer
+  target_kudos: 250 
+  achieved_on: 2016-01-18
+
+tennis:
+  name: Tennis
+  target_kudos: 1000
+  achieved_on: 2016-02-24
+
+karten:
+  name: Karten
+  target_kudos: 1500
+  achieved_on: 
+
+bbq:
+  name: Barbeque
+  target_kudos: 2500
+  achieved_on: 

@@ -9,7 +9,7 @@ class DashboardTest < Capybara::Rails::TestCase
     end
 
     within '#previous-goal' do
-      assert_content page, "TENNISSEN"
+      assert_content page, "TENNIS"
       assert_content page, "1.000 ₭"
     end
 
