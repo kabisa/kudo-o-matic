@@ -11,7 +11,7 @@ class GoalDecoratorTest < Draper::TestCase
   end
 
   def test_kudos
-    assert_equal "1.000 ₭" , goal.kudos
+    assert_equal "1.000 ₭", goal.kudos
   end
 
 end
