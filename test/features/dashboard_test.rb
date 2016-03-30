@@ -5,7 +5,7 @@ class DashboardTest < Capybara::Rails::TestCase
     visit root_path
 
     within '#most-recent' do
-      assert_content page, "50 ₭ van JOEP aan HENK voor HET GEVEN VAN EEN LEZING"
+      assert_content page, "1.342 ₭ from HARRY to WILLIAM for WRITING A BLOG POST"
     end
 
     within '#previous-goal' do

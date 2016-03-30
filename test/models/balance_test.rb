@@ -10,4 +10,8 @@ class BalanceTest < ActiveSupport::TestCase
     assert_equal 1342, Balance.current_amount
   end
 
+  def test_last_transaction
+    assert_equal transactions(:one), Balance.current.last_transaction
+  end
+
 end

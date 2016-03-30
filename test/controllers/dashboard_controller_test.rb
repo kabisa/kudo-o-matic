@@ -14,6 +14,9 @@ class DashboardControllerTest < ActionController::TestCase
 
     assert_equal balances(:current), assigns(:balance)
     assert assigns(:balance).decorated_with?(BalanceDecorator)
+
+    assert_equal transactions(:one), assigns(:last_transaction)
+    assert assigns(:last_transaction).decorated_with?(TransactionDecorator)
   end
 
 end
