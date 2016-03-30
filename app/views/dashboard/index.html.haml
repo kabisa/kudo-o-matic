@@ -17,5 +17,9 @@
 
   .row
     .col-md-12
-      #progress
+      .progress
+        .progress-bar.progress-bar-info{ role: 'progressbar', style: 'width: 40%', aria: { valuenow: 1324, valuemin: 1000, valuemax: 1500 } }
+          %span.sr-only= number_to_kudos(1234)
+
+      #progress-label
         .balance= number_to_kudos(1324)
