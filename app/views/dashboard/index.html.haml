@@ -2,20 +2,20 @@
   .row
     .col-md-12
       #most-recent
-        50𝕂 van JOEP aan HENK voor HET GEVEN VAN EEN LEZING
+        #{number_to_kudos(50)} van JOEP aan HENK voor HET GEVEN VAN EEN LEZING
 
   .row
     .col-md-6
       #previous-goal
         .title TENNISSEN
-        .balance 1.000K
+        .balance= number_to_kudos(1000)
 
     .col-md-6
       #next-goal
         .title KARTEN
-        .balance 1.500K
+        .balance= number_to_kudos(1500)
 
   .row
     .col-md-12
       #progress
-        .balance 1.324K
+        .balance= number_to_kudos(1324)
