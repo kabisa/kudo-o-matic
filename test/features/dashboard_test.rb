@@ -19,7 +19,7 @@ class DashboardTest < Capybara::Rails::TestCase
     end
 
     within '#progress-label' do
-      assert_content page, "1.324 ₭"
+      assert_content page, "1.342 ₭"
     end
   end
 end
