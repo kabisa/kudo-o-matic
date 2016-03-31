@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :transactions,
-    only: [:new]
+    only: [:new, :create]
 
   root 'dashboard#index'
 end

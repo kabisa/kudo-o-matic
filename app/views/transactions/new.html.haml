@@ -1,0 +1,10 @@
+%h1 Give some kudos!
+
+= simple_form_for @transaction do |f|
+  = f.input :sender
+  = f.input :receiver
+  = f.input :activity
+  = f.input :amount
+
+  = f.submit 'Give kudos'
+
