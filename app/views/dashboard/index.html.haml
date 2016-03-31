@@ -1,0 +1,26 @@
+.container
+  .row
+    .col-md-12
+      #most-recent
+        = @last_transaction
+
+  .row
+    .col-md-6
+      #previous-goal
+        .title= @previous.name
+        .balance= @previous.kudos
+
+    .col-md-6
+      #next-goal
+        .title= @next.name
+        .balance= @next.kudos
+
+  .row
+    .col-md-12
+      .progress
+        .progress-bar.progress-bar-info{ role: 'progressbar', style: "width: #{@balance.percentage}%",
+          aria: { valuenow: @balance.amount, valuemin: @previous.amount, valuemax: @next.amount } }
+          %span.sr-only= @balance.kudos
+
+      #progress-label
+        .balance= @balance.kudos
