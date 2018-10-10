@@ -1,12 +1,23 @@
-class Balance < ActiveRecord::Base
-  after_update :ensure_a_current_balance_remains
-  after_destroy :ensure_a_current_balance_remains
+# == Schema Information
+#
+# Table name: balances
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  current    :boolean          default(FALSE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  team_id    :integer
+#
 
+class Balance < ActiveRecord::Base
   validates :name, presence: true
 
   belongs_to :team
   has_many :transactions
   has_many :goals
+
+  attr_accessor :make_balance_active_checkbox
 
   scope :balances, -> { where(current: false).order("created_at DESC") }
 
@@ -33,11 +44,5 @@ class Balance < ActiveRecord::Base
     "#{days_left} days left"
   end
 
-  private
 
-  def ensure_a_current_balance_remains
-    if Balance.where(current: true).count < 1
-      raise "Last current balance can't be removed from the system"
-    end
-  end
 end

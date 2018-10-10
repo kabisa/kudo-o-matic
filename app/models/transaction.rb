@@ -1,5 +1,28 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: transactions
+#
+#  id                           :integer          not null, primary key
+#  sender_id                    :integer
+#  receiver_id                  :integer
+#  activity_id                  :integer
+#  balance_id                   :integer
+#  amount                       :integer
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  image_file_name              :string
+#  image_content_type           :string
+#  image_file_size              :integer
+#  image_updated_at             :datetime
+#  slack_reaction_created_at    :string
+#  slack_transaction_updated_at :string
+#  slack_kudos_left_on_creation :integer
+#  team_id                      :integer
+#
+
+
 class Transaction < ActiveRecord::Base
   validates :amount, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000, message: "is not correct. You can't give negative ₭udos or exceed over 1000" }
   validates :activity_name_feed, length: { minimum: 4, maximum: 140 }
@@ -9,6 +32,8 @@ class Transaction < ActiveRecord::Base
   validates_attachment :image, content_type: { content_type: ['image/jpeg', 'image/gif', 'image/png'] }
   validates_with AttachmentSizeValidator, attributes: :image, less_than: 10.megabytes
   process_in_background :image
+
+  attr_accessor :image_delete_checkbox
 
   acts_as_votable
   belongs_to :balance
@@ -21,6 +46,10 @@ class Transaction < ActiveRecord::Base
   delegate :name, to: :sender,   prefix: true
   delegate :name, to: :receiver, prefix: true
   delegate :name, to: :activity, prefix: true
+
+  def self.editable_time
+    15.minutes.ago
+  end
 
   def kudos_amount
     amount + votes.count
@@ -99,41 +128,6 @@ class Transaction < ActiveRecord::Base
 
   def liked_by_user?(user)
     votes.find_by_voter_id(user.id).present?
-  end
-
-  GUIDELINES =
-    [['Margin / month super (>=15% ROS)', 500],
-     ['Turnover / month super (>= 350k)', 500],
-     ['Score a project of >50 hours', 250],
-     ['Margin / month fine (>= 10% ROS <=15%)', 200],
-     ['Turnover / month fine (>= 300k; <= 350k)', 200],
-     ['Get a client quote for the website', 100],
-     ['Margin / month reasonable (>= 5% ROS <= 10%)', 100],
-     ['New colleague', 100],
-     ['Speak at a conference', 100],
-     ['Turnover / month reasonable (>= 280k <= 300k)', 100],
-     ['Get a great client satisfaction score', 80],
-     ['Organize event for external relations (workshop, coderetreat)', 50],
-     ['Score consultancy project', 50],
-     ['BlogPost Inbound', 40],
-     ['Project RefCase', 40],
-     ['Get a client satisfaction score', 40],
-     ['Pizza Session', 40],
-     ['Introduce a new potential client (ZOHO)', 40],
-     ['Blog tech', 20],
-     ['Call for Proposal for a conference', 20],
-     ['Lunch&Learn', 20],
-     ['Visit conference', 20],
-     ['Be a special help for someone', 10],
-     ['Be a quick help for someone', 5],
-     ['Start a meeting in time', 1]].freeze
-
-  def self.guidelines_between(from, to)
-    gl = []
-    GUIDELINES.each do |g|
-      gl.push g if g[1] >= from && g[1] <= to
-    end
-    gl
   end
 
   EMOJIES = [

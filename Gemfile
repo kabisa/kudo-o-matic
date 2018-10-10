@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.7'
+ruby '2.5.1'
 
 gem 'activerecord-typedstore', '~> 1.1.1'
 gem 'acts_as_votable', '~> 0.10.0'
@@ -19,7 +19,7 @@ gem "daemons"
 gem 'draper', '= 3.0.0.pre1'
 gem 'fcm', '~> 0.0.2'
 gem 'font-awesome-rails', '~> 4.7.0.2'
-gem 'friendly_id', '~> 5.1.0'
+gem 'friendly_id', '~> 5.2.4'
 gem 'google-id-token', '~> 1.4'
 gem 'haml-rails', '~> 1.0'
 gem 'jbuilder', '~> 2.0'
@@ -29,7 +29,7 @@ gem 'jsonapi-resources', '~> 0.9'
 gem 'jsonapi-resources-matchers', '~> 1.0'
 gem 'loofah', '~> 2.2.1'
 gem 'md_emoji', git: 'https://github.com/egonm12/md_emoji.git', branch: 'master'
-gem 'nokogiri', '~> 1.8.1'
+gem 'nokogiri', '~> 1.8.5'
 gem 'omniauth-google-oauth2', '~> 0.4.1'
 gem 'omniauth-oauth2', '~> 1.3.1'
 gem 'omniauth-slack', '~> 2.3.0'
@@ -47,7 +47,7 @@ gem 'rails_autolink', '~> 1.1.6'
 gem 'railties', '~> 5.0.3'
 gem 'redcarpet', '~> 3.4'
 gem 'rubocop', '~> 0.51.0', require: false
-gem 'rubyzip', require: 'zip'
+gem 'rubyzip', '~> 1.2.2', require: 'zip'
 gem 'sass-rails', '~> 5.0'
 gem 'scss_lint', '~> 0.54', require: false
 gem 'simple_form', '~> 3.5'
@@ -58,8 +58,9 @@ gem 'uglifier', '~> 3.2'
 group :development, :test do
   gem 'byebug', '~> 9.0.6'
   gem 'capybara', '~> 2.15.1'
+  gem 'capybara-selenium'
   gem 'dotenv-rails', '~> 2.2.1'
-  gem 'factory_girl_rails', '~> 4.8.0'
+  gem 'factory_bot_rails'
   gem 'launchy', '~> 2.4.3'
   gem 'poltergeist', '~> 1.16.0'
   gem 'rspec-rails', '~> 3.6'
@@ -68,12 +69,18 @@ end
 group :development do
   gem 'spring', '~> 2.0.2'
   gem 'web-console', '~> 3.0'
+  gem 'annotate'
+  gem 'meta_request'
+  gem 'rails-erd'
+  gem 'railroady'
+  gem 'pry-rails'
 end
 
 group :production do
   gem 'rails_12factor', '~> 0.0.3'
 end
 
-group :test do
+group :staging, :development, :test do
   gem 'database_cleaner', '~> 1.6.1'
 end
+

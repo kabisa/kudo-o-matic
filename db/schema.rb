@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180628091857) do
+ActiveRecord::Schema.define(version: 20180921063404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,15 @@ ActiveRecord::Schema.define(version: 20180628091857) do
     t.integer  "balance_id"
   end
 
+  create_table "guidelines", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "kudos"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "team_id"
+    t.index ["team_id"], name: "index_guidelines_on_team_id", using: :btree
+  end
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
     t.integer  "application_id",    null: false
@@ -129,12 +138,12 @@ ActiveRecord::Schema.define(version: 20180628091857) do
 
   create_table "team_invites", force: :cascade do |t|
     t.integer  "team_id"
-    t.integer  "user_id"
     t.datetime "sent_at"
     t.datetime "accepted_at"
     t.datetime "declined_at"
+    t.string   "email"
+    t.index ["email"], name: "index_team_invites_on_email", using: :btree
     t.index ["team_id"], name: "index_team_invites_on_team_id", using: :btree
-    t.index ["user_id"], name: "index_team_invites_on_user_id", using: :btree
   end
 
   create_table "team_members", force: :cascade do |t|
@@ -241,7 +250,6 @@ ActiveRecord::Schema.define(version: 20180628091857) do
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "team_invites", "teams"
-  add_foreign_key "team_invites", "users"
   add_foreign_key "team_members", "teams"
   add_foreign_key "team_members", "users"
 end

@@ -4,7 +4,10 @@ class UsersController < ApplicationController
   before_action :set_user, except: %i[autocomplete_search]
   before_action :check_team_membership, only: %i[autocomplete_search]
 
+  def index; end
+
   def edit; end
+  def privacy; end
 
   def view_data
     @transactions_count = Transaction.all_for_user(@user).count
@@ -41,15 +44,16 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to root_url
+      redirect_back(fallback_location: dashboard_path(team: current_team.slug))
+      flash[:succes] = "Changes saved successfully"
     else
-      render action: 'edit'
+      render action: 'index'
     end
   end
 
   def resend_email_confirmation
     unless current_user.confirmed?
-      current_user.send_reset_password_instructions
+      current_user.send_confirmation_instructions
       flash[:success] = 'Email confirmation instructions have been sent'
     end
     redirect_to root_url

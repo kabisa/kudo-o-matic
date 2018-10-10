@@ -6,6 +6,12 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_team
+  rescue_from ActionController::InvalidAuthenticityToken, with: :handle_token_issues
+
+  def handle_token_issues
+    redirect_to(root_path)
+  end
+
 
   def new_session_path(_scope)
     new_user_session_path
@@ -17,10 +23,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def check_team_admin_rights
-    unless current_user.admin_of?(current_team)
-      redirect_to(dashboard_path(current_team.slug))
-    end
+  def check_team_member_rights
+    redirect_to dashboard_path(team: current_team) unless current_user.admin_of?(current_team)
   end
 
   def current_team

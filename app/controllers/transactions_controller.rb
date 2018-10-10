@@ -1,18 +1,19 @@
 class TransactionsController < ApplicationController
   protect_from_forgery with: :exception
 
-  before_action :check_team_membership, only: [:index, :show, :create, :upvote, :downvote]
-  before_action :query_variables, only: [:index, :show, :create, :upvote, :downvote]
-  before_action :set_transaction, only: [:show, :upvote, :downvote]
+  before_action :check_team_membership
+  before_action :query_variables
+  before_action :set_transaction
   before_action :check_slack_connection, only: [:index, :create]
-  before_action :set_user, only: [:index, :show]
+  before_action :set_user, only: [:index, :create, :show, :update, :destroy]
+  before_action :danger_methods, :edit_or_delete_max_time, only: [:update, :edit, :destroy]
 
-  before_action :check_restricted, only: [:create, :upvote, :downvote]
+  before_action :check_restricted
   after_action :update_slack_transaction, only: [:upvote, :downvote]
 
   def index
     @transaction = Transaction.new
-
+    @transaction_decorate = @transaction.decorate
     respond_to do |format|
       format.html
       format.js
@@ -37,11 +38,29 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def destroy
+    if @transaction.delete
+      flash[:success] = 'Succesfully removed transaction!'
+    end
+    redirect_to root_path
+  end
+
+  def update
+    if @transaction.update(transaction_params)
+      if transaction_params["image_delete_checkbox"] == "1"
+        @transaction.image.clear
+        @transaction.save
+      end
+      flash[:success] = 'Successfully updated transaction!'
+    end
+    redirect_to @transaction
+  end
+
   def upvote
     @transaction.liked_by current_user
 
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html {redirect_to :back}
       format.js
     end
 
@@ -54,15 +73,9 @@ class TransactionsController < ApplicationController
     @transaction.unliked_by current_user
 
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html {redirect_to :back}
       format.js
     end
-  end
-
-  def kudo_guidelines
-    kudos = params[:kudo_amount].to_i
-    guidelines = Transaction.guidelines_between [(kudos - 10), 0].max, kudos + 10
-    render json: guidelines
   end
 
   private
@@ -76,9 +89,11 @@ class TransactionsController < ApplicationController
   end
 
   def check_slack_connection
-    if SLACK_IS_CONFIGURED && current_team.membership_of(current_user).slack_id.blank?
-      url = "<a href='#{settings_url(team: current_team.slug)}'>Connect your ₭udo-o-Matic account to Slack</a>"
-      flash.now[:warning] = url.html_safe
+    if current_team.slack_team_id.present?
+      if SLACK_IS_CONFIGURED && current_team.membership_of(current_user).slack_id.blank?
+        url = "<a href='#{settings_url(team: current_team.slug)}'>Connect your ₭udo-o-Matic account to Slack</a>"
+        flash.now[:warning] = url.html_safe
+      end
     end
   end
 
@@ -119,12 +134,12 @@ class TransactionsController < ApplicationController
       @transactions = Transaction.send_by_user(current_user, current_team).page(params[:page]).per(20)
     when 'received'
       @transactions = TransactionDecorator.decorate_collection(
-        Transaction.received_by_user(current_user, current_team).page(params[:page]).per(20)
+          Transaction.received_by_user(current_user, current_team).page(params[:page]).per(20)
       )
     else
       @transactions = TransactionDecorator.decorate_collection(
-        Transaction.where(team_id: current_team)
-            .order('created_at desc').page(params[:page]).per(20)
+          Transaction.where(team_id: current_team)
+              .order('created_at desc').page(params[:page]).per(20)
       )
     end
   end
@@ -144,7 +159,7 @@ class TransactionsController < ApplicationController
   def received_transactions_company
     user = current_team.users.find_by_name_and_company_user(
         current_team.name,
-      true
+        true
     )
     Transaction.where(receiver: user).count
   end
@@ -157,5 +172,25 @@ class TransactionsController < ApplicationController
     if current_user.restricted?
       redirect_to root_url
     end
+  end
+
+  def danger_methods
+    if current_user.id != @transaction.sender_id
+      return true if current_user.admin_of?(current_team)
+      flash[:error] = "You're not authorized to perform this action!"
+      redirect_to root_url
+    end
+  end
+
+  def edit_or_delete_max_time
+    return true if current_user.admin_of?(current_team)
+    if @transaction.created_at < Transaction.editable_time
+      flash[:error] = "You can only edit/delete your transaction the first 15 minutes after it is created!"
+      redirect_to root_url
+    end
+  end
+
+  def transaction_params
+    params.require(:transaction).permit(:receiver_name, :amount, :password, :activity_name, :image, :image_delete_checkbox)
   end
 end

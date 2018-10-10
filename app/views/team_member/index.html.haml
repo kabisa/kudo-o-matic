@@ -1,15 +1,19 @@
 = render 'layouts/header'
 .page
-  .settings-container
-    .title-container
-      %h1.settings-title
-        Manage members
-      .actions
-        = link_to root_path, method: "get", class: 'btn secondary' do
-          <i class="fa fa-home" aria-hidden="true"></i> Home
-        = link_to manage_team_path(team: current_team.slug), method: "get", class: 'btn secondary' do
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to manage
-    %h2.settings-subtitle
-      Members
-    = render 'member_list', members: @members
-    = render 'other_actions'
+  .body
+    .container-left
+      .fixed-div-left
+        = render 'teams/menu'
+    .container-center.flex-is-three
+      .container
+        .topic-container
+          %h2.title-container
+            Members
+          .text-container.has-table#team-members
+            = render 'team_members_list', members: @members
+          .actions
+            = link_to manage_invites_path(team: current_team.slug), method: "get", class: 'btn btn-primary' do
+              <i class="fa fa-plus" aria-hidden="true"></i> Invite users
+
+
+

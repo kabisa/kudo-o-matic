@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :headless_chrome
 
 options = {js_errors: false, timeout: 30}
 Capybara.register_driver :poltergeist do |app|
@@ -54,7 +54,6 @@ RSpec.feature 'Add a like', type: :feature do
     fill_in 'user_password', with: 'testpass'
     click_button 'Log in'
     expect(current_path).to eql('/kabisa')
-    find('button.close-welcome').click
   end
 
   context 'User likes transaction' do

@@ -17,12 +17,23 @@ module TransactionsHelper
   end
 
   def percentage_next_goal(team)
-    number = ((Balance.current(team).amount.to_f - Goal.previous(team).amount.to_f) / (Goal.next(team).amount.to_f - Goal.previous(team).amount.to_f)) * 100
+    number = (((Balance.current(team).amount.to_f - Goal.previous(team).amount.to_f) / (Goal.next(team).amount.to_f - Goal.previous(team).amount.to_f)) * 100).floor
     helper.number_to_percentage(number, precision: 0)
   end
   
   def kudos_to_next_goal(team)
     Goal.next(team).amount - Balance.current(team).amount
+  end
+
+  def editable_by?(user, team, transaction)
+    return true if user.admin_of?(team)
+    if transaction.created_at > Transaction.editable_time
+      true
+    end
+  end
+
+  def is_edited?(transaction)
+    transaction.updated_at != transaction.created_at
   end
 
   private

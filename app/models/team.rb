@@ -1,5 +1,26 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: teams
+#
+#  id                     :integer          not null, primary key
+#  name                   :string
+#  general_info           :text
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  logo_file_name         :string
+#  logo_content_type      :string
+#  logo_file_size         :integer
+#  logo_updated_at        :datetime
+#  slug                   :string
+#  preferences            :json
+#  slack_team_id          :string
+#  slack_bot_access_token :string
+#  channel_id             :string
+#
+
+
 class Team < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -17,6 +38,7 @@ class Team < ActiveRecord::Base
   has_many :balances
   has_many :goals, through: :balances
   has_many :transactions
+  has_many :guidelines
   has_many :likes, class_name: 'Vote'
 
   typed_store :preferences, coder: PreferencesCoder do |p|

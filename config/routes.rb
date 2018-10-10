@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :teams, only: %i[new create]
 
-  get :kudo_guidelines, to: 'transactions#kudo_guidelines'
+  get :kudo_guidelines, to: 'guidelines#kudo_guidelines'
 
 
   get :activities, to: 'activities#autocomplete_search', as: :activities_autocomplete
@@ -25,6 +25,12 @@ Rails.application.routes.draw do
 
   get 'legal/privacy'
 
+  scope :hc, controller: :help do
+    get 'getting-started', to: 'helpcenter#start'
+    get 'contact', to: 'helpcenter#contact'
+    get 'faq', to: 'helpcenter#faq'
+  end
+
   scope :slack, controller: :slack do
     post :action
     post :command
@@ -41,6 +47,7 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :guidelines
     resources :balances
     resources :goals
     resources :transactions
@@ -199,24 +206,27 @@ Rails.application.routes.draw do
 
   scope ':team' do
     root to: 'transactions#index', as: 'dashboard'
-    resources :transactions, only: %i[index show create], param: :id
+    resources :transactions, param: :id
     get 'transactions/:type', to: 'transactions#filter'
 
     post 'like/:id', to: 'transactions#upvote', as: :like
     post 'unlike/:id', to: 'transactions#downvote', as: :unlike
 
-    get :settings, to: 'users#edit', as: :settings
+    get :settings, to: 'users#index', as: :settings
+    get 'settings/privacy', to: 'users#privacy', as: :privacy_settings
     patch :settings, to: 'users#update'
 
     scope 'manage' do
       get '/', to: 'teams#manage', as: :manage_team
       patch 'update', to: 'teams#update', as: :team_update
-      get 'invites', to: 'team_invite#new', as: :manage_invites
+      get 'invites', to: 'team_invite#index', as: :manage_invites
       post 'invites', to: 'team_invite#create', as: :create_invites
+      delete 'invites/:id', to: 'team_invite#delete', as: :delete_invites
       get 'members', to: 'team_member#index', as: :manage_team_members
       delete 'members', to: 'team_member#delete', as: :delete_member
       resources :balances, path: 'balances'
       resources :goals, path: 'goals'
+      resources :guidelines, path: 'guidelines'
     end
 
     get :users, to: 'users#autocomplete_search', as: :users_autocomplete

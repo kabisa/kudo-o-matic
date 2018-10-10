@@ -1,8 +1,15 @@
 # frozen_string_literal: true
 
 class TeamMemberController < ApplicationController
+  before_action :check_team_member_rights
+
   def index
-    @members = current_team.manageable_members(current_user)
+    @members = current_team.manageable_members(current_user).page(params[:page]).per(20)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def delete

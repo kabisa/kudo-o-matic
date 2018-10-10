@@ -23,12 +23,12 @@ RSpec.describe SummaryMailer, type: :mailer do
       expect(mail.from).to eq(['example@mail.com'])
     end
 
-    it 'assigns @user' do
-      expect(mail.body.encoded).to match(user.first_name)
-    end
-
     it 'sends the email' do
       expect {mail.deliver_now}.to change {ActionMailer::Base.deliveries.count}.from(0).to(1)
+    end
+
+    it 'logo attachment is added' do
+      expect(mail.attachments.count).to eq(1)
     end
   end
 end
