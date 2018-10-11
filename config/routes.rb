@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   post :resend_email_confirmation, to: 'users#resend_email_confirmation',
        as: :users_resend_email_confirmation
 
-  get '/feed/:team', to: 'feed#index'
+  # get ':slug/feed/:rss_token', to: 'feed#index' #, as: :feed_path
+  # get '/feed/:slug', to: 'feed#index'
 
   get 'account/view_data', to: 'users#view_data', as: :users_view_data
   get 'account/view_data/transactions', to: 'users#view_transactions', as: :users_view_transactions
@@ -216,8 +217,11 @@ Rails.application.routes.draw do
     get 'settings/privacy', to: 'users#privacy', as: :privacy_settings
     patch :settings, to: 'users#update'
 
+    get 'feed/:rss_token', to: 'feed#index'
+
     scope 'manage' do
       get '/', to: 'teams#manage', as: :manage_team
+      get 'integrations', to: 'teams#integrations'
       patch 'update', to: 'teams#update', as: :team_update
       get 'invites', to: 'team_invite#index', as: :manage_invites
       post 'invites', to: 'team_invite#create', as: :create_invites

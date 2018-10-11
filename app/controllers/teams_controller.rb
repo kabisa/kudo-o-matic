@@ -44,6 +44,10 @@ class TeamsController < ApplicationController
     redirect_to user_slack_omniauth_authorize_path
   end
 
+  def integrations
+    @team = current_team
+  end
+
   private
 
   def set_user
@@ -59,6 +63,6 @@ class TeamsController < ApplicationController
   end
 
   def team_params
-    params.permit(:name, :general_info, :logo, :primary_color)
+    params.permit(:name, :general_info, :logo, :primary_color, :rss_token)
   end
 end
