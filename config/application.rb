@@ -36,8 +36,5 @@ module KudoOMatic
 
     # Autoload libs
     config.autoload_paths += %W[#{config.root}/lib]
-
-    # Delayed::Job
-    config.active_job.queue_adapter = :delayed_job
   end
 end
