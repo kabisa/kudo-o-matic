@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post :resend_email_confirmation, to: 'users#resend_email_confirmation',
        as: :users_resend_email_confirmation
 
-  get :feed, to: 'feed#index'
+  get '/feed/:team', to: 'feed#index'
 
   get 'account/view_data', to: 'users#view_data', as: :users_view_data
   get 'account/view_data/transactions', to: 'users#view_transactions', as: :users_view_transactions
