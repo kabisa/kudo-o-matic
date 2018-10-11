@@ -14,9 +14,6 @@ Rails.application.routes.draw do
   post :resend_email_confirmation, to: 'users#resend_email_confirmation',
        as: :users_resend_email_confirmation
 
-  # get ':slug/feed/:rss_token', to: 'feed#index' #, as: :feed_path
-  # get '/feed/:slug', to: 'feed#index'
-
   get 'account/view_data', to: 'users#view_data', as: :users_view_data
   get 'account/view_data/transactions', to: 'users#view_transactions', as: :users_view_transactions
   get 'account/view_data/likes', to: 'users#view_likes', as: :users_view_likes
