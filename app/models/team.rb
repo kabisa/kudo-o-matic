@@ -33,6 +33,7 @@ class Team < ActiveRecord::Base
   validates_with AttachmentSizeValidator, attributes: :logo, less_than: 10.megabytes
   process_in_background :logo
 
+  has_secure_token :rss_token
   has_many :memberships, class_name: 'TeamMember', foreign_key: :team_id
   has_many :users, through: :memberships
   has_many :balances
@@ -85,10 +86,6 @@ class Team < ActiveRecord::Base
     users.where(company_user: false)
   end
 
-  def generate_new_rss_token(team)
-    team.update(rss_token: SecureRandom.hex(20))
-  end
-
   private
 
   def setup_team
@@ -103,9 +100,6 @@ class Team < ActiveRecord::Base
     user = User.new(name: name, company_user: true)
     user.save(validate: false)
     add_member(user)
-
-    # Create rss token
-    generate_new_rss_token(Team.find(id))
   end
 
   # A hacky but necessary fix to keep showing the current Team logo on logo validation errors

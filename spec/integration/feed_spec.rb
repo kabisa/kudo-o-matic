@@ -2,7 +2,7 @@ require "rails_helper"
 require "rss"
 
 describe "/feed", type: :request do
-  let!(:team) { create :team, name: "kabisa", slug: 'kabisa', rss_token: 'faketoken' }
+  let!(:team) { create :team, name: "kabisa", slug: 'kabisa' }
 
   context "no transactions" do
     it "produces an empty feed" do
@@ -32,6 +32,12 @@ describe "/feed", type: :request do
       entries = parse_feed
 
       expect(entries.first.updated.content).to eq(transactions.first.created_at)
+    end
+
+    it 'renders 404 with wrong slug' do
+      get "/#{team.slug}/feed/faketoken"
+
+      expect(response).to have_http_status(404)
     end
   end
 

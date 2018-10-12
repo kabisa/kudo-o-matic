@@ -2,7 +2,7 @@
 
 class TeamsController < ApplicationController
   before_action :set_user, only: [:index, :create]
-  before_action :check_team_member_rights, only: [:manage]
+  before_action :check_team_member_rights, only: [:manage, :integrations]
 
   def new
     @team = Team.new(create_team_params)
