@@ -3,6 +3,7 @@ require "rss"
 
 describe "/feed", type: :request do
   let!(:team) { create :team, name: "kabisa", slug: 'kabisa' }
+  let!(:team_2) { create :team, name: "other team", slug: 'other-team' }
 
   context "no transactions" do
     it "produces an empty feed" do
@@ -34,8 +35,14 @@ describe "/feed", type: :request do
       expect(entries.first.updated.content).to eq(transactions.first.created_at)
     end
 
-    it 'renders 404 with wrong slug' do
+    it 'renders 404 with wrong token' do
       get "/#{team.slug}/feed/faketoken"
+
+      expect(response).to have_http_status(404)
+    end
+
+    it 'renders 404 when visiting other teams feed with own token' do
+      get "/#{team_2.slug}/feed/#{team.rss_token}"
 
       expect(response).to have_http_status(404)
     end
