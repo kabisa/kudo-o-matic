@@ -33,6 +33,7 @@ class Team < ActiveRecord::Base
   validates_with AttachmentSizeValidator, attributes: :logo, less_than: 10.megabytes
   process_in_background :logo
 
+  has_secure_token :rss_token
   has_many :memberships, class_name: 'TeamMember', foreign_key: :team_id
   has_many :users, through: :memberships
   has_many :balances
