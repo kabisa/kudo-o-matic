@@ -1,0 +1,35 @@
+= render 'layouts/header'
+.page
+  .body
+    .container-left
+      .fixed-div-left
+        = render 'menu'
+    .container-center.flex-is-three
+      .container
+        .topic-container
+          %h2.title-container
+            Integrations
+            - flash.each do |key, value|
+              .message-container.show-message
+                .margin-bottom{:class => "#{key}-message"}
+                  %span.message
+                    .fa.fa-exclamation-circle
+                    .message{:class => key}= value
+            - if @team.errors.any?
+              .message-container.show-message
+                .error-message.margin-bottom
+                  %span.message
+                    .fa.fa-exclamation-circle
+                    %ul
+                      - @team.errors.full_messages.each do |msg|
+                        %li
+                          = msg.capitalize
+                  %span
+                    .fa.fa-times.close-message
+          .text-container
+            .integration-field.simple_form
+              %label
+                RSS Feed*
+              %input{value: "#{root_url + current_team.slug}/feed/#{@team.rss_token}.xml", readonly: true}
+            %p.topic-p
+              Copy this unique token and use it to get notifications via RSS Feed of your team's transactions

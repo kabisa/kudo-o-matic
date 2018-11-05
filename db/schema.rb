@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180921063404) do
+ActiveRecord::Schema.define(version: 20181011145946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 20180921063404) do
     t.string   "slack_team_id"
     t.string   "slack_bot_access_token"
     t.string   "channel_id"
+    t.string   "rss_token"
   end
 
   create_table "transactions", force: :cascade do |t|
