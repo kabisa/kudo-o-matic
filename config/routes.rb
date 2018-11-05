@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  if Rails.env.development?
+  unless Rails.env.production?
     mount GraphqlPlayground::Rails::Engine, at: "/graphql/playground", graphql_path: "/graphql"
   end
 
