@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddTeamToTransactionsAndBalances < ActiveRecord::Migration[5.0]
   def change
     add_reference :transactions, :team, index: true

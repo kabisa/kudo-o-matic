@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddSlackIdAndUsernameToTeamMembers < ActiveRecord::Migration[5.0]
   def change
     add_column :team_members, :slack_id, :string

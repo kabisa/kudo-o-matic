@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: goals
@@ -11,7 +13,7 @@
 #  balance_id  :integer
 #
 
-class Goal < ActiveRecord::Base
+class Goal < ApplicationRecord
   acts_as_votable
 
   validates :name, presence: true
@@ -28,7 +30,7 @@ class Goal < ActiveRecord::Base
   end
 
   def self.next(team)
-    where(balance: Balance.current(team)).where(achieved_on: nil).order("amount ASC").first || Goal.create(name: 'TBD', amount: Goal.previous(team).amount + 1000, balance: Balance.current(team), achieved_on: nil)
+    where(balance: Balance.current(team)).where(achieved_on: nil).order("amount ASC").first || Goal.create(name: "TBD", amount: Goal.previous(team).amount + 1000, balance: Balance.current(team), achieved_on: nil)
   end
 
   def achieved?
@@ -38,5 +40,4 @@ class Goal < ActiveRecord::Base
   def achieve!
     touch(:achieved_on)
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: fcm_tokens
@@ -9,7 +11,7 @@
 #  updated_at :datetime         not null
 #
 
-class FcmToken < ActiveRecord::Base
+class FcmToken < ApplicationRecord
   validates :token, uniqueness: true
 
   belongs_to :user

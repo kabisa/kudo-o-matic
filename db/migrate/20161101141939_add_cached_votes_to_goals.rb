@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class AddCachedVotesToGoals < ActiveRecord::Migration[5.0]
   def self.up
-    add_column :goals, :cached_votes_total, :integer, :default => 0
-    add_column :goals, :cached_votes_score, :integer, :default => 0
-    add_column :goals, :cached_votes_up, :integer, :default => 0
-    add_column :goals, :cached_votes_down, :integer, :default => 0
-    add_column :goals, :cached_weighted_score, :integer, :default => 0
-    add_column :goals, :cached_weighted_total, :integer, :default => 0
-    add_column :goals, :cached_weighted_average, :float, :default => 0.0
+    add_column :goals, :cached_votes_total, :integer, default: 0
+    add_column :goals, :cached_votes_score, :integer, default: 0
+    add_column :goals, :cached_votes_up, :integer, default: 0
+    add_column :goals, :cached_votes_down, :integer, default: 0
+    add_column :goals, :cached_weighted_score, :integer, default: 0
+    add_column :goals, :cached_weighted_total, :integer, default: 0
+    add_column :goals, :cached_weighted_average, :float, default: 0.0
     add_index  :goals, :cached_votes_total
     add_index  :goals, :cached_votes_score
     add_index  :goals, :cached_votes_up

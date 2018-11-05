@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: team_members
@@ -13,7 +15,7 @@
 #  slack_name     :string
 #
 
-class TeamMember < ActiveRecord::Base
+class TeamMember < ApplicationRecord
   belongs_to :team
   belongs_to :user
 end

@@ -1,4 +1,6 @@
-class CreateBalances < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateBalances < ActiveRecord::Migration[4.2]
   def change
     create_table :balances do |t|
       t.string :name

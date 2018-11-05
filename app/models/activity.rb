@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: activities
@@ -9,11 +11,10 @@
 #  updated_at       :datetime         not null
 #
 
-class Activity < ActiveRecord::Base
-  has_many :transactions
+class Activity < ApplicationRecord
+  has_many :posts
   acts_as_votable
   def to_s
     name
   end
-
 end

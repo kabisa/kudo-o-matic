@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Encodes User preferences to JSON data
 module PreferencesCoder
   extend self

@@ -11,12 +11,12 @@ class TeamInviteForm
 
   private
 
-  def validate_emails
-    email_list = emails.split(/\s*[,;]\s*/).map(&:strip)
-    email_list.each do |e|
-      unless e.match(EmailRegex.valid_regex)
-        errors.add(:emails, 'should only include valid emailadresses')
+    def validate_emails
+      email_list = emails.split(/\s*[,;]\s*/).map(&:strip)
+      email_list.each do |e|
+        unless e.match?(EmailRegex.valid_regex)
+          errors.add(:emails, "should only include valid emailadresses")
+        end
       end
     end
-  end
 end

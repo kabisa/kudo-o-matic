@@ -1,4 +1,6 @@
-class CreateTransactions < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateTransactions < ActiveRecord::Migration[4.2]
   def change
     create_table :transactions do |t|
       t.integer :from_id

@@ -23,9 +23,7 @@
 
 FactoryBot.define do
   factory :team do
-    name 'Kabisa'
-    slug 'kabisa'
-    general_info 'Some general info about the team.'
+    name { "Kabisa" }
+    slug { "kabisa" }
   end
-
 end

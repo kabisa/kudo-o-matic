@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: team_invites
@@ -11,7 +12,7 @@
 #  email       :string
 #
 
-class TeamInvite < ActiveRecord::Base
+class TeamInvite < ApplicationRecord
   belongs_to :team
 
   after_create :send_invite
@@ -21,7 +22,7 @@ class TeamInvite < ActiveRecord::Base
   end
 
   def accept
-    TeamInvite.transaction do
+    TeamInvite.post do
       update_attribute(:accepted_at, Time.now)
     end
     user = User.find_by_email(email)
@@ -29,7 +30,7 @@ class TeamInvite < ActiveRecord::Base
   end
 
   def decline
-    TeamInvite.transaction do
+    TeamInvite.post do
       update_attribute(:declined_at, Time.now)
     end
   end
@@ -40,7 +41,7 @@ class TeamInvite < ActiveRecord::Base
 
   private
 
-  def send_invite
-    UserMailer.invite_email(self.email, self.team).deliver_now
-  end
+    def send_invite
+      UserMailer.invite_email(self.email, self.team).deliver_now
+    end
 end

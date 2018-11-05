@@ -1,26 +1,28 @@
-class TransactionMailer < ApplicationMailer
-  def self.new_transaction(transaction)
-    return if Rails.env == 'test' || ENV['MAIL_USERNAME'].blank? || transaction.receiver.nil?
+# frozen_string_literal: true
 
-    receiver = transaction.receiver
+class PostMailer < ApplicationMailer
+  def self.new_post(post)
+    return if Rails.env == "test" || ENV["MAIL_USERNAME"].blank? || post.receiver.nil?
 
-    if receiver.email.present? && receiver.transaction_received_mail && receiver.deactivated_at.nil?
-      suppress(Exception) {transaction_email(receiver, transaction).deliver_later}
+    receiver = post.receiver
+
+    if receiver.email.present? && receiver.post_received_mail && receiver.deactivated_at.nil?
+      suppress(Exception) { post_email(receiver, post).deliver_later }
     end
 
-    if receiver.name == ENV['COMPANY_USER']
-      User.where.not(email: '').where.not(email: transaction.sender.email).where(deactivated_at: nil).each do |user|
-        suppress(Exception) {transaction_email(user, transaction).deliver_later if user.transaction_received_mail}
+    if receiver.name == ENV["COMPANY_USER"]
+      User.where.not(email: "").where.not(email: post.sender.email).where(deactivated_at: nil).each do |user|
+        suppress(Exception) { post_email(user, post).deliver_later if user.post_received_mail }
       end
     end
   end
 
-  def transaction_email(user, transaction)
-    @transaction = transaction
+  def post_email(user, post)
+    @post = post
     @user = user
 
     @markdown = Redcarpet::Markdown.new(MdEmoji::Render, no_intra_emphasis: true)
 
-    mail(to: user.email, subject: "You just received #{ApplicationController.helpers.number_to_kudos(@transaction.amount)} from #{@transaction.sender.name}!")
+    mail(to: user.email, subject: "You just received #{ApplicationController.helpers.number_to_kudos(@post.amount)} from #{@post.sender.name}!")
   end
 end

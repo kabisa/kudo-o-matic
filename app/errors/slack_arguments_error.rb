@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SlackArgumentsError < StandardError
   def initialize(message)
     super(message)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 DELAYED_JOB_PID_PATH = "#{Rails.root}/tmp/pids/delayed_job.pid"
 
 def start_delayed_job

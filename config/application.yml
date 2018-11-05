@@ -1,0 +1,11 @@
+defaults: &defaults
+  token_expiration_time: <%= 1.month %>
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

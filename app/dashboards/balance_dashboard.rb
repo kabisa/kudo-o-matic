@@ -1,4 +1,6 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
+
+require "administrate/base_dashboard"
 
 class BalanceDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -13,7 +15,7 @@ class BalanceDashboard < Administrate::BaseDashboard
       current: Field::Boolean,
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      transactions: Field::HasMany
+      posts: Field::HasMany
   }
 
   # COLLECTION_ATTRIBUTES
@@ -25,7 +27,7 @@ class BalanceDashboard < Administrate::BaseDashboard
       :id,
       :name,
       :current,
-      :transactions
+      :posts
   ]
 
   # SHOW_PAGE_ATTRIBUTES
@@ -36,7 +38,7 @@ class BalanceDashboard < Administrate::BaseDashboard
       :current,
       :created_at,
       :updated_at,
-      :transactions
+      :posts
   ]
 
   # FORM_ATTRIBUTES

@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 atom_feed do |feed|
   feed.title("Kudos-o-Matic - #{@team.name}")
-  feed.updated(@transactions.max_by(&:created_at).try(:created_at))
+  feed.updated(@posts.max_by(&:created_at).try(:created_at))
   feed.author do |author|
     author.name "Kudos-o-Matic"
   end
 
-  @transactions.each do |transaction|
-    feed.entry(transaction, url: transaction_url(id: transaction.id, team: @team.slug), updated: transaction.created_at) do |entry|
-      entry.title("New transaction on #{request.host}")
-      entry.summary("#{transaction.sender.name} awarded #{transaction.receiver_name_feed} #{number_to_kudos(transaction.amount)} for #{transaction.activity_name_feed}")
+  @posts.each do |post|
+    feed.entry(post, url: root_url, updated: post.created_at) do |entry|
+      entry.title("New post on #{request.host}")
+      entry.summary("#{post.sender.name} awarded #{post.receiver_name_feed} #{number_to_kudos(post.amount)} for #{post.message}")
     end
   end
 end

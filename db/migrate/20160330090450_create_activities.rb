@@ -1,4 +1,6 @@
-class CreateActivities < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateActivities < ActiveRecord::Migration[4.2]
   def change
     create_table :activities do |t|
       t.string :name, limit: 60

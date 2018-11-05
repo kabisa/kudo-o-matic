@@ -1,4 +1,6 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
+
+require "administrate/base_dashboard"
 
 class VoteDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -18,8 +20,8 @@ class VoteDashboard < Administrate::BaseDashboard
       vote_weight: Field::Number,
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      transaction_votable: Field::BelongsTo.with_options(class_name: 'Transaction'),
-      user_voter: Field::BelongsTo.with_options(class_name: 'User')
+      post_votable: Field::BelongsTo.with_options(class_name: "Post"),
+      user_voter: Field::BelongsTo.with_options(class_name: "User")
   }
 
   # COLLECTION_ATTRIBUTES
@@ -29,7 +31,7 @@ class VoteDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
       :id,
-      :transaction_votable,
+      :post_votable,
       :user_voter
   ]
 
@@ -38,7 +40,7 @@ class VoteDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
       :votable_id,
       :votable_type,
-      :transaction_votable,
+      :post_votable,
       :voter_id,
       :voter_type,
       :user_voter,
@@ -50,7 +52,7 @@ class VoteDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-      :transaction_votable,
+      :post_votable,
       :user_voter
   ]
 

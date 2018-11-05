@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class UserDecorator < Draper::Decorator
   delegate_all
 
   def name
     if object.restricted?
-      'Hidden'
+      "Hidden"
     else
       object.name
     end

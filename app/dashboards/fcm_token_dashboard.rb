@@ -1,4 +1,6 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
+
+require "administrate/base_dashboard"
 
 class FcmTokenDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -46,10 +48,10 @@ class FcmTokenDashboard < Administrate::BaseDashboard
       :user
   ]
 
-    # Overwrite this method to customize how fcm tokens are displayed
-    # across all pages of the admin dashboard.
-    #
-    # def display_resource(fcm_token)
-    #   "FcmToken ##{fcm_token.id}"
-    # end
+  # Overwrite this method to customize how fcm tokens are displayed
+  # across all pages of the admin dashboard.
+  #
+  # def display_resource(fcm_token)
+  #   "FcmToken ##{fcm_token.id}"
+  # end
 end
