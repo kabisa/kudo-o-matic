@@ -51,6 +51,11 @@ gem "scss_lint", "~> 0.54", require: false
 gem "slack-ruby-client", "~> 0.11.0"
 gem "uglifier", "~> 3.2"
 
+group :development, :staging, :test do
+  # GraphQL UI similar to GraphiQL but better
+  gem "graphql_playground-rails", "~> 2.0", ">= 2.0.1"
+end
+
 group :development, :test do
   gem "database_cleaner", "~> 1.7"
   gem "dotenv-rails", "~> 2.5"
@@ -70,8 +75,6 @@ group :test do
 end
 
 group :development do
-  # GraphQL UI similar to GraphiQL but better
-  gem "graphql_playground-rails", "~> 2.0", ">= 2.0.1"
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem "web-console", ">= 3.3.0"
   gem "listen", "~> 3.0.5"
