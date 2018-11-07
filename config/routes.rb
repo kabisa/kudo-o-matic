@@ -7,10 +7,6 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
 
-  root "feed#index"
-
-
-
   devise_for :users, controllers: {
       omniauth_callbacks: "users/omniauth_callbacks",
       registrations: :registrations

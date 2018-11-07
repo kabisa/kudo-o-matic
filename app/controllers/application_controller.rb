@@ -4,12 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   around_action :catch_not_found
   helper_method :current_team
-  rescue_from ActionController::InvalidAuthenticityToken, with: :handle_token_issues
-
-  def handle_token_issues
-    redirect_to(root_path)
-  end
-
 
   def new_session_path(_scope)
     new_user_session_path
@@ -40,6 +34,6 @@ class ApplicationController < ActionController::Base
     def catch_not_found
       yield
     rescue ActiveRecord::RecordNotFound
-      redirect_to root_url
+      raise ActiveRecord::RecordNotFound
     end
 end
