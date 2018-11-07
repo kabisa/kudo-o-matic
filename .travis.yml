@@ -23,6 +23,9 @@ jobs:
     - stage: "Rspec"
       script:
         - bundle exec rspec
+    - stage: "Check graphql schema for breaking changes"
+      if: type = push AND branch NOT IN (master, develop)
+      script:
         - rails s & sleep 20 && apollo schema:check --endpoint=http://localhost:3000/graphql
     - stage: "Publish schema"
       if: type = push AND branch = develop
