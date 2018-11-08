@@ -6,7 +6,7 @@ module Types
 
     field :id, !types.ID
     field :name, !types.String
-    field :email, !types.String
+    field :email, !Types::EmailAddress
 
     field :sentPosts, !types[Types::PostType] do
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(Post).load_many(obj.sent_posts.ids) }

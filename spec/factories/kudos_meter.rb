@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: balances
+# Table name: kudos_meters
 #
 #  id         :integer          not null, primary key
 #  name       :string
@@ -13,11 +13,7 @@
 #
 
 FactoryBot.define do
-  factory :balance do
-    name { "My Balance" }
-
-    trait :current do
-      current { true }
-    end
+  factory :kudos_meter do
+    name { "My KudosMeter" }
   end
 end

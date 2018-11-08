@@ -4,8 +4,8 @@ require "database_cleaner"
 
 DatabaseCleaner.clean_with(:truncation)
 
-balance = Balance.create(name: "Balance Name", current: true)
 team = Team.create(name: Faker::Company.name)
+
 
 15.times do
   name = Faker::Name.unique.first_name
@@ -27,8 +27,8 @@ end
     sender: sender,
     receivers: User.limit(rand(1..5)).order("RANDOM()").where.not(id: sender.id),
     message: Faker::Lorem.sentence(3),
-    amount: rand(1..500),
-    balance: balance,
+    amount: rand(1..50),
+    kudos_meter: team.active_kudos_meter,
     team: team
   )
 end

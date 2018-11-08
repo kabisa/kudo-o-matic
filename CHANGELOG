@@ -6,6 +6,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- GraphQL API for backend
+
+### Changed
+- Name change Transaction to Post
+- Name change Balance to KudosMeter
+- Deleted Slack integration
+- Active KudosMeter is set on team instead of on KudosMeter itself
+- Activities migrated to Message on Post
+
+## [3.4.0]
+### Added
+- RSS feed token for team and rss feed per team
+
+## [3.3.0]
+### Added
+- Users can get invited to team without needing an account first
+- Added guidelines per team
+- Added helpcenter
+- Edit/Delete your transactions
+
+### Changed
+- Bug fixes
+- Improved profile menu
+- Improved team manage page
+
+## [3.2.0]
+### Added
 - Users can now create teams
 - After team creation, a balance, some goals, a company user and example transaction are created
 - Teams are accessible by their slug, e.g. /kabisa

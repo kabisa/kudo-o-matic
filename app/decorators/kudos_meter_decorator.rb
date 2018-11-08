@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BalanceDecorator < Draper::Decorator
+class KudosMeterDecorator < Draper::Decorator
   delegate_all
 
   def kudos

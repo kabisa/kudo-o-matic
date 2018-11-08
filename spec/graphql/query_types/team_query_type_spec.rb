@@ -11,6 +11,10 @@ RSpec.describe QueryTypes::TeamQueryType do
       expect(subject).to have_field(:teams).that_returns(types[Types::TeamType])
     end
 
+    it 'accepts a orderBy argument, of type String' do
+      expect(subject.fields["teams"]).to accept_arguments(orderBy: types.String)
+    end
+
     it "returns all teams" do
       args = {}
       query_result = subject.fields["teams"].resolve(nil, args, nil)
@@ -21,16 +25,17 @@ RSpec.describe QueryTypes::TeamQueryType do
 
       expect(query_result.count).to eq(teams.count)
     end
-
-    it "returns all teams with orderBy argument" do
-      args = { order: "created_at desc" }
-      query_result = subject.fields["teams"].resolve(nil, args, nil)
-
-      expect(query_result).to eq(Team.all.order("created_at desc"))
-    end
   end
 
   describe "querying a specific team by id" do
+    it "has a field :teamById that returns a Team type" do
+      expect(subject).to have_field(:teamById).that_returns(Types::TeamType)
+    end
+
+    it 'accepts a id argument, of type !ID' do
+      expect(subject.fields["teamById"]).to accept_argument(id: !types.ID)
+    end
+
     it "returns the queried team" do
       id = teams.first.id
       args = { id: id }

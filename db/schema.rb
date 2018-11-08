@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_103959) do
+ActiveRecord::Schema.define(version: 2018_11_07_081013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,30 +19,6 @@ ActiveRecord::Schema.define(version: 2018_10_30_103959) do
     t.integer "suggested_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "balances", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.boolean "current", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "team_id"
-    t.index ["team_id"], name: "index_balances_on_team_id"
-  end
-
-  create_table "delayed_jobs", id: :serial, force: :cascade do |t|
-    t.integer "priority", default: 0, null: false
-    t.integer "attempts", default: 0, null: false
-    t.text "handler", null: false
-    t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string "locked_by"
-    t.string "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
   create_table "exports", id: :serial, force: :cascade do |t|
@@ -83,7 +59,7 @@ ActiveRecord::Schema.define(version: 2018_10_30_103959) do
     t.date "achieved_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "balance_id"
+    t.integer "kudos_meter_id"
   end
 
   create_table "guidelines", id: :serial, force: :cascade do |t|
@@ -93,6 +69,14 @@ ActiveRecord::Schema.define(version: 2018_10_30_103959) do
     t.datetime "updated_at", null: false
     t.integer "team_id"
     t.index ["team_id"], name: "index_guidelines_on_team_id"
+  end
+
+  create_table "kudos_meters", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "team_id"
+    t.index ["team_id"], name: "index_kudos_meters_on_team_id"
   end
 
   create_table "oauth_access_grants", id: :serial, force: :cascade do |t|
@@ -145,7 +129,7 @@ ActiveRecord::Schema.define(version: 2018_10_30_103959) do
   create_table "posts", id: :serial, force: :cascade do |t|
     t.integer "sender_id"
     t.integer "activity_id"
-    t.integer "balance_id"
+    t.integer "kudos_meter_id"
     t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

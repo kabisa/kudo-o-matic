@@ -3,12 +3,14 @@
 RSpec.describe Post, type: :model do
   let(:user) { create(:user) }
   let(:user_2) { create(:user) }
+  let(:team) { create(:team) }
+  let(:kudos_meter) { team.active_kudos_meter }
 
   it "should have a valid factory" do
-    expect(build(:post, sender: user, receivers: [user_2])).to be_valid
+    expect(build(:post, sender: user, receivers: [user_2], team: team, kudos_meter: kudos_meter)).to be_valid
   end
 
-  let!(:post) { create(:post, sender: user, receivers: [user_2]) }
+  let!(:post) { create(:post, sender: user, receivers: [user_2], team: team, kudos_meter: kudos_meter) }
 
   describe "model destroy dependencies" do
     it "should destroy dependent PostReceivers" do
@@ -29,11 +31,15 @@ RSpec.describe Post, type: :model do
     it { expect(post).to validate_presence_of(:amount) }
     # ensure that the number of amount is between a specific numericality
     it { expect(post).to validate_numericality_of(:amount) }
+    # ensure that the team field is never empty
+    it { expect(post).to validate_presence_of(:team) }
+    # ensure that the team field is never empty
+    it { expect(post).to validate_presence_of(:kudos_meter) }
   end
 
   describe "model associations" do
-    # ensure that a post belongs to balance
-    it { expect(post).to belong_to(:balance) }
+    # ensure that a post belongs to kudos_meter
+    it { expect(post).to belong_to(:kudos_meter) }
     # ensure that a post belongs to team
     it { expect(post).to belong_to(:team) }
     # ensure that a post belongs to activity

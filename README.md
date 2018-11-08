@@ -260,28 +260,28 @@ Crontab expression: `55 10 * * 5` (GMT)
 **NOTE**: Only works if the Firebase Cloud Messaging environment variable is set.
 
 ## Entities
-### Balance
-A *Balance* is the base of the Kudos-o-Matic system. It groups *Goals* together and connects them to *Transactions*.  
+### KudosMeter
+A *KudosMeter* is the base of the Kudos-o-Matic system. It groups *Goals* together and connects them to *Transactions*.  
 
-A *Balance*:
+A *KudosMeter*:
 * Has a name
-* Is the current *Balance* or not
+* Is the current *KudosMeter* or not
 * Has *0..n* *Goals*
 * Has *0..n* *Transactions*
 
 ### Goal
-A *Goal* depends on a *Balance*. 
-To set and see a *Goal* on the Kudo Meter you need to associate the *Goal* with the current *Balance*.
+A *Goal* depends on a *KudosMeter*. 
+To set and see a *Goal* on the Kudo Meter you need to associate the *Goal* with the current *KudosMeter*.
 A *Goal* is a common reward for the organization (for example: paintball) that will be organized if the defined Kudo threshold is exceeded.
 
 A *Goal*:
 * Has a name
 * Has an amount of Kudos
 * Has a date of achievement
-* Belongs to *1* *Balance*
+* Belongs to *1* *KudosMeter*
 
 ### Transaction
-A *Transaction* depends on a *Balance*. 
+A *Transaction* depends on a *KudosMeter*. 
 A *User* can reward another *User* for a good deed by creating a Kudo *Transaction*.
 
 A *Transaction*:

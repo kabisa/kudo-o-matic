@@ -17,8 +17,8 @@ class PostAdder
       sender: current_user,
       receiver: receiver,
       team_id: current_team.id,
-      slack_kudos_left_on_creation: Goal.next(current_team).amount - Balance.current(current_team).amount - amount.to_i,
-      balance: Balance.current(current_team)
+      slack_kudos_left_on_creation: Goal.next(current_team).amount - KudosMeter.current(current_team).amount - amount.to_i,
+      kudos_meter: KudosMeter.current(current_team)
     )
 
     save post, current_team
@@ -43,8 +43,8 @@ class PostAdder
       activity: Activity.find_or_create_by(name: activity),
       sender: User.find_by_api_token(headers["Api-Token"]),
       receiver: receiver,
-      slack_kudos_left_on_creation: Goal.next(current_team).amount - Balance.current(current_team).amount - amount.to_i,
-      balance: Balance.current(current_team),
+      slack_kudos_left_on_creation: Goal.next(current_team).amount - KudosMeter.current(current_team).amount - amount.to_i,
+      kudos_meter: KudosMeter.current(current_team),
       team_id: current_team
     )
 
@@ -89,8 +89,8 @@ class PostAdder
       activity: Activity.find_or_create_by(name: activity),
       sender: sender,
       receiver: receiver,
-      slack_kudos_left_on_creation: Goal.next(team.id).amount - Balance.current(team.id).amount - amount.to_i,
-      balance: Balance.current(team.id),
+      slack_kudos_left_on_creation: Goal.next(team.id).amount - KudosMeter.current(team.id).amount - amount.to_i,
+      kudos_meter: KudosMeter.current(team.id),
       team_id: team.id
     )
 
@@ -113,8 +113,8 @@ class PostAdder
       sender: sender,
       receiver: receiver,
       slack_reaction_created_at: timestamp,
-      slack_kudos_left_on_creation: Goal.next(team.id).amount - Balance.current(team.id).amount - 1,
-      balance: Balance.current(team.id),
+      slack_kudos_left_on_creation: Goal.next(team.id).amount - KudosMeter.current(team.id).amount - 1,
+      kudos_meter: KudosMeter.current(team.id),
       team_id: team.id
     )
 
@@ -127,8 +127,8 @@ class PostAdder
       activity: Activity.find_or_create_by(name: "creating a new team!"),
       sender: team.users.find_by_company_user(true),
       receiver: current_user,
-      slack_kudos_left_on_creation: Goal.next(team.id).amount - Balance.current(team.id).amount - 1,
-      balance: Balance.current(team.id),
+      slack_kudos_left_on_creation: Goal.next(team.id).amount - KudosMeter.current(team.id).amount - 1,
+      kudos_meter: KudosMeter.current(team.id),
       team_id: team.id
     )
   end

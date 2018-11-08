@@ -33,8 +33,9 @@ class Team < ApplicationRecord
 
   has_many :memberships, class_name: "TeamMember", foreign_key: :team_id
   has_many :users, through: :memberships
-  has_many :balances
-  has_many :goals, through: :balances
+  has_one :active_kudos_meter, class_name: "KudosMeter"
+  has_many :kudos_meters
+  has_many :goals, through: :kudos_meters
   has_many :posts
   has_many :guidelines
   has_many :likes, class_name: "Vote"
@@ -76,7 +77,7 @@ class Team < ApplicationRecord
   end
 
   def current_goals
-    goals.where(balance: Balance.current(id))
+    goals.where(kudos_meter: Team.find(id).active_kudos_meter)
   end
 
   def real_users
@@ -86,10 +87,10 @@ class Team < ApplicationRecord
   private
 
     def setup_team
-      balance = Balance.create(name: "My first balance", current: true, team_id: id)
-      Goal.create(name: "First goal", amount: 500, balance_id: balance.id)
-      Goal.create(name: "Second goal", amount: 1000, balance_id: balance.id)
-      Goal.create(name: "Third goal", amount: 1500, balance_id: balance.id)
+      kudos_meter = KudosMeter.create(name: "My first kudos_meter", team_id: id)
+      Goal.create(name: "First goal", amount: 500, kudos_meter_id: kudos_meter.id)
+      Goal.create(name: "Second goal", amount: 1000, kudos_meter_id: kudos_meter.id)
+      Goal.create(name: "Third goal", amount: 1500, kudos_meter_id: kudos_meter.id)
 
       # Create company user
       user = User.new(name: name, company_user: true)

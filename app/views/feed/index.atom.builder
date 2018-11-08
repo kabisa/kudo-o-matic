@@ -8,7 +8,7 @@ atom_feed do |feed|
   end
 
   @posts.each do |post|
-    feed.entry(post, url: ENV['ROOT_URL'], updated: post.created_at) do |entry|
+    feed.entry(post, url: ENV["ROOT_URL"], updated: post.created_at) do |entry|
       entry.title("New post on #{request.host}")
       entry.summary("#{post.sender.name} awarded #{post.receiver_name_feed} #{number_to_kudos(post.amount)} for #{post.message}")
     end

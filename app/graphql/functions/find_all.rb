@@ -7,14 +7,16 @@ class Functions::FindAll < GraphQL::Function
     @model_class = model_class
   end
 
-  description "Retrieve all resources"
+  description "Retrieve all resources with optional arguments"
+
+  argument :orderBy, types.String, "Column to order the results by"
 
   def call(_obj, args, _ctx)
     result = @model_class.all
     return result if args.keys.empty?
 
-    result = result.order(args[:order]) if args[:order]
-    result = result.where("name LIKE?", args[:find_by_name]) if args[:find_by_name]
+    result = result.order(args[:orderBy]) if args[:orderBy]
+    result = result.where("name LIKE?", args[:findByName]) if args[:findByName]
 
     result
   end

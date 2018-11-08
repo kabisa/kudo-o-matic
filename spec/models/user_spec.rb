@@ -12,8 +12,10 @@ RSpec.describe User, type: :model do
 
   let(:user) { create(:user) }
   let(:user_2) { create(:user) }
-  let!(:post) { create(:post, sender: user, receivers: [user_2]) }
-  let!(:post_2) { create(:post, sender: user_2, receivers: [user]) }
+  let(:team) { create(:team) }
+  let(:kudos_meter) { team.active_kudos_meter }
+  let!(:post) { create(:post, sender: user, receivers: [user_2], team: team, kudos_meter: kudos_meter) }
+  let!(:post_2) { create(:post, sender: user_2, receivers: [user], team: team, kudos_meter: kudos_meter) }
 
   describe "model destroy dependencies" do
     it "should destroy dependent SentPosts" do

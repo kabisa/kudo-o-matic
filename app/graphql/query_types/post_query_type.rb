@@ -6,9 +6,7 @@ module QueryTypes
     description "The post query type"
 
     # find all records
-    connection :postsConnection, Connections::PostsConnection,  function: Functions::FindAll.new(Post) do
-      argument :orderBy, types.String, "Column to order the results by", as: :order, default_value: "created_at desc"
-    end
+    connection :postsConnection, Connections::PostsConnection,  function: Functions::FindAll.new(Post)
 
     # find post by id
     field :postById, Types::PostType, function: Functions::FindById.new(Post)

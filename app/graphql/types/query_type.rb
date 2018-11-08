@@ -6,11 +6,13 @@ module Types
     root_type.description = "The query root"
     root_type.interfaces = []
     root_type.fields = Util::FieldCombiner.combine([
-      QueryTypes::ViewerQueryType,
-      QueryTypes::UserQueryType,
+      QueryTypes::GoalQueryType,
+      QueryTypes::KudosMeterQueryType,
       QueryTypes::PostQueryType,
       QueryTypes::PostReceiverQueryType,
-      QueryTypes::TeamQueryType
+      QueryTypes::TeamQueryType,
+      QueryTypes::UserQueryType,
+      QueryTypes::ViewerQueryType
     ])
   end
 end

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Goal, type: :model do
-  # Skip the after_create callback in this spec, because we are working with specific balances and goals
+  # Skip the after_create callback in this spec, because we are working with specific kudos_meters and goals
   before do
     Team.skip_callback(:create, :after, :setup_team)
   end
@@ -15,13 +15,13 @@ RSpec.describe Goal, type: :model do
 
   context ".previous and .next goals" do
     let!(:team) { create(:team) }
-    let!(:old_balance)   { create :balance, name: "closed balance", current: false, team_id: team.id  }
-    let!(:current_balance)   { create :balance, name: "current balance", current: true, team_id: team.id  }
-    let!(:old_goal)   { create :goal, :achieved, achieved_on: 100.days.ago, amount: 600, balance: old_balance }
-    let!(:goal_one)   { create :goal, :achieved, achieved_on: 60.days.ago, amount: 100, balance: current_balance }
-    let!(:goal_two)   { create :goal, :achieved, achieved_on: 30.day.ago, amount: 200,  balance: current_balance }
-    let!(:goal_three) { create :goal, amount: 300,  balance: current_balance }
-    let!(:goal_four)  { create :goal, amount: 400,  balance: current_balance }
+    let!(:old_kudos_meter)   { create :kudos_meter, name: "closed kudos_meter", team: team  }
+    let!(:current_kudos_meter)   { create :kudos_meter, name: "current kudos_meter", team: team  }
+    let!(:old_goal)   { create :goal, :achieved, achieved_on: 100.days.ago, amount: 600, kudos_meter: old_kudos_meter }
+    let!(:goal_one)   { create :goal, :achieved, achieved_on: 60.days.ago, amount: 100, kudos_meter: current_kudos_meter }
+    let!(:goal_two)   { create :goal, :achieved, achieved_on: 30.day.ago, amount: 200,  kudos_meter: current_kudos_meter }
+    let!(:goal_three) { create :goal, amount: 300,  kudos_meter: current_kudos_meter }
+    let!(:goal_four)  { create :goal, amount: 400,  kudos_meter: current_kudos_meter }
 
     it "finds the previous goal" do
       expect(Goal.previous(team)).to eq(goal_two)

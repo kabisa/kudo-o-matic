@@ -10,7 +10,7 @@
 #  achieved_on :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  balance_id  :integer
+#  kudos_meter_id  :integer
 #
 
 class Goal < ApplicationRecord
@@ -19,18 +19,18 @@ class Goal < ApplicationRecord
   validates :name, presence: true
   validates :amount, presence: true
 
-  belongs_to :balance
+  belongs_to :kudos_meter
 
   def self.achieved(team)
-    where(balance: Balance.current(team)).where.not(achieved_on: nil).order("amount ASC")
+    where(kudos_meter: team.active_kudos_meter).where.not(achieved_on: nil).order("amount ASC")
   end
 
   def self.previous(team)
-    where(balance: Balance.current(team)).where.not(achieved_on: nil).order("amount DESC").first || Goal.new(name: "N/A", amount: 0)
+    where(kudos_meter: team.active_kudos_meter).where.not(achieved_on: nil).order("amount DESC").first || Goal.new(name: "N/A", amount: 0)
   end
 
   def self.next(team)
-    where(balance: Balance.current(team)).where(achieved_on: nil).order("amount ASC").first || Goal.create(name: "TBD", amount: Goal.previous(team).amount + 1000, balance: Balance.current(team), achieved_on: nil)
+    where(kudos_meter: team.active_kudos_meter).where(achieved_on: nil).order("amount ASC").first || Goal.create(name: "TBD", amount: Goal.previous(team).amount + 1000, kudos_meter: team.active_kudos_meter, achieved_on: nil)
   end
 
   def achieved?

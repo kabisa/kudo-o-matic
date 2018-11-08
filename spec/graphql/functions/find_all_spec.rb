@@ -2,6 +2,8 @@
 
 RSpec.describe Functions::FindAll do
   let(:users) { create_list(:user, 10) }
+  let(:team) { create(:team) }
+  let(:kudos_meter) { team.active_kudos_meter }
 
   context "existing records are provided" do
     it "returns all records with no argument given" do
@@ -11,8 +13,8 @@ RSpec.describe Functions::FindAll do
     end
 
     it "returns all records with argument given" do
-      create_list(:post, 10, sender: users.first, receivers: [users.second, users.last])
-      args = { order: "created_at desc" }
+      create_list(:post, 10, sender: users.first, receivers: [users.second, users.last], team: team, kudos_meter: kudos_meter)
+      args = { orderBy: "created_at desc" }
       query_result = Functions::FindAll.new(Post).call(nil, args, nil)
 
       expect(query_result).to eq(Post.all.order("created_at desc"))

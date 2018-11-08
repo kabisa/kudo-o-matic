@@ -16,8 +16,8 @@ describe "/feed", type: :request do
   context "given many posts" do
     let(:user) { create(:user) }
     let(:user_2) { create(:user) }
-    let(:balance) { create :balance, :current }
-    let!(:posts) { create_list(:post, 26, sender: user, receivers: [user, user_2], balance: balance, created_at: Date.yesterday.to_time, team: team) }
+    let(:kudos_meter) { create :kudos_meter, team: team }
+    let!(:posts) { create_list(:post, 26, sender: user, receivers: [user, user_2], kudos_meter: kudos_meter, created_at: Date.yesterday.to_time, team: team) }
 
     it "includes last 25 entries" do
       entries = parse_feed

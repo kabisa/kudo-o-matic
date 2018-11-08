@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Types::PostReceiverType do
-  # available type definer in our tests
+  # available type definer in tests
   types = GraphQL::Define::TypeDefiner.instance
 
   it "has an :id field of ID type" do

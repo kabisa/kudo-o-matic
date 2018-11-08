@@ -10,7 +10,7 @@
 #  achieved_on :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  balance_id  :integer
+#  kudos_meter_id  :integer
 #
 
 FactoryBot.define do

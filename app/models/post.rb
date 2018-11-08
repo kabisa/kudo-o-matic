@@ -8,7 +8,7 @@
 #  sender_id                    :integer
 #  receiver_id                  :integer
 #  activity_id                  :integer
-#  balance_id                   :integer
+#  kudos_meter_id                   :integer
 #  amount                       :integer
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
@@ -28,6 +28,8 @@ class Post < ApplicationRecord
   validates :receivers, presence: true
   validates :message, presence: true, length: { minimum: 4, maximum: 140 }
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000 }
+  validates :team, presence: true
+  validates :kudos_meter, presence: true
 
   # also creates a second image file with a maximum width and/or height of 800 pixels with its aspect ratio preserved
   # #TODO upgrade to Rails ActiveStorage
@@ -39,7 +41,7 @@ class Post < ApplicationRecord
   attr_accessor :image_delete_checkbox
 
   acts_as_votable
-  belongs_to :balance
+  belongs_to :kudos_meter
   belongs_to :team
   belongs_to :activity
 

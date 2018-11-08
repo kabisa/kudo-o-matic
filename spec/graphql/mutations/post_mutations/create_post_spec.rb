@@ -2,13 +2,17 @@
 
 RSpec.describe Mutations::PostMutation, ":createPost" do
   let(:users) { create_list(:user, 2) }
+  let!(:team) { create(:team) }
+  let(:kudos_meter) { team.active_kudos_meter }
 
   context "create valid post" do
     it "creates a new post" do
       args = {
-          receivers: [users.last.id],
           message: Faker::Lorem.sentence(3),
-          amount: rand(0..500)
+          amount: rand(0..500),
+          receiver_ids: [users.last.id],
+          team_id: team.id,
+          kudos_meter_id: kudos_meter.id
       }
       ctx = { current_user: users.first }
 
@@ -20,9 +24,11 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
 
   context "create invalid post" do
     let(:args) { {
-        receivers: [],
         message: "one",
-        amount: rand(0..500)
+        amount: rand(0..500),
+        receiver_ids: [],
+        team_id: team.id,
+        kudos_meter_id: kudos_meter.id
     } }
 
     it "raises an ExecutionError if post is not saved" do

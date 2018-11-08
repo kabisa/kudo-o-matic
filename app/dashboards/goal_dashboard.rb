@@ -16,7 +16,7 @@ class GoalDashboard < Administrate::BaseDashboard
       achieved_on: Field::DateTime,
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      balance: Field::BelongsTo
+      kudos_meter: Field::BelongsTo
   }
 
   # COLLECTION_ATTRIBUTES
@@ -28,7 +28,7 @@ class GoalDashboard < Administrate::BaseDashboard
       :id,
       :name,
       :amount,
-      :balance,
+      :kudos_meter,
       :achieved_on
   ]
 
@@ -38,7 +38,7 @@ class GoalDashboard < Administrate::BaseDashboard
       :id,
       :name,
       :amount,
-      :balance,
+      :kudos_meter,
       :achieved_on,
       :created_at,
       :updated_at
@@ -49,7 +49,7 @@ class GoalDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
       :name,
-      :balance,
+      :kudos_meter,
       :amount,
       :achieved_on
   ]

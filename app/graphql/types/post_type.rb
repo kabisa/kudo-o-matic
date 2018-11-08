@@ -15,5 +15,13 @@ module Types
     field :receivers, !types[Types::UserType] do
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(User).load_many(obj.receivers.ids) }
     end
+
+    field :team, !Types::TeamType do
+      resolve ->(obj, args, ctx) { Util::RecordLoader.for(Team).load(obj.team_id) }
+    end
+
+    field :kudosMeter, !Types::KudosMeterType do
+      resolve ->(obj, args, ctx) { Util::RecordLoader.for(KudosMeter).load(obj.kudos_meter_id) }
+    end
   end
 end

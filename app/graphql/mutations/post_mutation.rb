@@ -9,7 +9,8 @@ module Mutations
       description "Create a new post"
       argument :message, !types.String
       argument :amount, !types.Int
-      argument :receivers, !types[types.ID]
+      argument :receiver_ids, !types[types.ID]
+      argument :team_id, !types.ID
 
       # define return type
       type Types::PostType
@@ -23,14 +24,14 @@ module Mutations
           message: args[:message],
           amount: args[:amount],
           sender: ctx[:current_user],
-          receivers: User.find(args[:receivers])
+          receivers: User.find(args[:receiver_ids]),
+          team: Team.find(args[:team_id]),
+          kudos_meter: Team.find(args[:team_id]).active_kudos_meter
         )
 
-        if post.save
-          post
-        else
-          raise GraphQL::ExecutionError, post.errors.full_messages.join(", ")
-        end
+        return post if post.save
+
+        raise GraphQL::ExecutionError, post.errors.full_messages.join(', ')
       end
     end
   end

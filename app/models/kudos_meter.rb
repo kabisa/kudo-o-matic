@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: balances
+# Table name: kudos_meters
 #
 #  id         :integer          not null, primary key
 #  name       :string
@@ -12,31 +12,25 @@
 #  team_id    :integer
 #
 
-class Balance < ApplicationRecord
+class KudosMeter < ApplicationRecord
   validates :name, presence: true
 
   belongs_to :team
-  has_many :posts
-  has_many :goals
+  has_many :posts, dependent: :destroy
+  has_many :goals, dependent: :destroy
 
-  attr_accessor :make_balance_active_checkbox
-
-  scope :balances, -> { where(current: false).order("created_at DESC") }
-
-  def self.current(team)
-    where(current: true).where(team_id: team).order("created_at DESC").first
-  end
+  attr_accessor :make_kudos_meter_active_checkbox
 
   def last_post
     posts.order("created_at DESC").first
   end
 
-  def self.likes(balance)
-    Post.joins("INNER JOIN votes on votes.votable_id = posts.id and votable_type='Post'").where("balance_id=#{balance.id}").count
+  def self.likes(kudos_meter)
+    Post.joins("INNER JOIN votes on votes.votable_id = posts.id and votable_type='Post'").where("kudos_meter_id=#{kudos_meter.id}").count
   end
 
   def amount
-    Post.where(balance: self).sum(:amount) + Balance.likes(self)
+    Post.where(kudos_meter: self).sum(:amount) + KudosMeter.likes(self)
   end
 
   def self.time_left

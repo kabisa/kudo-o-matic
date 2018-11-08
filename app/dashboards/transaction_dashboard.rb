@@ -17,7 +17,7 @@ class PostDashboard < Administrate::BaseDashboard
       sender: Field::BelongsTo.with_options(class_name: "User"),
       receiver: Field::BelongsTo.with_options(class_name: "User"),
       activity: Field::BelongsTo,
-      balance: Field::BelongsTo
+      kudos_meter: Field::BelongsTo
   }
 
   # COLLECTION_ATTRIBUTES
@@ -31,7 +31,7 @@ class PostDashboard < Administrate::BaseDashboard
       :sender,
       :receiver,
       :activity,
-      :balance
+      :kudos_meter
   ]
 
   # SHOW_PAGE_ATTRIBUTES
@@ -42,7 +42,7 @@ class PostDashboard < Administrate::BaseDashboard
       :sender,
       :receiver,
       :activity,
-      :balance,
+      :kudos_meter,
       :created_at,
       :updated_at
   ]
@@ -55,7 +55,7 @@ class PostDashboard < Administrate::BaseDashboard
       :sender,
       :receiver,
       :activity,
-      :balance
+      :kudos_meter
   ]
 
   # Overwrite this method to customize how posts are displayed

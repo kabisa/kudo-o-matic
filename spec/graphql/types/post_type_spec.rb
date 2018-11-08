@@ -9,6 +9,16 @@ RSpec.describe Types::PostType do
     expect(subject).to have_field(:id).that_returns(!types.ID)
   end
 
+  it "has a :message field of String type" do
+    # Ensure the field is of String type
+    expect(subject).to have_field(:message).that_returns(!types.String)
+  end
+
+  it "has a :amount field of Integer type" do
+    # Ensure the field is of String type
+    expect(subject).to have_field(:amount).that_returns(!types.Int)
+  end
+
   it "has an :sender field of UserType" do
     # Ensure that the field id is of type ID
     expect(subject).to have_field(:sender).that_returns(!Types::UserType)
@@ -19,14 +29,8 @@ RSpec.describe Types::PostType do
     expect(subject).to have_field(:receivers).that_returns(!types[Types::UserType])
   end
 
-
-  it "has a :message field of String type" do
-    # Ensure the field is of String type
-    expect(subject).to have_field(:message).that_returns(!types.String)
-  end
-
-  it "has a :kudos field of Integer type" do
-    # Ensure the field is of String type
-    expect(subject).to have_field(:amount).that_returns(!types.Int)
+  it "has an :team field of TeamType" do
+    # Ensure that the field team is of type TeamType
+    expect(subject).to have_field(:team).that_returns(!Types::TeamType)
   end
 end

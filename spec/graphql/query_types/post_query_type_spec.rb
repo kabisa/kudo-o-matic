@@ -1,15 +1,21 @@
 # frozen_string_literal: true
 
 RSpec.describe QueryTypes::PostQueryType do
-  # avail type definer in our tests
+  # available type definer in tests
   types = GraphQL::Define::TypeDefiner.instance
 
-  let!(:users) { create_list(:user, 3) }
-  let!(:posts) { create_list(:post, 3, sender: users.first, receivers: [users.second, users.last]) }
+  let(:users) { create_list(:user, 3) }
+  let(:team) { create(:team) }
+  let(:kudos_meter) { team.active_kudos_meter }
+  let!(:posts) { create_list(:post, 3, sender: users.first, receivers: [users.second, users.last], team: team, kudos_meter: kudos_meter) }
 
   describe "querying all posts" do
-    it "has :postsConnection field that returns a Post type" do
+    it "has a :postsConnection field that returns a PostConnection connection" do
       expect(subject).to have_field(:postsConnection).that_returns(Connections::PostsConnection)
+    end
+
+    it "accepts a orderBy argument, of type String" do
+      expect(subject.fields["postsConnection"]).to accept_arguments(orderBy: types.String)
     end
 
     it "returns all created posts" do
@@ -22,10 +28,6 @@ RSpec.describe QueryTypes::PostQueryType do
 
       expect(query_result.count).to eq(posts.count)
     end
-
-    it "accepts a orderBy argument, of type String" do
-      expect(subject.fields["postsConnection"]).to accept_arguments(orderBy: types.String)
-    end
   end
 
   describe "querying a specific post by id" do
@@ -33,10 +35,14 @@ RSpec.describe QueryTypes::PostQueryType do
       expect(subject).to have_field(:postById).that_returns(Types::PostType)
     end
 
+    it "accepts a id argument, of type !ID" do
+      expect(subject.fields["postById"]).to accept_arguments(id: !types.ID)
+    end
+
     it "returns the queried post" do
       id = posts.first.id
       args = { id: id }
-      query_result = Functions::FindById.new(Post).call(nil, args, nil)
+      query_result = subject.fields["postById"].resolve(nil, args, nil)
       expect(query_result).to eq(posts.first)
     end
   end

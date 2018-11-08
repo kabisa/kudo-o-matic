@@ -5,11 +5,17 @@ RSpec.describe QueryTypes::PostReceiverQueryType do
   types = GraphQL::Define::TypeDefiner.instance
 
   let!(:users) { create_list(:user, 3) }
-  let!(:posts) { create_list(:post, 3, sender: users.first, receivers: [users.second, users.last]) }
+  let(:team) { create(:team) }
+  let(:kudos_meter) { team.active_kudos_meter }
+  let!(:posts) { create_list(:post, 3, sender: users.first, receivers: [users.second, users.last], team: team, kudos_meter: kudos_meter) }
 
   describe "querying all posts receivers" do
     it "has a :posts_receivers that returns a PostReceiver type" do
       expect(subject).to have_field(:postReceivers).that_returns(types[Types::PostReceiverType])
+    end
+
+    it 'accepts a orderBy argument, of type String' do
+      expect(subject.fields["postReceivers"]).to accept_arguments(orderBy: types.String)
     end
 
     it "returns all our created posts" do

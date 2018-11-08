@@ -10,13 +10,13 @@
 #  achieved_on :date
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  balance_id  :integer
+#  kudos_meter_id  :integer
 #
 
 FactoryBot.define do
   factory :goal do
-    name { "Drinks" }
-    amount { 100 }
+    name { Faker::Lorem.word }
+    amount { rand(1..500) }
     achieved_on { nil }
 
     trait :achieved do

@@ -14,7 +14,6 @@ gem "chronic", "~> 0.10.2"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
 gem "devise", "~> 4.3"
 gem "doorkeeper", "~> 4.3"
-gem "delayed_job_active_record", "~> 4.1.1"
 gem "delayed_paperclip", "~> 3.0.1"
 gem "daemons"
 gem "draper", "~> 3.0", ">= 3.0.1"
@@ -83,6 +82,11 @@ group :development do
   gem "spring-watcher-listen", "~> 2.0.0"
   # Pry as rails console
   gem "pry-rails"
+end
+
+group :development, :staging, :test do
+  # GraphQL UI similar to GraphiQL but better
+  gem "graphql_playground-rails", "~> 2.0", ">= 2.0.1"
 end
 
 group :production do
