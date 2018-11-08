@@ -1,9 +1,12 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=867ed5bd868c75536a7557060ce70eb943b6edf75e8cd9640582891e11fbe6ee
 language: ruby
 sudo: false
 cache: bundler
 
 rbenv:
-  - 2.3.7
+  - 2.5.1
 
 services:
   - postgresql
@@ -17,6 +20,14 @@ before_install:
   - cp env.example .env
   - psql -c 'create database kudo_o_matic_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 jobs:
   include:

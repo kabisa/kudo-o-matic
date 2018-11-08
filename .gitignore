@@ -24,3 +24,5 @@ config/database.yml
 !/.gitignore
 
 /public/system/*
+
+coverage
