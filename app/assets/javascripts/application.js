@@ -11,24 +11,6 @@
 // about supported directives.
 //
 
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui
-
-//= require autocomplete/jquery.ui.autocomplete.scroll.min
-//= require throttle-debounce/jquery.ba-throttle-debounce.min
-
-//= require emoji/emoji.js
-//= require emoji/jquery.textcomplete
-
-//= require popper/popper
-//= require popper/tooltip
-
-//= require clipboard.min
-
-//= require profile/profile-menu.jquery
-//= require transaction/transaction-dropdown.jquery
-
 //= require later
 //= require_tree .
 
