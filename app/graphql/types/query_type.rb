@@ -7,6 +7,7 @@ module Types
     root_type.interfaces = []
     root_type.fields = Util::FieldCombiner.combine([
       QueryTypes::GoalQueryType,
+      QueryTypes::GuidelineQueryType,
       QueryTypes::KudosMeterQueryType,
       QueryTypes::PostQueryType,
       QueryTypes::PostReceiverQueryType,

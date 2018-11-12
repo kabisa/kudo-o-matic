@@ -9,11 +9,11 @@ RSpec.describe QueryTypes::GoalQueryType do
   let(:goals) { team.current_goals }
 
   describe "querying all goals" do
-    it "has a :goals field that returns a GoalsType type" do
+    it "has a :goals field that returns an array of GoalsType types" do
       expect(subject).to have_field(:goals).that_returns(types[Types::GoalType])
     end
 
-    it "accepts a orderBy argument, of type String" do
+    it "accepts a orderBy argument of type String" do
       expect(subject.fields["goals"]).to accept_arguments(orderBy: types.String)
     end
 

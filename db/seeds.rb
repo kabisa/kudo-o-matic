@@ -25,6 +25,14 @@ team.add_member(admin, true)
   team.add_member(user)
 end
 
+20.times do
+  kudos = [1, 5, 10, 20, 50]
+  Guideline.create(
+    name: Faker::Lorem.sentence(4),
+    kudos: kudos.sample,
+    team: team
+  )
+end
 
 
 100.times do
