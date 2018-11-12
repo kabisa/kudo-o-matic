@@ -3,7 +3,6 @@
 require "database_cleaner"
 
 DatabaseCleaner.clean_with(:truncation)
-DatabaseCleaner.allow_remote_database_url = true
 
 team = Team.create(name: Faker::Company.name)
 
