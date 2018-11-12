@@ -45,6 +45,7 @@ gem "rails_autolink", "~> 1.1.6"
 gem "railties", "~> 5.2", ">= 5.2.1"
 gem "rubocop", "~> 0.60.0", require: false
 gem "rubyzip", "~> 1.2.2", require: "zip"
+gem "sentry-raven"
 gem "settingslogic", "~> 2.0", ">= 2.0.9"
 gem "scss_lint", "~> 0.54", require: false
 gem "slack-ruby-client", "~> 0.11.0"
@@ -53,10 +54,10 @@ gem "uglifier", "~> 3.2"
 group :development, :staging, :test do
   # GraphQL UI similar to GraphiQL but better
   gem "graphql_playground-rails", "~> 2.0", ">= 2.0.1"
+  gem "database_cleaner", "~> 1.7"
 end
 
 group :development, :test do
-  gem "database_cleaner", "~> 1.7"
   gem "dotenv-rails", "~> 2.5"
   gem "factory_bot_rails", "~> 4.8", ">= 4.8.2"
   gem "faker", "~> 1.9", ">= 1.9.1"
