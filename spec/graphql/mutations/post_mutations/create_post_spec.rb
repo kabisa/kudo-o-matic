@@ -8,28 +8,30 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
   context "create valid post" do
     it "creates a new post" do
       args = {
-          message: Faker::Lorem.sentence(3),
-          amount: rand(0..500),
-          receiver_ids: [users.last.id],
-          team_id: team.id,
-          kudos_meter_id: kudos_meter.id
+        message: Faker::Lorem.sentence(3),
+        amount: rand(0..500),
+        receiver_ids: [users.last.id],
+        team_id: team.id,
+        kudos_meter_id: kudos_meter.id
       }
       ctx = { current_user: users.first }
 
-      expect {
+      expect do
         subject.fields["createPost"].resolve(nil, args, ctx)
-      }.to change { Post.count }.by(1)
+      end.to change { Post.count }.by(1)
     end
   end
 
   context "create invalid post" do
-    let(:args) { {
+    let(:args) {
+      {
         message: "one",
         amount: rand(0..500),
         receiver_ids: [],
         team_id: team.id,
         kudos_meter_id: kudos_meter.id
-    } }
+      }
+    }
 
     it "raises an ExecutionError if post is not saved" do
       ctx = { current_user: users.first }

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-ruby "2.5.1"
+ruby '2.5.1'
 
 gem "activerecord-typedstore", "~> 1.1.1"
 gem "actionpack", "~> 5.2", ">= 5.2.1"
@@ -66,30 +66,25 @@ group :development, :test do
 end
 
 group :test do
-  gem "rubocop-rspec", "~> 1.30"
-  gem "rspec-rails", "~> 3.8"
-  gem "rspec-graphql_matchers", "~> 0.7.1"
-  gem "shoulda-matchers", "~> 3.1", ">= 3.1.2"
-  gem "simplecov", "~> 0.16.1", require: false
-  gem "timecop", "~> 0.9.1"
+  gem 'rubocop-rspec', '~> 1.30'
+  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-graphql_matchers', '~> 0.7.1'
+  gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
+  gem 'simplecov', '~> 0.16.1', require: false
+  gem 'timecop', '~> 0.9.1'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem "web-console", ">= 3.3.0"
-  gem "listen", "~> 3.0.5"
+  gem 'web-console', '>= 3.3.0'
+  gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem "spring"
-  gem "spring-watcher-listen", "~> 2.0.0"
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
   # Pry as rails console
-  gem "pry-rails"
-end
-
-group :development, :staging, :test do
-  # GraphQL UI similar to GraphiQL but better
-  gem "graphql_playground-rails", "~> 2.0", ">= 2.0.1"
+  gem 'pry-rails'
 end
 
 group :production do
-  gem "rails_12factor", "~> 0.0.3"
+  gem 'rails_12factor', '~> 0.0.3'
 end

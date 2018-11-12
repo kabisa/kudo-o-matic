@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Types::AuthProviderSignupInput do
+RSpec.describe Types::AuthProviderSigninInput do
   # available type definer in our tests
   types = GraphQL::Define::TypeDefiner.instance
 

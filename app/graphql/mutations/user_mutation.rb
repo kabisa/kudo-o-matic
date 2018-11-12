@@ -54,5 +54,25 @@ module Mutations
         )
       end
     end
+
+    field :resetPassword, Types::UserType do
+      description "Reset a user's password"
+
+      argument :credentials, !Types::AuthProviderEmailInput
+
+      # define return type
+      type Types::UserType
+
+      resolve ->(_obj, args, _ctx) do
+        input = args[:credentials]
+        return unless input
+
+        user = User.find_by(email: input[:email])
+        return unless user
+
+        user.send_reset_password_instructions
+        user
+      end
+    end
   end
 end

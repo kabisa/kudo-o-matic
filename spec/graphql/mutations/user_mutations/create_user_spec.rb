@@ -4,12 +4,12 @@ RSpec.describe Mutations::UserMutation, ":createUser" do
   context "create valid user" do
     name = Faker::Name.first_name
     args = {
-        credentials: {
-            name: name,
-            email: "#{name.downcase}@example.com",
-            password: "password",
-            password_confirmation: "password"
-        }
+      credentials: {
+        name: name,
+        email: "#{name.downcase}@example.com",
+        password: "password",
+        password_confirmation: "password"
+      }
     }
 
     it "creates a new user" do
