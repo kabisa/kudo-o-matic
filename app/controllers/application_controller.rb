@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  before_action :set_raven_context
   around_action :catch_not_found
   helper_method :current_team
 
@@ -25,15 +26,20 @@ class ApplicationController < ActionController::Base
 
   protected
 
-    def team_by_slug
-      Team.friendly.find(params[:team]) if params[:team]
-    end
+  def team_by_slug
+    Team.friendly.find(params[:team]) if params[:team]
+  end
 
   private
 
-    def catch_not_found
-      yield
-    rescue ActiveRecord::RecordNotFound
-      raise ActiveRecord::RecordNotFound
-    end
+  def set_raven_context
+    Raven.user_context(id: session[:current_user_id]) # or anything else in session
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+  end
+
+  def catch_not_found
+    yield
+  rescue ActiveRecord::RecordNotFound
+    raise ActiveRecord::RecordNotFound
+  end
 end
