@@ -26,7 +26,7 @@ module Types
 
     field :activeKudosMeter, !Types::KudosMeterType do
       description "The active KudosMeter that belongs to the team"
-      resolve ->(obj, args, ctx) { Util::RecordLoader.for(KudosMeter).load(obj.kudos_meter_ids) }
+      resolve ->(obj, args, ctx) { Util::RecordLoader.for(KudosMeter).load(obj.active_kudos_meter.id) }
     end
 
     field :goals, !types[Types::GoalType] do
