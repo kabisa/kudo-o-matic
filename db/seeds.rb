@@ -34,15 +34,14 @@ end
   )
 end
 
-
-100.times do
+50.times do
   sender = User.offset(rand(User.count)).first
 
   Post.create(
     sender: sender,
     receivers: User.limit(rand(1..5)).order("RANDOM()").where.not(id: sender.id),
     message: Faker::Lorem.sentence(3),
-    amount: rand(1..50),
+    amount: rand(1..10),
     kudos_meter: team.active_kudos_meter,
     team: team
   )
