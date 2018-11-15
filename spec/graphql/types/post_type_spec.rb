@@ -33,4 +33,14 @@ RSpec.describe Types::PostType do
     # Ensure that the field team is of type TeamType
     expect(subject).to have_field(:team).that_returns(!Types::TeamType)
   end
+
+  it "has an :kudosMeter field of KudosMeterType" do
+    # Ensure that the field kudosMeter is of type KudosMeterType
+    expect(subject).to have_field(:kudosMeter).that_returns(!Types::KudosMeterType)
+  end
+
+  it "has an :votes field of VoteType" do
+    # Ensure that the field votes is of type VoteType
+    expect(subject).to have_field(:votes).that_returns(!types[Types::VoteType])
+  end
 end

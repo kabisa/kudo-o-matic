@@ -23,5 +23,9 @@ module Types
     field :kudosMeter, !Types::KudosMeterType do
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(KudosMeter).load(obj.kudos_meter_id) }
     end
+
+    field :votes, !types[Types::VoteType] do
+      resolve ->(obj, args, ctx) { Util::RecordLoader.for(Vote).load_many(obj.votes.ids) }
+    end
   end
 end
