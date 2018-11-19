@@ -17,6 +17,7 @@ class Functions::FindAll < GraphQL::Function
 
     result = result.order(args[:orderBy]) if args[:orderBy]
     result = result.where("name LIKE?", args[:findByName]) if args[:findByName]
+    result = result.where(team_id: args[:findByTeamId]) if args[:findByTeamId]
 
     result
   end

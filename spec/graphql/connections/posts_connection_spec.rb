@@ -17,9 +17,11 @@ RSpec.describe Connections::PostsConnection do
   end
 
   it "returns the number of nodes" do
+    team_id = team.id # somehow the query sees team.id as a String
+
     response = client.query do
       query do
-        postsConnection do
+        postsConnection(findByTeamId: team_id) do
           totalCount
         end
       end

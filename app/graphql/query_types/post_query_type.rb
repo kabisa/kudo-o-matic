@@ -6,7 +6,9 @@ module QueryTypes
     description "The post query type"
 
     # find all records
-    connection :postsConnection, Connections::PostsConnection,  function: Functions::FindAll.new(Post)
+    connection :postsConnection, Connections::PostsConnection,  function: Functions::FindAll.new(Post) do
+      argument :findByTeamId, !types.ID, 'Find posts that belong to a team'
+    end
 
     # find post by id
     field :postById, Types::PostType, function: Functions::FindById.new(Post)

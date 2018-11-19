@@ -18,8 +18,12 @@ RSpec.describe QueryTypes::PostQueryType do
       expect(subject.fields["postsConnection"]).to accept_arguments(orderBy: types.String)
     end
 
+    it "accepts a findByTeamID argument, of type ID" do
+      expect(subject.fields["postsConnection"]).to accept_arguments(findByTeamId: !types.ID)
+    end
+
     it "returns all created posts" do
-      args = { order_by: "created_at desc" }
+      args = { findByTeamId: team.id }
       query_result = subject.fields["postsConnection"].resolve(nil, args, nil)
 
       posts.each do |post|
