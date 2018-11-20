@@ -38,5 +38,10 @@ module Types
       description "All goals that belong to the team and are part of the active KudosMeter"
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(Goal).load_many(obj.active_kudos_meter.goal_ids) }
     end
+
+    field :guidelines, !types[Types::GuidelineType] do
+      description "All guidelines that belong to the team"
+      resolve ->(obj, args, ctx) { Util::RecordLoader.for(Guideline).load_many(obj.guideline_ids) }
+    end
   end
 end

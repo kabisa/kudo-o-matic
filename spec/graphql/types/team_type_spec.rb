@@ -44,8 +44,12 @@ RSpec.describe Types::TeamType do
     expect(subject).to have_field(:kudosMeters).that_returns(!types[Types::KudosMeterType])
   end
 
-  it "has a :activeGoals field of an array GoalType! type" do
+  it "has an :activeGoals field of an array GoalType! type" do
     # Ensure the field is of KudosMeterType type
     expect(subject).to have_field(:activeGoals).that_returns(!types[Types::GoalType])
+  end
+
+  it "has a :guidelines field of an array GuidelineType! type" do
+    expect(subject).to have_field(:guidelines).that_returns(!types[Types::GuidelineType])
   end
 end
