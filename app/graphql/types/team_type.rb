@@ -39,6 +39,12 @@ module Types
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(Goal).load_many(obj.active_kudos_meter.goal_ids) }
     end
 
+    field :teamInvites, !types[Types::TeamInviteType], 'The invites send by the team' do
+      resolve ->(obj, args, ctx) do
+        Util::RecordLoader.for(TeamInvite).load_many(TeamInvite.where(team: obj).ids)
+      end
+    end
+
     field :guidelines, !types[Types::GuidelineType] do
       description "All guidelines that belong to the team"
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(Guideline).load_many(obj.guideline_ids) }

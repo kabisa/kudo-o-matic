@@ -45,3 +45,7 @@ end
     team: team
   )
 end
+
+5.times do
+  TeamInvite.create(email: Faker::Internet.unique.email, team: team)
+end

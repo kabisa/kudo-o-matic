@@ -27,4 +27,8 @@ RSpec.describe Types::UserType do
     # Ensure the field is of an array of !PostType type
     expect(subject).to have_field(:receivedPosts).that_returns(!types[Types::PostType])
   end
+
+  it "has a :teamInvites field of an array TeamInviteType" do
+    expect(subject).to have_field(:teamInvites).that_returns(!types[Types::TeamInviteType])
+  end
 end

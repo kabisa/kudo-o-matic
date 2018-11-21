@@ -22,16 +22,17 @@ class TeamInvite < ApplicationRecord
   end
 
   def accept
-    TeamInvite.post do
+    transaction do
       update_attribute(:accepted_at, Time.now)
     end
+    # touch(:accepted_at)
     user = User.find_by_email(email)
     TeamMember.create(team: team, user: user, admin: false)
   end
 
   def decline
-    TeamInvite.post do
-      update_attribute(:declined_at, Time.now)
+    transaction do
+      touch(:declined_at)
     end
   end
 

@@ -49,6 +49,10 @@ RSpec.describe Types::TeamType do
     expect(subject).to have_field(:activeGoals).that_returns(!types[Types::GoalType])
   end
 
+  it "has a :teamInvites field of an array TeamInviteType" do
+    expect(subject).to have_field(:teamInvites).that_returns(!types[Types::TeamInviteType])
+  end
+
   it "has a :guidelines field of an array GuidelineType! type" do
     expect(subject).to have_field(:guidelines).that_returns(!types[Types::GuidelineType])
   end
