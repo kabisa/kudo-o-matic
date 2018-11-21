@@ -55,13 +55,13 @@ module Mutations
       end
     end
 
-    field :resetPassword, Types::UserType do
+    field :forgotPassword, Types::UserType do
       description "Reset a user's password"
 
       argument :credentials, !Types::AuthProviderEmailInput
 
       # define return type
-      type Types::UserType
+      type Types::AuthenticateEmailType
 
       resolve ->(_obj, args, _ctx) do
         input = args[:credentials]
@@ -72,6 +72,30 @@ module Mutations
 
         user.send_reset_password_instructions
         user
+      end
+    end
+
+    field :newPassword, Types::UserType do
+      description "Create new password if user forgot old one"
+
+      argument :reset_password_token, !types.String
+      argument :password, !types.String
+      argument :password_confirmation, !types.String
+
+      # define return type
+      type Types::UserType
+
+      resolve ->(_obj, args, _ctx) do
+        break unless args[:reset_password_token]
+
+        user = User.reset_password_by_token(
+          reset_password_token: args[:reset_password_token],
+          password: args[:password],
+          password_confirmation: args[:password_confirmation]
+        )
+
+        # reset_password_by_token returns a new user if no user is found
+        user.id.nil? ? break : user
       end
     end
   end
