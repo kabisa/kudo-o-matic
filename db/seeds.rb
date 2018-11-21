@@ -7,15 +7,14 @@ DatabaseCleaner.clean_with(:truncation)
 team = Team.create(name: Faker::Company.name)
 
 admin = User.create(
-  name: "John Doe",
+  name: "Admin Doe",
   email: "admin@example.com",
   password: "password",
   password_confirmation: "password"
 )
 team.add_member(admin, true)
 
-15.times do
-  name = Faker::Name.unique.first_name
+['Kabisa', 'Ariejan', 'Egon', 'Stefan', 'Ralph', 'Marijn', 'Guido', 'Managed Services'].each do |name|
   user = User.create(
     name: name,
     email: "#{name}@example.com",
