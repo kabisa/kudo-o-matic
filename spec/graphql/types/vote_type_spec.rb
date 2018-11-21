@@ -9,24 +9,14 @@ RSpec.describe Types::VoteType do
     expect(subject).to have_field(:id).that_returns(!types.ID)
   end
 
-  it "has a :votable_type field of !String type" do
+  it "has a :votedOn field of !PostType type" do
     # Ensure the field is of String type
-    expect(subject).to have_field(:votable_type).that_returns(!types.String)
+    expect(subject).to have_field(:votedOn).that_returns(!Types::PostType)
   end
 
-  it "has a :votable_id field of !ID type" do
+  it "has a :voter field of !UserType type" do
     # Ensure the field is of !ID type
-    expect(subject).to have_field(:votable_id).that_returns(!types.ID)
-  end
-
-  it "has a :voter_type field of !String type" do
-    # Ensure the field is of !String type
-    expect(subject).to have_field(:voter_type).that_returns(!types.String)
-  end
-
-  it "has a :voter_id field of !ID type" do
-    # Ensure the field is of !ID type
-    expect(subject).to have_field(:voter_id).that_returns(!types.ID)
+    expect(subject).to have_field(:voter).that_returns(!Types::UserType)
   end
 
   it "has a :vote_weight field of !Int type" do
