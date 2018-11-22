@@ -31,4 +31,8 @@ RSpec.describe Types::UserType do
   it "has a :teamInvites field of an array TeamInviteType" do
     expect(subject).to have_field(:teamInvites).that_returns(!types[Types::TeamInviteType])
   end
+
+  it "has a :teams field of an array TeamType" do
+    expect(subject).to have_field(:teams).that_returns(!types[Types::TeamType])
+  end
 end
