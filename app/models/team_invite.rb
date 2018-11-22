@@ -27,7 +27,7 @@ class TeamInvite < ApplicationRecord
     end
     # touch(:accepted_at)
     user = User.find_by_email(email)
-    TeamMember.create(team: team, user: user, admin: false)
+    TeamMember.create(team: team, user: user, role: 'member')
   end
 
   def decline

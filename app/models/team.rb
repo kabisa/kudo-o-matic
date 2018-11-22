@@ -54,8 +54,8 @@ class Team < ApplicationRecord
     "#{slug}-#{sequence}"
   end
 
-  def add_member(user, admin = false)
-    TeamMember.create(user: user, team: self, admin: admin)
+  def add_member(user, role = 'member')
+    TeamMember.create(user: user, team: self, role: role)
   end
 
   def remove_member(user)

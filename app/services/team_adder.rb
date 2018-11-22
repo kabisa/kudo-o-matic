@@ -17,7 +17,7 @@ class TeamAdder
 
     def self.save(team, current_user)
       if team.save!
-        team.add_member(current_user, true)
+        team.add_member(current_user, 'admin')
         PostAdder.create_for_new_team(team, current_user)
       end
 

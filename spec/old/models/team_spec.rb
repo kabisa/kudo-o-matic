@@ -8,7 +8,7 @@ RSpec.describe Team, type: :model do
     let(:user) { create :user }
 
     it "adds and removes a member" do
-      team.add_member(user, true)
+      team.add_member(user, 'admin')
       expect(user.memberships.any?).to be true
 
       team.remove_member user

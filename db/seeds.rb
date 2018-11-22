@@ -12,7 +12,7 @@ admin = User.create(
   password: "password",
   password_confirmation: "password"
 )
-team.add_member(admin, true)
+team.add_member(admin, 'admin')
 
 ['Kabisa', 'Ariejan', 'Egon', 'Stefan', 'Ralph', 'Marijn', 'Guido', 'Managed Services'].each do |name|
   user = User.create(

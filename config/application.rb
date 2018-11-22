@@ -24,6 +24,9 @@ module KudoOMatic
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # Rails doesn't know about native enum column type
+    config.active_record.schema_format = :sql
+
     # CORS
     config.middleware.insert_before 0, Rack::Cors do
       allow do
