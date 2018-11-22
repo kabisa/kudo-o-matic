@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :post do
-    message { Faker::Lorem.sentence(3) }
+    message { "the message why I give kudos" }
     amount { rand(1..500) }
   end
 end

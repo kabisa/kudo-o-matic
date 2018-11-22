@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :team_invite do
     email { Faker::Internet.unique.email }
+    team {}
   end
 
   trait :is_accepted do

@@ -13,27 +13,27 @@
 #
 
 class TeamInvite < ApplicationRecord
+  validates :email, presence: true
+  validates :team, presence: true
+
   belongs_to :team
 
-  after_create :send_invite
+  after_create :duplicate?
 
   def complete?
-    accepted_at || declined_at
+    accepted_at || declined_at ? true : false
   end
 
   def accept
     transaction do
-      update_attribute(:accepted_at, Time.now)
+      touch(:accepted_at)
+      user = User.find_by_email(email)
+      TeamMember.create(team: team, user: user, role: 'member')
     end
-    # touch(:accepted_at)
-    user = User.find_by_email(email)
-    TeamMember.create(team: team, user: user, role: 'member')
   end
 
   def decline
-    transaction do
-      touch(:declined_at)
-    end
+    touch(:declined_at)
   end
 
   def self.open
@@ -42,7 +42,14 @@ class TeamInvite < ApplicationRecord
 
   private
 
-    def send_invite
-      UserMailer.invite_email(self.email, self.team).deliver_now
-    end
+  def duplicate?
+    invite_count = TeamInvite.where(email: email, team: team).count
+    raise "There is already an invite send to #{email}" if invite_count > 1
+
+    send_invite
+  end
+
+  def send_invite
+    UserMailer.invite_email(email, team).deliver_now
+  end
 end

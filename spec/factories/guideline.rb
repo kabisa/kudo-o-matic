@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :guideline do
-    name { Faker::Lorem.sentence(4) }
+    name { "The Guideline name" }
     kudos { [1, 5, 10, 20, 50].sample }
   end
 end

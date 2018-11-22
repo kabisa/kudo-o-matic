@@ -15,8 +15,8 @@
 
 FactoryBot.define do
   factory :goal do
-    name { Faker::Lorem.word }
-    amount { rand(1..500) }
+    name { "The Goal name" }
+    amount { 500 }
     achieved_on { nil }
 
     trait :achieved do

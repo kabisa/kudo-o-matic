@@ -44,6 +44,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
 
+  after_create :send_welcome_email
   after_update :ensure_an_admin_remains
 
   acts_as_voter
@@ -78,44 +79,17 @@ class User < ApplicationRecord
     p.boolean :summary_mail, default: true
   end
 
-  def self.from_omniauth(access_token)
-    data = access_token.info
-
-    email_address = data["email"]
-    email_domain = extract_email_domain(email_address)
-    return if email_domain_not_allowed?(email_domain)
-
-    existing_user = User.exists? uid: access_token.uid
-
-    user = User.where(uid: access_token.uid).first_or_create(
-      provider: access_token.provider,
-      uid: access_token.uid,
-      name: data["name"],
-      email: email_address,
-      avatar_url: data["image"]
-    )
-
-    UserMailer.new_user(user) unless existing_user
-
-    user
-  end
-
-  def self.find_by_term(term)
-    User.order(:name).where("lower(name) like ?", "#{term}%".downcase)
-        .where(deactivated_at: nil).where(restricted: false)
-  end
-
   def member_of?(team)
     memberships.find_by_team_id(team.id).present?
   end
 
   def member_since(team)
-    memberships.find_by_team_id(team.id).created_at
+    memberships.where(team: team).first&.created_at
   end
 
   def admin_of?(team)
     @admin_rights = Hash.new do |h, key|
-      h[key] = memberships.find_by_team_id(key)&.admin?
+      h[key] = memberships.find_by_team_id(key).role == 'admin'
     end
     @admin_rights[team.id]
     # TODO: when we implement the functionality to give/revoke admin rights, we need to make sure to invalidate @admin_rights[team.id]
@@ -123,10 +97,6 @@ class User < ApplicationRecord
 
   def open_invites
     TeamInvite.where(email: self.email, accepted_at: nil, declined_at: nil)
-  end
-
-  def all_posts
-    Post.all_for_user(self)
   end
 
   def first_name
@@ -138,8 +108,8 @@ class User < ApplicationRecord
   end
 
   def deactivate
-    post do
-      update(deactivated_at: DateTime.now, api_token: nil)
+    transaction do
+      touch(:deactivated_at)
       fcm_tokens.destroy_all
       ensure_an_admin_remains
     end
@@ -157,54 +127,21 @@ class User < ApplicationRecord
     teams.length > 1
   end
 
-  def slack_id_for_team(team)
-    team.membership_of(self).slack_id
-  end
-
-  def slack_name_for_team(team)
-    team.membership_of(self).slack_name
-  end
-
-  def slack_username_for_team(team)
-    team.membership_of(self).slack_username
-  end
-
   # overridden Devise method that checks the soft delete timestamp on authentication
   def active_for_authentication?
     super && !deactivated_at
   end
 
-  def to_s
-    name
-  end
-
-  def to_profile_json
-    Jbuilder.new do |user|
-      user.name name
-      user.avatar_url avatar_url
-    end
-  end
-
   private
 
-    def ensure_an_admin_remains
-      if User.where(admin: true, deactivated_at: nil).count < 1
-        raise "Last administrator can't be removed from the system"
-      end
+  def ensure_an_admin_remains
+    if User.where(admin: true, deactivated_at: nil).count < 1
+      raise "Last administrator can't be removed from the system"
     end
+  end
 
-    def self.extract_email_domain(email_address)
-      email_address.split("@")[1]
-    end
-
-    def self.email_domain_not_allowed?(email_domain)
-      email_domain != ENV.fetch("DEVISE_DOMAIN", "gmail.com")
-    end
-
-    def self.generate_unique_api_token
-      api_token = SecureRandom.urlsafe_base64
-      # recursively call this function to ensure that a unique api token is generated
-      generate_unique_api_token if User.exists?(api_token: api_token)
-      api_token
-    end
+  def send_welcome_email
+    user = User.find(id)
+    UserMailer.welcome_email(user).deliver_now
+  end
 end

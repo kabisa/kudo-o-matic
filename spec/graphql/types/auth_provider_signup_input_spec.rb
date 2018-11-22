@@ -5,22 +5,18 @@ RSpec.describe Types::AuthProviderSignupInput do
   types = GraphQL::Define::TypeDefiner.instance
 
   it "has a :name input field of String type" do
-    # Ensure that the field name is of type String
     expect(subject).to have_an_input_field(:name).of_type(!types.String)
   end
 
   it "has an :email input field of String type" do
-    # Ensure that the field email is of type String
     expect(subject).to have_an_input_field(:email).of_type(!Types::EmailAddress)
   end
 
   it "has an :password input field of String type" do
-    # Ensure that the field password is of type String
     expect(subject).to have_an_input_field(:password).of_type(!types.String)
   end
 
   it "has an :password_confirmation input field of String type" do
-    # Ensure that the field password_confirmation is of type String
     expect(subject).to have_an_input_field(:password_confirmation).of_type(!types.String)
   end
 end

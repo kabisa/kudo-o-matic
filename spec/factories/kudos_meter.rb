@@ -14,6 +14,6 @@
 
 FactoryBot.define do
   factory :kudos_meter do
-    name { "My KudosMeter" }
+    name { "The KudosMeter name" }
   end
 end

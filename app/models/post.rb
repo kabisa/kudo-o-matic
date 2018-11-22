@@ -57,10 +57,6 @@ class Post < ApplicationRecord
 
   delegate :name, to: :sender,   prefix: true
 
-  def self.editable_time
-    15.minutes.ago
-  end
-
   def kudos_amount
     amount + votes.count
   end
@@ -88,44 +84,5 @@ class Post < ApplicationRecord
       avatars << receiver.picture_url
     end
     avatars.join(", ")
-  end
-
-  def sender_name
-    if sender
-      sender.name
-    else
-      "Deleted"
-    end
-  end
-
-  def self.all_for_user(user)
-    Post.where(sender: user).or(Post.where(receiver: user)).or(
-      Post.where(receiver: User.where(name: ENV["COMPANY_USER"]))
-    ).order("created_at desc")
-  end
-
-  def self.all_for_user_in_team(user, team)
-    result = []
-
-    user.sent_posts.where(team: team).each { |post| result << post }
-    user.received_posts.where(team: team).each { |post| result << post }
-
-    result
-  end
-
-  def self.send_by_user(user, team)
-    user.sent_posts.where(team: team)
-  end
-
-  def self.received_by_user(user, team)
-    user.received_posts.where(team: team)
-  end
-
-  def self.last_of_team(team)
-    Post.where(team_id: team.id).last
-  end
-
-  def liked_by_user?(user)
-    votes.find_by_voter_id(user.id).present?
   end
 end

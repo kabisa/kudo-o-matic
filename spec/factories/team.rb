@@ -23,7 +23,6 @@
 
 FactoryBot.define do
   factory :team do
-    name { "Kabisa" }
-    slug { "kabisa" }
+    name { "The Team name" }
   end
 end

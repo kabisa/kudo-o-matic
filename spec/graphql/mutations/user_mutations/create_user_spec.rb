@@ -31,6 +31,12 @@ RSpec.describe Mutations::UserMutation, ":createUser" do
       user_id = result.dig("user").id
       expect(payload.dig(:ok, :id)).to eq(user_id)
     end
+
+    it "sends a confirmation instruction and welcome email" do
+      expect { subject.fields["createUser"].resolve(nil, args, nil) }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(2)
+    end
   end
 
   context "create invalid user" do

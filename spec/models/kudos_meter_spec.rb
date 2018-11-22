@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 RSpec.describe KudosMeter, type: :model do
-  let(:kudos_meter) { create(:kudos_meter) }
-  let(:user) { create(:user) }
+  let(:users) { create_list(:user, 5) }
   let(:team) { create(:team) }
-  let!(:post) { create(:post, sender: user, receivers: [user], kudos_meter: kudos_meter, team: team) }
-  let!(:goal) { create(:goal, kudos_meter: kudos_meter) }
+  let!(:kudos_meter) { team.active_kudos_meter }
+  let!(:goal) { team.current_goals }
+  let!(:post) { create(:post, sender: users.first, receivers: [users.second], kudos_meter: kudos_meter, team: team) }
+  let!(:vote) { create(:vote, voter_id: users.first.id, voter_type: "User", votable_id: post.id, votable_type: "Post") }
+  let!(:vote_2) { create(:vote, voter_id: users.second.id, voter_type: "User", votable_id: post.id, votable_type: "Post") }
+  let!(:vote_3) { create(:vote, voter_id: users.third.id, voter_type: "User", votable_id: post.id, votable_type: "Post") }
 
   it "should have a valid factory" do
     expect(build(:kudos_meter)).to be_valid
@@ -22,16 +25,24 @@ RSpec.describe KudosMeter, type: :model do
   end
 
   describe "model validations" do
-    # ensure that the name field is never empty
     it { expect(kudos_meter).to validate_presence_of(:name) }
   end
 
   describe "model associations" do
-    # ensure that a kudos_meter belongs to team
-    it { expect(kudos_meter).to belong_to(:team) }
-    # ensure that a kudos_meter has many posts
-    it { expect(kudos_meter).to have_many(:posts).dependent(:destroy) }
-    # ensure that a kudos_meter has many goals
-    it { expect(kudos_meter).to have_many(:goals).dependent(:destroy) }
+    it { is_expected.to belong_to(:team) }
+    it { is_expected.to have_many(:posts).dependent(:destroy) }
+    it { is_expected.to have_many(:goals).dependent(:destroy) }
+  end
+
+  describe '.likes(kudos_meter)' do
+    it 'returns the likes that belong to the kudos meter' do
+      expect(KudosMeter.likes(kudos_meter)).to eq(3)
+    end
+  end
+
+  describe '#amount' do
+    it 'returns the total amount of kudos from posts and likes' do
+      expect(kudos_meter.amount).to eq(post.kudos_amount)
+    end
   end
 end

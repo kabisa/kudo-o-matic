@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
     expect(build(:receiver)).to be_valid
   end
 
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :admin) }
   let(:user_2) { create(:user) }
   let(:team) { create(:team) }
   let(:kudos_meter) { team.active_kudos_meter }
@@ -19,41 +19,172 @@ RSpec.describe User, type: :model do
 
   describe "model destroy dependencies" do
     it "should destroy dependent SentPosts" do
-      # ensure that dependent SentPosts are deleted
       expect { user.destroy }.to change { PostReceiver.count }
     end
 
     it "should destroy dependent ReceivedPosts" do
-      # ensure that dependent ReceivedPosts are deleted
       expect { user.destroy }.to change { PostReceiver.count }
     end
   end
 
   describe "model validations" do
-    # ensure that the name field is never empty
-    it { expect(user).to validate_presence_of(:name) }
-    # ensure that the email field is never empty
-    it { expect(user).to validate_presence_of(:email) }
-    # ensure that the email field is unique
-    it { expect(user).to validate_uniqueness_of(:email).ignoring_case_sensitivity }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity }
   end
 
   describe "model associations" do
-    # ensure that a user has many sent_posts with foreign key sender_id
-    it { expect(user).to have_many(:sent_posts).dependent(:destroy).with_foreign_key("sender_id") }
-    # ensure that a user has many post_receivers
-    it { expect(user).to have_many(:post_receivers).dependent(:destroy) }
-    # ensure that a user has many received_posts through post_receivers
-    it { expect(user).to have_many(:received_posts).through(:post_receivers) }
-    # ensure that a user has many memberships with foreign key user_id
-    it { expect(user).to have_many(:memberships).with_foreign_key("user_id") }
-    # ensure that a user has many teams through memberships
-    it { expect(user).to have_many(:teams).through(:memberships) }
-    # ensure that a user has many votes with foreign key voter_id
-    it { expect(user).to have_many(:votes).with_foreign_key("voter_id") }
-    # ensure that a user has many exports with foreign key user_id
-    it { expect(user).to have_many(:exports).with_foreign_key("user_id") }
-    # ensure that a user has many fcm_tokens
-    it { expect(user).to have_many(:fcm_tokens) }
+    it { is_expected.to have_many(:sent_posts).dependent(:destroy).with_foreign_key("sender_id") }
+    it { is_expected.to have_many(:post_receivers).dependent(:destroy) }
+    it { is_expected.to have_many(:received_posts).through(:post_receivers) }
+    it { is_expected.to have_many(:memberships).with_foreign_key("user_id") }
+    it { is_expected.to have_many(:teams).through(:memberships) }
+    it { is_expected.to have_many(:votes).with_foreign_key("voter_id") }
+    it { is_expected.to have_many(:exports).with_foreign_key("user_id") }
+    it { is_expected.to have_many(:fcm_tokens) }
+  end
+
+  describe '#member_of?(team)' do
+    it 'returns true if user is member of the team' do
+      team.add_member(user)
+
+      expect(user.member_of?(team)).to be true
+    end
+
+    it 'returns false if user is not member of the team' do
+      expect(user.member_of?(team)).to be false
+    end
+  end
+
+  describe '#member_since(team)' do
+    it 'returns DateTime if user is member of the team' do
+      team.add_member(user)
+
+      expect(user.member_since(team)).to eq(user.memberships.first.created_at)
+    end
+
+    it 'returns nil if user is not member of the team' do
+      expect(user.member_since(team)).to be_nil
+    end
+  end
+
+  describe '#admin_of?(team)' do
+    it 'returns true if user is admin of the team' do
+      team.add_member(user, 'admin')
+
+      expect(user.admin_of?(team)).to be true
+    end
+
+    it 'returns false if user is not admin of the team' do
+      team.add_member(user)
+
+      expect(user.admin_of?(team)).to be false
+    end
+  end
+
+  describe '#open_invites' do
+    it 'returns the invites of the user' do
+      invite = create(:team_invite, email: user.email, team: team)
+
+      expect(user.open_invites).to eq([invite])
+    end
+
+    it 'returns an empty array if user has no invites' do
+      expect(user.open_invites).to be_empty
+    end
+  end
+
+  describe '#first_name' do
+    it 'returns the first name of the user' do
+      user_with_full_name = create(:user, name: "John Doe")
+      expect(user_with_full_name.first_name).to eq("John")
+    end
+
+    it 'returns an empty array if user has no invites' do
+      expect(user.open_invites).to be_empty
+    end
+  end
+
+  describe '#picture_url' do
+    it 'returns the avatar of the user' do
+      user_with_avatar = create(:user, avatar_url: "/kabisa_lizard.png")
+      expect(user_with_avatar.picture_url).to eq(user_with_avatar.avatar_url)
+    end
+
+    it 'returns a default avatar if user has no avatar' do
+      expect(user.picture_url).to eq("/no-picture-icon.jpg")
+    end
+  end
+
+  describe '#deactivate' do
+    it 'deactivates the users account if an admin remains' do
+      expect { user_2.deactivate }.to change { user_2.deactivated_at }
+    end
+
+    it 'doesn\'t deactivate the users account if last admin' do
+      expect { user.deactivate }.to raise_error("Last administrator can't be removed from the system")
+    end
+  end
+
+  describe '#reactivate' do
+    it 'reactivates the users account' do
+      deactivated_user = create(:user, :deactivated)
+
+      expect { deactivated_user.reactivate }.to change { deactivated_user.deactivated_at }.to(nil)
+    end
+  end
+
+  describe '#deactivated?' do
+    it 'returns true if users account is deactivated' do
+      deactivated_user = create(:user, :deactivated)
+
+      expect(deactivated_user.deactivated?).to be true
+    end
+
+    it 'returns false if users account is not deactivated' do
+      expect(user.deactivated?).to be false
+    end
+  end
+
+  describe '#multiple_teams?' do
+    it 'returns true if user has multiple teams' do
+      team.add_member(user)
+      team_2 = create(:team)
+      team_2.add_member(user)
+
+      expect(user.multiple_teams?).to be true
+    end
+
+    it 'returns false if user has not multiple teams' do
+      team.add_member(user)
+
+      expect(user.multiple_teams?).to be false
+    end
+  end
+
+  describe '#active_for_authentication?' do
+    it 'returns true if user can authenticate' do
+      expect(user.active_for_authentication?).to be true
+    end
+
+    it 'returns false if user can not authenticate' do
+      user_2.deactivate
+
+      expect(user_2.active_for_authentication?).to be false
+    end
+  end
+
+  describe '#ensure_an_admin_remains' do
+    it 'triggers the method after update' do
+      expect(user).to receive(:ensure_an_admin_remains)
+      user.run_callbacks(:update)
+    end
+  end
+
+  describe '#send_welcome_email' do
+    it 'triggers the method after create' do
+      expect(user).to receive(:send_welcome_email)
+      user.run_callbacks(:create)
+    end
   end
 end

@@ -21,16 +21,12 @@ class Goal < ApplicationRecord
 
   belongs_to :kudos_meter
 
-  def self.achieved(team)
-    where(kudos_meter: team.active_kudos_meter).where.not(achieved_on: nil).order("amount ASC")
-  end
-
   def self.previous(team)
-    where(kudos_meter: team.active_kudos_meter).where.not(achieved_on: nil).order("amount DESC").first || Goal.new(name: "N/A", amount: 0)
+    where(kudos_meter: team.active_kudos_meter).where.not(achieved_on: nil).order("amount DESC").first
   end
 
   def self.next(team)
-    where(kudos_meter: team.active_kudos_meter).where(achieved_on: nil).order("amount ASC").first || Goal.create(name: "TBD", amount: Goal.previous(team).amount + 1000, kudos_meter: team.active_kudos_meter, achieved_on: nil)
+   where(kudos_meter: team.active_kudos_meter).where(achieved_on: nil).order("amount ASC").first
   end
 
   def achieved?

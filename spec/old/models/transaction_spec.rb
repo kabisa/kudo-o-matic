@@ -58,29 +58,5 @@ describe Post do
       team.add_member(user_2)
       team.add_member(user_3)
     end
-
-    it "Displays all my posts from the current kudos_meter" do
-      posts = Post.all_for_user_in_team(user_2, team)
-
-      expect(posts.count).to eq(4)
-    end
-
-    it "Displays my send posts from the current kudos_meter" do
-      posts = Post.send_by_user(user_2, team)
-
-      expect(posts.count).to eq(4)
-    end
-
-    it "Displays my received posts from the current kudos_meter" do
-      posts = Post.received_by_user(user, team)
-
-      expect(posts.count).to eq(4)
-    end
-
-    it "Displays no posts" do
-      posts = Post.received_by_user(user_3, team.id)
-
-      expect(posts.count).to eq(0)
-    end
   end
 end

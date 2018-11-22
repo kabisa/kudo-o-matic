@@ -5,7 +5,6 @@ RSpec.describe Types::ViewerType do
   types = GraphQL::Define::TypeDefiner.instance
 
   it "has an :self field of UserType" do
-    # Ensure that the field id is of type ID
     expect(subject).to have_field(:self).that_returns(Types::UserType)
   end
 

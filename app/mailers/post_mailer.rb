@@ -21,8 +21,6 @@ class PostMailer < ApplicationMailer
     @post = post
     @user = user
 
-    @markdown = Redcarpet::Markdown.new(MdEmoji::Render, no_intra_emphasis: true)
-
     mail(to: user.email, subject: "You just received #{ApplicationController.helpers.number_to_kudos(@post.amount)} from #{@post.sender.name}!")
   end
 end
