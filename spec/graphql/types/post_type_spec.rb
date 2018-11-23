@@ -12,27 +12,35 @@ RSpec.describe Types::PostType do
     expect(subject).to have_field(:message).that_returns(!types.String)
   end
 
-  it "has a :amount field of Integer type" do
+  it "has an :amount field of Integer type" do
     expect(subject).to have_field(:amount).that_returns(!types.Int)
   end
 
-  it "has an :sender field of UserType" do
+  it "has a :sender field of UserType" do
     expect(subject).to have_field(:sender).that_returns(!Types::UserType)
   end
 
-  it "has an :receivers field of an array UserType" do
+  it "has a :receivers field of an array UserType" do
     expect(subject).to have_field(:receivers).that_returns(!types[Types::UserType])
   end
 
-  it "has an :team field of TeamType" do
+  it "has a :team field of TeamType" do
     expect(subject).to have_field(:team).that_returns(!Types::TeamType)
   end
 
-  it "has an :kudosMeter field of KudosMeterType" do
+  it "has a :kudosMeter field of KudosMeterType" do
     expect(subject).to have_field(:kudosMeter).that_returns(!Types::KudosMeterType)
   end
 
-  it "has an :votes field of VoteType" do
+  it "has a :votes field of VoteType" do
     expect(subject).to have_field(:votes).that_returns(!types[Types::VoteType])
+  end
+
+  it "has a :createdAt field of ISO8601DateTime type" do
+    expect(subject).to have_field(:createdAt).that_returns('ISO8601DateTime')
+  end
+
+  it "has a :updatedAt field of ISO8601DateTime type" do
+    expect(subject).to have_field(:updatedAt).that_returns('ISO8601DateTime')
   end
 end

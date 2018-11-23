@@ -27,5 +27,10 @@ module Types
     field :votes, !types[Types::VoteType] do
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(Vote).load_many(obj.votes.ids) }
     end
+
+    field :createdAt, GraphQL::Types::ISO8601DateTime, 'The time the post was created',
+          property: :created_at
+    field :updatedAt, GraphQL::Types::ISO8601DateTime, 'The time the post was last updated',
+          property: :updated_at
   end
 end
