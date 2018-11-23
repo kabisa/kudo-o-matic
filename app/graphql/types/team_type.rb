@@ -9,9 +9,9 @@ module Types
     field :name, !types.String, "The Team Name"
     field :slug, !types.String, "The team slug (friendly id)"
 
-    field :memberships, !types[Types::UserType] do
+    field :users, !types[Types::UserType] do
       description "The users that are member of the team"
-      resolve ->(obj, args, ctx) { Util::RecordLoader.for(User).load_many(obj.memberships.ids) }
+      resolve ->(obj, args, ctx) { Util::RecordLoader.for(User).load_many(obj.user_ids) }
     end
 
     field :posts, !types[Types::PostType] do

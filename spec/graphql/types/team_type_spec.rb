@@ -16,8 +16,8 @@ RSpec.describe Types::TeamType do
     expect(subject).to have_field(:slug).that_returns(!types.String)
   end
 
-  it "has a :memberships field of an array UserType! type" do
-    expect(subject).to have_field(:memberships).that_returns(!types[Types::UserType])
+  it "has a :users field of an array UserType! type" do
+    expect(subject).to have_field(:users).that_returns(!types[Types::UserType])
   end
 
   it "has a :posts field of an array PostType! type" do
