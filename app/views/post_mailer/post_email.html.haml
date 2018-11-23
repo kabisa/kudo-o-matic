@@ -1,0 +1,11 @@
+%tr
+  %td.content
+    = "You just received #{number_to_kudos(@post.amount)} from"
+    = "#{@post.sender.name} for '#{@post.message}'! \u{1f389}".html_safe
+    %br
+    Show your appreciation by liking the
+    = "#{link_to 'post', ENV['ROOT_URL']}.".html_safe
+    = "\u{1f44d}"
+    %p
+      - if !Goal.next(@post.team).nil?
+        = "There is #{kudos_to_next_goal(@post.team)} ₭ left until goal '#{Goal.next(@post.team).name}' is reached."

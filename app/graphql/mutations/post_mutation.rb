@@ -20,18 +20,25 @@ module Mutations
           raise GraphQL::ExecutionError.new("Authentication required")
         end
 
+        team = Team.find(args[:team_id])
+
         post = Post.new(
           message: args[:message],
           amount: args[:amount],
           sender: ctx[:current_user],
           receivers: User.find(args[:receiver_ids]),
-          team: Team.find(args[:team_id]),
+          team: team,
           kudos_meter: Team.find(args[:team_id]).active_kudos_meter
         )
 
-        return post if post.save
+        if post.save
+          PostMailer.new_post(post)
+          GoalReacher.check!(team)
 
-        raise GraphQL::ExecutionError, post.errors.full_messages.join(', ')
+          return post
+        else
+          raise GraphQL::ExecutionError, post.errors.full_messages.join(', ')
+        end
       end
     end
   end

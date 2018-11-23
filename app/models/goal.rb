@@ -26,7 +26,7 @@ class Goal < ApplicationRecord
   end
 
   def self.next(team)
-   where(kudos_meter: team.active_kudos_meter).where(achieved_on: nil).order("amount ASC").first
+    where(kudos_meter: team.active_kudos_meter).where(achieved_on: nil).order("amount ASC").first
   end
 
   def achieved?
