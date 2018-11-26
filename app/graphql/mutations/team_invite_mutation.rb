@@ -50,5 +50,42 @@ module Mutations
         team_invite
       end
     end
+
+    field :createInvite, Types::TeamInviteType do
+      description "Create a team invite"
+      argument :email, !Types::EmailAddress
+      argument :team_id, !types.ID
+
+      # define return type
+      type Types::TeamInviteType
+
+      resolve ->(_obj, args, ctx) do
+        current_user = ctx[:current_user]
+        team = Team.find(args[:team_id])
+
+        if current_user.blank?
+          raise GraphQL::ExecutionError.new("Authentication required")
+        end
+
+        team_member = TeamMember.where(team: team, user: current_user).first
+
+        if team_member.nil?
+          raise GraphQL::ExecutionError.new("Failed to create invite: You are not a member of this team.")
+        end
+
+        if team_member.role != 'admin'
+          raise GraphQL::ExecutionError.new("Failed to create invite: Permission denied.")
+        end
+
+        team_invite = TeamInvite.new(
+          email: args[:email],
+          team: team
+        )
+
+        return team_invite if team_invite.save
+
+        raise GraphQL::ExecutionError, team_invite.errors.full_messages.join(", ")
+      end
+    end
   end
 end
