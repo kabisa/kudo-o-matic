@@ -12,6 +12,7 @@ module Types
       QueryTypes::PostQueryType,
       QueryTypes::PostReceiverQueryType,
       QueryTypes::TeamQueryType,
+      QueryTypes::TeamMemberQueryType,
       QueryTypes::UserQueryType,
       QueryTypes::ViewerQueryType
     ])
