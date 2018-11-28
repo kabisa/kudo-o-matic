@@ -45,7 +45,6 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   after_create :send_welcome_email
-  after_update :ensure_an_admin_remains
 
   acts_as_voter
   # Include default devise modules. Others available are:
@@ -111,7 +110,6 @@ class User < ApplicationRecord
     transaction do
       touch(:deactivated_at)
       fcm_tokens.destroy_all
-      ensure_an_admin_remains
     end
   end
 
@@ -133,12 +131,6 @@ class User < ApplicationRecord
   end
 
   private
-
-  def ensure_an_admin_remains
-    if User.where(admin: true, deactivated_at: nil).count < 1
-      raise "Last administrator can't be removed from the system"
-    end
-  end
 
   def send_welcome_email
     user = User.find(id)

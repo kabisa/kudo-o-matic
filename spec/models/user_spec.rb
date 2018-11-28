@@ -117,12 +117,8 @@ RSpec.describe User, type: :model do
   end
 
   describe '#deactivate' do
-    it 'deactivates the users account if an admin remains' do
+    it 'deactivates the users account' do
       expect { user_2.deactivate }.to change { user_2.deactivated_at }
-    end
-
-    it 'doesn\'t deactivate the users account if last admin' do
-      expect { user.deactivate }.to raise_error("Last administrator can't be removed from the system")
     end
   end
 
@@ -171,13 +167,6 @@ RSpec.describe User, type: :model do
       user_2.deactivate
 
       expect(user_2.active_for_authentication?).to be false
-    end
-  end
-
-  describe '#ensure_an_admin_remains' do
-    it 'triggers the method after update' do
-      expect(user).to receive(:ensure_an_admin_remains)
-      user.run_callbacks(:update)
     end
   end
 
