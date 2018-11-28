@@ -4,7 +4,7 @@ require "database_cleaner"
 
 DatabaseCleaner.clean_with(:truncation)
 
-team = Team.create(name: Faker::Company.name)
+team = Team.create(name: "Kabisa")
 
 admin = User.create(
   name: "Admin Doe",
