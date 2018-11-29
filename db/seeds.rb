@@ -14,7 +14,8 @@ admin = User.create(
 )
 team.add_member(admin, 'admin')
 
-['Kabisa', 'Ariejan', 'Egon', 'Stefan', 'Ralph', 'Marijn', 'Guido', 'Managed Services'].each do |name|
+users = []
+['Kabisa', 'Ariejan', 'Egon', 'Stefan', 'Ralph', 'Marijn', 'Guido', 'Managed-Services'].each do |name|
   user = User.create(
     name: name,
     email: "#{name}@example.com",
@@ -22,6 +23,7 @@ team.add_member(admin, 'admin')
     password_confirmation: "password"
   )
   team.add_member(user)
+  users << user
 end
 
 20.times do
@@ -36,7 +38,7 @@ end
 50.times do
   sender = User.offset(rand(User.count)).first
 
-  Post.create(
+  post = Post.create(
     sender: sender,
     receivers: User.limit(rand(1..5)).order("RANDOM()").where.not(id: sender.id),
     message: Faker::Lorem.sentence(3),
@@ -44,6 +46,11 @@ end
     kudos_meter: team.active_kudos_meter,
     team: team
   )
+  if rand(1..5) == 1
+    users.each do |user|
+      post.liked_by user
+    end
+  end
 end
 
 5.times do
