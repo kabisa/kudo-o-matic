@@ -87,11 +87,9 @@ class User < ApplicationRecord
   end
 
   def admin_of?(team)
-    @admin_rights = Hash.new do |h, key|
-      h[key] = memberships.find_by_team_id(key).role == 'admin'
-    end
-    @admin_rights[team.id]
-    # TODO: when we implement the functionality to give/revoke admin rights, we need to make sure to invalidate @admin_rights[team.id]
+    return unless member_of?(team)
+
+    memberships.find_by_team_id(team.id).role == 'admin'
   end
 
   def open_invites
