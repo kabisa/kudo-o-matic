@@ -7,17 +7,19 @@ module Mutations
 
     field :createUser, Types::UserType do
       description "Create a new user"
-      argument :credentials, !Types::AuthProviderSignupInput
+      argument :credentials, Types::AuthProviderSignupInput
 
       # define return type
       type Types::AuthenticateType
 
       resolve ->(_obj, args, _ctx) do
+        input = args[:credentials]
+
         user = User.new(
-          name: args[:credentials][:name],
-          email: args[:credentials][:email],
-          password: args[:credentials][:password],
-          password_confirmation: args[:credentials][:password_confirmation]
+          name: input[:name],
+          email: input[:email],
+          password: input[:password],
+          password_confirmation: input[:password_confirmation]
         )
 
         if user.save
@@ -58,7 +60,7 @@ module Mutations
     field :forgotPassword, Types::UserType do
       description "Reset a user's password"
 
-      argument :credentials, !Types::AuthProviderEmailInput
+      argument :credentials, Types::AuthProviderEmailInput
 
       # define return type
       type Types::AuthenticateEmailType
@@ -78,9 +80,9 @@ module Mutations
     field :newPassword, Types::UserType do
       description "Create new password if user forgot old one"
 
-      argument :reset_password_token, !types.String
-      argument :password, !types.String
-      argument :password_confirmation, !types.String
+      argument :reset_password_token, types.String
+      argument :password, types.String
+      argument :password_confirmation, types.String
 
       # define return type
       type Types::UserType
@@ -96,6 +98,35 @@ module Mutations
 
         # reset_password_by_token returns a new user if no user is found
         user.id.nil? ? break : user
+      end
+    end
+
+    field :resetPassword, Types::UserType do
+      description "Reset password if user wants a new password"
+
+      argument :current_password, types.String
+      argument :new_password, types.String
+      argument :new_password_confirmation, types.String
+
+      # define return type
+      type Types::UserType
+
+      resolve ->(_obj, args, ctx) do
+        current_user = ctx[:current_user]
+
+        if current_user.blank?
+          raise GraphQL::ExecutionError.new('Authentication required')
+        end
+
+        unless current_user.valid_password?(args[:current_password])
+          raise GraphQL::ExecutionError.new('Invalid current password')
+        end
+
+        if current_user.reset_password(args[:new_password], args[:new_password_confirmation])
+          return current_user
+        else
+          raise GraphQL::ExecutionError.new(current_user.errors.full_messages.join(', '))
+        end
       end
     end
   end

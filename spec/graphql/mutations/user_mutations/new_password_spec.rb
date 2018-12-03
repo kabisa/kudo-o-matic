@@ -8,9 +8,9 @@ RSpec.describe Mutations::UserMutation, ":newPassword" do
       let(:reset_password_token) { user.send_reset_password_instructions }
       let(:args) {
         {
-            reset_password_token: reset_password_token,
-            password: "newpassword",
-            password_confirmation: "newpassword"
+          reset_password_token: reset_password_token,
+          password: "newpassword",
+          password_confirmation: "newpassword"
         }
       }
 
