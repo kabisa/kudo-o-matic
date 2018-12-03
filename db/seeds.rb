@@ -22,9 +22,8 @@ users.each do |user|
   )
   team_invite = TeamInvite.create(email: user.email, team: Team.first)
   team_invite.accept
+  TeamMember.last.update(role: 'admin')
 end
-
-TeamMember.second.update(role: 'admin')
 
 ##################
 ###
