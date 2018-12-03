@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   around_action :catch_not_found
   helper_method :current_team
 
+  def index; end
+
   def new_session_path(_scope)
     new_user_session_path
   end

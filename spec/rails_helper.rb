@@ -12,6 +12,8 @@ require "database_cleaner"
 
 # shared context
 require "support/graphql/client"
+# custom matcher for ActiveStorage
+require "support/matchers/have_attached_file"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

@@ -1,20 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: exports
-#
-#  id               :integer          not null, primary key
-#  uuid             :string
-#  user_id          :integer
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  zip_file_name    :string
-#  zip_content_type :string
-#  zip_file_size    :integer
-#  zip_updated_at   :datetime
-#
-
 class Export < ApplicationRecord
   has_attached_file :zip
   validates_attachment_content_type :zip,

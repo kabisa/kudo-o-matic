@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     mount GraphqlPlayground::Rails::Engine, at: "/graphql/playground", graphql_path: "/graphql"
   end
 
+  root 'application#index'
+
   post "/graphql", to: "graphql#execute"
 
   devise_for :users, controllers: {

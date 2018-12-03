@@ -1,26 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: teams
-#
-#  id                     :integer          not null, primary key
-#  name                   :string
-#  general_info           :text
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  logo_file_name         :string
-#  logo_content_type      :string
-#  logo_file_size         :integer
-#  logo_updated_at        :datetime
-#  slug                   :string
-#  preferences            :json
-#  slack_team_id          :string
-#  slack_bot_access_token :string
-#  channel_id             :string
-#
-
-
 class Team < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
@@ -28,6 +7,10 @@ class Team < ApplicationRecord
 
   validates :name, presence: true
   validates :slug, presence: true
+  validates :logo, file_content_type: {
+      allow: %w[image/jpeg image/png],
+      if: -> { logo.attached? }
+  }
 
   has_secure_token :rss_token
 
@@ -39,6 +22,8 @@ class Team < ApplicationRecord
   has_many :posts
   has_many :guidelines
   has_many :likes, class_name: "Vote"
+
+  has_one_attached :logo
 
   typed_store :preferences, coder: PreferencesCoder do |p|
     p.string :primary_color, default: nil

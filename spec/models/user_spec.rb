@@ -22,6 +22,11 @@ RSpec.describe User, type: :model do
       expect { user.destroy }.to change { PostReceiver.count }
     end
 
+    it "should have one attached avatar" do
+      user.avatar.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
+      expect(user).to have_attached_file(:avatar)
+    end
+
     it "should destroy dependent ReceivedPosts" do
       expect { user.destroy }.to change { PostReceiver.count }
     end
@@ -31,6 +36,9 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity }
+    it "should validate content type of avatar" do
+      skip("Create custom content type matcher")
+    end
   end
 
   describe "model associations" do

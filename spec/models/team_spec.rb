@@ -8,10 +8,18 @@ RSpec.describe Team, type: :model do
     expect(build(:team)).to be_valid
   end
 
+  it "can have one attached logo" do
+    team.logo.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
+    expect(team).to have_attached_file(:logo)
+  end
+
   describe "model validations" do
     it { expect(team).to validate_presence_of(:name) }
     it "expect(team).to validate_presence_of(:slug)" do
       skip("TODO Fix this test")
+    end
+    it "should validate content type of logo" do
+      skip("Create custom content type matcher")
     end
   end
 

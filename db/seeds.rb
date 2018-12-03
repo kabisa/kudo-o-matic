@@ -71,6 +71,7 @@ end
     kudos: kudos.sample,
     team: Team.second
   )
+
 end
 
 users.last(3).each do |user|

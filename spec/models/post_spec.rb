@@ -15,9 +15,14 @@ RSpec.describe Post, type: :model do
   let!(:post_3) { create(:post, sender: user, receivers: [users.second, users.third, users.fourth], team: team, kudos_meter: kudos_meter) }
   let!(:vote) { create(:vote, voter_id: user.id, votable_id: post.id) }
 
+  it "can have one attached image" do
+    post.image.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
+    expect(post).to have_attached_file(:image)
+  end
+
   describe "model destroy dependencies" do
     it "should destroy dependent PostReceivers" do
-      expect { post.destroy }.to change { PostReceiver.count }
+      expect {post.destroy }.to change{ PostReceiver.count }
     end
   end
 

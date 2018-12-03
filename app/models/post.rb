@@ -1,28 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: posts
-#
-#  id                           :integer          not null, primary key
-#  sender_id                    :integer
-#  receiver_id                  :integer
-#  activity_id                  :integer
-#  kudos_meter_id                   :integer
-#  amount                       :integer
-#  created_at                   :datetime         not null
-#  updated_at                   :datetime         not null
-#  image_file_name              :string
-#  image_content_type           :string
-#  image_file_size              :integer
-#  image_updated_at             :datetime
-#  slack_reaction_created_at    :string
-#  slack_post_updated_at :string
-#  slack_kudos_left_on_creation :integer
-#  team_id                      :integer
-#
-
-
 class Post < ApplicationRecord
   validates :sender, presence: true
   validates :receivers, presence: true
@@ -30,15 +7,12 @@ class Post < ApplicationRecord
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000 }
   validates :team, presence: true
   validates :kudos_meter, presence: true
+  validates :image, file_content_type: {
+      allow: %w[image/jpeg image/png image/gif],
+      if: -> { image.attached? }
+  }
 
-  # also creates a second image file with a maximum width and/or height of 800 pixels with its aspect ratio preserved
-  # #TODO upgrade to Rails ActiveStorage
-  # has_attached_file :image, styles: { thumb: "600x600" }
-  # validates_attachment :image, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
-  # validates_with AttachmentSizeValidator, attributes: :image, less_than: 10.megabytes
-  # process_in_background :image
-
-  attr_accessor :image_delete_checkbox
+  has_one_attached :image
 
   acts_as_votable
   belongs_to :kudos_meter
