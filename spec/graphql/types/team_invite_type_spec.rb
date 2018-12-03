@@ -15,15 +15,15 @@ RSpec.describe Types::TeamInviteType do
     expect(subject).to have_field(:team).that_returns(!Types::TeamType)
   end
 
-  xit "has an :acceptedAt field of ISO8601DateTime type" do
-    expect(subject).to have_field(:acceptedAt).that_returns(GraphQL::Types::ISO8601DateTime)
+  it "has an :acceptedAt field of ISO8601DateTime type" do
+    expect(subject).to have_field(:acceptedAt).that_returns('ISO8601DateTime')
   end
 
-  xit "has a :declinedAt field of ISO8601DateTime type" do
-    expect(subject).to have_field(:declinedAt).that_returns(GraphQL::Types::ISO8601DateTime)
+  it "has a :declinedAt field of ISO8601DateTime type" do
+    expect(subject).to have_field(:declinedAt).that_returns('ISO8601DateTime')
   end
 
-  xit "has a :sentAt field of ISO8601DateTime type" do
-    expect(subject).to have_field(:sentAt).that_returns(GraphQL::Types::ISO8601DateTime)
+  it "has a :sentAt field of ISO8601DateTime type" do
+    expect(subject).to have_field(:sentAt).that_returns('ISO8601DateTime')
   end
 end

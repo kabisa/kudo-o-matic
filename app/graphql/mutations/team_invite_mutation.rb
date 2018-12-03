@@ -53,15 +53,16 @@ module Mutations
 
     field :createInvite, Types::TeamInviteType do
       description "Create a team invite"
-      argument :email, !Types::EmailAddress
-      argument :team_id, !types.ID
+      argument :emails, types[Types::EmailAddress]
+      argument :team_id, types.ID
 
       # define return type
-      type Types::TeamInviteType
+      type types[Types::TeamInviteType]
 
       resolve ->(_obj, args, ctx) do
         current_user = ctx[:current_user]
         team = Team.find(args[:team_id])
+        emails = args[:emails]
 
         if current_user.blank?
           raise GraphQL::ExecutionError.new("Authentication required")
@@ -77,14 +78,30 @@ module Mutations
           raise GraphQL::ExecutionError.new("Failed to create invite: Permission denied.")
         end
 
-        team_invite = TeamInvite.new(
-          email: args[:email],
-          team: team
-        )
+        if emails.blank?
+          raise GraphQL::ExecutionError.new("You didn't supply any email addresses")
+        end
 
-        return team_invite if team_invite.save
+        team_invites = []
 
-        raise GraphQL::ExecutionError, team_invite.errors.full_messages.join(", ")
+        emails.uniq.each do |email|
+          team_invite = TeamInvite.new(
+            email: email,
+            team: team
+          )
+
+          unless team_invite.valid?
+            raise GraphQL::ExecutionError.new(team_invite.errors.full_messages.join(', '))
+          end
+
+          team_invites << team_invite
+        end
+
+        TeamInvite.transaction do
+          team_invites.each(&:save)
+        end
+
+        team_invites
       end
     end
   end

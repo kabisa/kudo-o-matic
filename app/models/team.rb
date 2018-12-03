@@ -47,7 +47,10 @@ class Team < ApplicationRecord
   end
 
   def remove_member(user)
-    TeamMember.find_by_user_id_and_team_id(user.id, id).delete
+    transaction do
+      TeamMember.find_by_user_id_and_team_id(user.id, id).delete
+      TeamInvite.where(email: user.email, team_id: id).delete_all
+    end
   end
 
   def member?(user)

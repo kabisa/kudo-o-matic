@@ -7,14 +7,47 @@ RSpec.describe Mutations::TeamInviteMutation, ":createInvite" do
 
   context 'authenticated user' do
     describe "user is team administrator" do
-      it 'creates an invite' do
+      it 'can create one invite' do
         team.add_member(user, 'admin')
-        args = { team_id: team.id, email: "my@email.com" }
+        args = { team_id: team.id, emails: ["my@email.com"] }
         ctx = { current_user: user }
 
         expect do
           subject.fields["createInvite"].resolve(nil, args, ctx)
         end.to change { TeamInvite.count && ActionMailer::Base.deliveries.count }.by(1)
+      end
+
+      it 'can create multiple invites' do
+        team.add_member(user, 'admin')
+        args = { team_id: team.id, emails: ["my@email.com", "your@email.com"] }
+        ctx = { current_user: user }
+
+        expect do
+          subject.fields["createInvite"].resolve(nil, args, ctx)
+        end.to change { TeamInvite.count && ActionMailer::Base.deliveries.count }.by(2)
+      end
+
+      it 'creates only one invite per email address' do
+        team.add_member(user, 'admin')
+        args = { team_id: team.id, emails: ["my@email.com", "my@email.com"] }
+        ctx = { current_user: user }
+
+        expect do
+          subject.fields["createInvite"].resolve(nil, args, ctx)
+        end.to change {
+          TeamInvite.count
+          ActionMailer::Base.deliveries.count
+        }.by(1)
+      end
+
+      it 'creates no invites if one teaminvite is not valid' do
+        team.add_member(user, 'admin')
+        args = { team_id: team.id, emails: ['my@email.com', ''] }
+        ctx = { current_user: user }
+
+        expect do
+          subject.fields["createInvite"].resolve(nil, args, ctx)
+        end.to raise_error(GraphQL::ExecutionError, 'Email can\'t be blank')
       end
     end
 

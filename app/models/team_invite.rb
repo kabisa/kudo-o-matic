@@ -6,10 +6,14 @@ class TeamInvite < ApplicationRecord
 
   belongs_to :team
 
-  after_create :duplicate?
+  before_create :duplicate?
 
   def complete?
     accepted_at || declined_at ? true : false
+  end
+
+  def declined?
+    declined_at ? true : false
   end
 
   def accept
@@ -28,14 +32,16 @@ class TeamInvite < ApplicationRecord
     where(accepted_at: nil).where(declined_at: nil)
   end
 
-  private
-
   def duplicate?
-    invite_count = TeamInvite.where(email: email, team: team).count
-    raise "There is already an invite send to #{email}" if invite_count > 1
+    invite = TeamInvite.where(email: email, team: team).first
 
-    send_invite
+    send_invite and return if invite.nil?
+    send_invite and return if invite.declined?
+
+    throw :abort
   end
+
+  private
 
   def send_invite
     UserMailer.invite_email(email, team).deliver_now

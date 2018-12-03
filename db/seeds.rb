@@ -12,6 +12,7 @@ end
 
 users = ['Ariejan', 'Stefan', 'Marijn', 'Egon', 'Ralph', 'Guido']
 
+
 users.each do |user|
   user = User.create(
     name: user,

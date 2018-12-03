@@ -73,14 +73,19 @@ RSpec.describe Team, type: :model do
 
     describe "#remove_member(user)" do
       it 'removes a TeamMember' do
-        team.add_member(user)
+        team_invite = TeamInvite.create(email: user.email, team: team)
+        team_invite.accept
+
         team.remove_member(user)
 
         expect(team.member?(user)).to be false
+        expect { team_invite.reload }.to raise_error { ActiveRecord::RecordNotFound }
       end
 
       it 'removes a TeamMember with admin rights' do
-        team.add_member(user, 'admin')
+        team_invite = TeamInvite.create(email: user.email, team: team)
+        team_invite.accept
+
         team.remove_member(user)
 
         expect(team.member?(user)).to be false
