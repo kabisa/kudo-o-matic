@@ -8,21 +8,54 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
   let!(:team_member) { create(:team_member) }
 
   context "create valid post" do
-    let(:args) {
-      {
-        message: Faker::Lorem.sentence(3),
-        amount: 50,
-        receiver_ids: [users.last.id],
-        team_id: team.id,
-        kudos_meter_id: kudos_meter.id
-      }
-    }
     let(:ctx) { { current_user: users.first } }
 
-    it "creates a new post" do
+    it "creates a new post with existing users" do
+      args = {
+          message: 'message',
+          amount: 50,
+          receiver_ids: [users.last.id],
+          team_id: team.id,
+          kudos_meter_id: kudos_meter.id
+      }
+
       expect do
         subject.fields["createPost"].resolve(nil, args, ctx)
       end.to change { Post.count }.by(1)
+     .and change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+
+    it "creates a new post with non-existing users" do
+      args = {
+          message: 'message',
+          amount: 50,
+          null_receivers: ["Harry"],
+          team_id: team.id,
+          kudos_meter_id: kudos_meter.id
+      }
+
+      expect do
+        subject.fields["createPost"].resolve(nil, args, ctx)
+      end.to change { Post.count }.by(1)
+      .and change { ActionMailer::Base.deliveries.count }.by(0)
+      .and change { User.count }.by(1)
+    end
+
+    it "creates a new post with existing and non-existing users" do
+      args = {
+          message: 'message',
+          amount: 50,
+          receiver_ids: [users.last.id],
+          null_receivers: ["Harry"],
+          team_id: team.id,
+          kudos_meter_id: kudos_meter.id
+      }
+
+      expect do
+        subject.fields["createPost"].resolve(nil, args, ctx)
+      end.to change { Post.count }.by(1)
+      .and change { ActionMailer::Base.deliveries.count }.by(1)
+      .and change { User.count }.by(1)
     end
 
     it 'checks and sends an email if a goal is reached' do
@@ -37,13 +70,6 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
       expect do
         subject.fields["createPost"].resolve(nil, args, ctx)
       end.to change { ActionMailer::Base.deliveries.count }.by(2)
-    end
-
-    it 'sends an email to receivers of the post' do
-      expect do
-        subject.fields["createPost"].resolve(nil, args, ctx)
-      end.to change { ActionMailer::Base.deliveries.count }.by(1)
-
     end
   end
 

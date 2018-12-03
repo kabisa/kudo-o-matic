@@ -42,7 +42,6 @@
 
 class User < ApplicationRecord
   validates :name, presence: true
-  validates :email, presence: true, uniqueness: true
 
   after_create :send_welcome_email
 
@@ -129,6 +128,18 @@ class User < ApplicationRecord
   end
 
   private
+
+  def email_required?
+    return false if virtual_user
+
+    super
+  end
+
+  def password_required?
+    return false if virtual_user
+
+    super
+  end
 
   def send_welcome_email
     user = User.find(id)

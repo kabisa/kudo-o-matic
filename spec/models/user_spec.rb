@@ -170,10 +170,38 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#email_required?' do
+    it 'returns false if user is a virtual user' do
+      user.update(virtual_user: true)
+      expect(user.send(:email_required?)).to be false
+    end
+
+    it 'returns true if user is not a virtual user' do
+      expect(user.send(:email_required?)).to be true
+    end
+  end
+
+  describe '#password_required?' do
+    it 'returns false if user is a virtual user' do
+      user.update(virtual_user: true)
+      expect(user.send(:password_required?)).to be false
+    end
+
+    it 'returns true if user is not a virtual user' do
+      expect(user.send(:password_required?)).to be true
+    end
+  end
+
   describe '#send_welcome_email' do
     it 'triggers the method after create' do
       expect(user).to receive(:send_welcome_email)
       user.run_callbacks(:create)
+    end
+
+    it 'sends a welcome email to the user' do
+      expect { user.send(:send_welcome_email) }.to change {
+        ActionMailer::Base.deliveries.count
+      }.by(1)
     end
   end
 end

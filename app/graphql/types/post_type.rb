@@ -13,7 +13,7 @@ module Types
     end
 
     field :receivers, !types[Types::UserType] do
-      resolve ->(obj, args, ctx) { Util::RecordLoader.for(User).load_many(obj.receivers.ids) }
+      resolve ->(obj, args, ctx) { Util::RecordLoader.for(User).load_many(obj.receiver_ids) }
     end
 
     field :team, !Types::TeamType do
