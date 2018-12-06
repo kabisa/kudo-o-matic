@@ -3,6 +3,10 @@
     = "You have been invited to join the '₭udo-o-Matic' by #{@team.name}! \u{1f600}".html_safe
     %ul
       %li
-        = link_to "Sign up here", sign_up_url
+        If you already have an account just check your invites
+        = link_to, 'here', "#{ENV['ROOT_URL']}/#/choose-team"
+      %li
+        If you have no account yet you can
+        = link_to, 'sign up here!', "#{ENV['ROOT_URL']}/#/register"
       %li
         For any help on how to use the ₭udo-o-Matic please read the FAQ, which you can find in your profile menu.
