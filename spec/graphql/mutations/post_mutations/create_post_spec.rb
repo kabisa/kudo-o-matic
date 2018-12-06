@@ -39,6 +39,7 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
       end.to change { Post.count }.by(1)
       .and change { ActionMailer::Base.deliveries.count }.by(0)
       .and change { User.count }.by(1)
+      .and change { TeamMember.count }.by(1)
     end
 
     it "creates a new post with existing and non-existing users" do
@@ -56,6 +57,7 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
       end.to change { Post.count }.by(1)
       .and change { ActionMailer::Base.deliveries.count }.by(1)
       .and change { User.count }.by(1)
+       .and change { TeamMember.count }.by(1)
     end
 
     it 'checks and sends an email if a goal is reached' do

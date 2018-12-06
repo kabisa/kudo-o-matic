@@ -21,6 +21,8 @@ module Mutations
           raise GraphQL::ExecutionError.new("Authentication required")
         end
 
+        team = Team.find(args[:team_id])
+
         receivers = []
 
         receiver_ids = args[:receiver_ids]
@@ -42,11 +44,11 @@ module Mutations
 
             user.save
 
+            team.add_member(user)
+
             receivers << user
           end
         end
-
-        team = Team.find(args[:team_id])
 
         post = Post.new(
           message: args[:message],
