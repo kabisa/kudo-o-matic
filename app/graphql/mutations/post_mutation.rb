@@ -7,11 +7,11 @@ module Mutations
 
     field :createPost, Types::PostType do
       description "Create a new post"
-      argument :message, !types.String, 'The reason you are giving kudos'
-      argument :amount, !types.Int, 'The amount of kudos you want to give'
-      argument :receiver_ids, !types[types.ID], 'The existing users'
+      argument :message, types.String, 'The reason you are giving kudos'
+      argument :amount, types.Int, 'The amount of kudos you want to give'
+      argument :receiver_ids, types[types.ID], 'The existing users'
       argument :null_receivers, types[types.String], 'The non-existing users'
-      argument :team_id, !types.ID, 'The team the post belongs to'
+      argument :team_id, types.ID, 'The team the post belongs to'
 
       # define return type
       type Types::PostType
