@@ -7,8 +7,12 @@ namespace :post_receivers do
 
       begin
         # Find users in post message
-        receivers = post.message.split('for:')[0].strip.split(/[,&+]/)
-        receivers = receivers.map(&:lstrip)
+        post_message = post.message.split('for:')
+        receivers = post_message[0].strip.split(/[,&+]/).map(&:lstrip)
+        message = post_message[1].strip
+
+        # Update post message
+        post.update(message: message)
 
         users = []
         # Create virtual user for each
@@ -32,10 +36,6 @@ namespace :post_receivers do
 
         # update receivers
         post.update(receivers: users)
-
-        # Update post message
-        message = post.message.split('for:')[1].strip
-        post.update(message: message)
       rescue
         post.destroy
       end
