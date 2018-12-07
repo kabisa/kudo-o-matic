@@ -30,4 +30,8 @@ RSpec.describe Types::UserType do
   it "has a :teams field of an array TeamType" do
     expect(subject).to have_field(:teams).that_returns(!types[Types::TeamType])
   end
+
+  it "has an :admin field of Boolean type" do
+    expect(subject).to have_field(:admin).that_returns(types.Boolean)
+  end
 end

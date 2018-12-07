@@ -26,5 +26,7 @@ module Types
     field :teams, !types[Types::TeamType], 'The teams that the user is member of' do
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(Team).load_many(obj.team_ids) }
     end
+
+    field :admin, types.Boolean, 'Admin of the application'
   end
 end
