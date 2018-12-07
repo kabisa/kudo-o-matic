@@ -122,7 +122,6 @@ CREATE TABLE public.activities (
 --
 
 CREATE SEQUENCE public.activities_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -161,7 +160,7 @@ CREATE TABLE public.exports (
     updated_at timestamp without time zone NOT NULL,
     zip_file_name character varying,
     zip_content_type character varying,
-    zip_file_size bigint,
+    zip_file_size integer,
     zip_updated_at timestamp without time zone
 );
 
@@ -171,7 +170,6 @@ CREATE TABLE public.exports (
 --
 
 CREATE SEQUENCE public.exports_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -204,7 +202,6 @@ CREATE TABLE public.fcm_tokens (
 --
 
 CREATE SEQUENCE public.fcm_tokens_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -238,7 +235,6 @@ CREATE TABLE public.friendly_id_slugs (
 --
 
 CREATE SEQUENCE public.friendly_id_slugs_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -273,7 +269,6 @@ CREATE TABLE public.goals (
 --
 
 CREATE SEQUENCE public.goals_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -307,7 +302,6 @@ CREATE TABLE public.guidelines (
 --
 
 CREATE SEQUENCE public.guidelines_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -340,7 +334,6 @@ CREATE TABLE public.kudos_meters (
 --
 
 CREATE SEQUENCE public.kudos_meters_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -377,7 +370,6 @@ CREATE TABLE public.oauth_access_grants (
 --
 
 CREATE SEQUENCE public.oauth_access_grants_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -415,7 +407,6 @@ CREATE TABLE public.oauth_access_tokens (
 --
 
 CREATE SEQUENCE public.oauth_access_tokens_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -451,7 +442,6 @@ CREATE TABLE public.oauth_applications (
 --
 
 CREATE SEQUENCE public.oauth_applications_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -510,7 +500,7 @@ CREATE TABLE public.posts (
     updated_at timestamp without time zone NOT NULL,
     image_file_name character varying,
     image_content_type character varying,
-    image_file_size bigint,
+    image_file_size integer,
     image_updated_at timestamp without time zone,
     slack_reaction_created_at character varying,
     slack_transaction_updated_at character varying,
@@ -525,7 +515,6 @@ CREATE TABLE public.posts (
 --
 
 CREATE SEQUENCE public.posts_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -556,7 +545,7 @@ CREATE TABLE public.schema_migrations (
 CREATE TABLE public.team_invites (
     id integer NOT NULL,
     team_id integer,
-    sent_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    sent_at timestamp without time zone DEFAULT now(),
     accepted_at timestamp without time zone,
     declined_at timestamp without time zone,
     email character varying
@@ -568,7 +557,6 @@ CREATE TABLE public.team_invites (
 --
 
 CREATE SEQUENCE public.team_invites_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -605,7 +593,6 @@ CREATE TABLE public.team_members (
 --
 
 CREATE SEQUENCE public.team_members_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -632,7 +619,7 @@ CREATE TABLE public.teams (
     updated_at timestamp without time zone NOT NULL,
     logo_file_name character varying,
     logo_content_type character varying,
-    logo_file_size bigint,
+    logo_file_size integer,
     logo_updated_at timestamp without time zone,
     slug character varying,
     preferences json,
@@ -648,7 +635,6 @@ CREATE TABLE public.teams (
 --
 
 CREATE SEQUENCE public.teams_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -710,7 +696,6 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -738,8 +723,8 @@ CREATE TABLE public.votes (
     vote_flag boolean,
     vote_scope character varying,
     vote_weight integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 
 
@@ -748,7 +733,6 @@ CREATE TABLE public.votes (
 --
 
 CREATE SEQUENCE public.votes_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1017,14 +1001,6 @@ ALTER TABLE ONLY public.posts
 
 
 --
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
 -- Name: team_invites team_invites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1268,13 +1244,6 @@ CREATE INDEX index_votes_on_votable_id_and_votable_type_and_vote_scope ON public
 
 
 --
--- Name: index_votes_on_votable_type_and_votable_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_votes_on_votable_type_and_votable_id ON public.votes USING btree (votable_type, votable_id);
-
-
---
 -- Name: index_votes_on_voter_id_and_voter_type_and_vote_scope; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1282,10 +1251,10 @@ CREATE INDEX index_votes_on_voter_id_and_voter_type_and_vote_scope ON public.vot
 
 
 --
--- Name: index_votes_on_voter_type_and_voter_id; Type: INDEX; Schema: public; Owner: -
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_votes_on_voter_type_and_voter_id ON public.votes USING btree (voter_type, voter_id);
+CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
 
 
 --
