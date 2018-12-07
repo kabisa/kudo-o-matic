@@ -31,6 +31,10 @@ class Post < ApplicationRecord
 
   delegate :name, to: :sender,   prefix: true
 
+  def self.editable_time
+    Time.now - Settings.max_edit_and_delete_time
+  end
+
   def kudos_amount
     amount + votes.count
   end

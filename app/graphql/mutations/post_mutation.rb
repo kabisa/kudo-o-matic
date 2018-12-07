@@ -69,5 +69,39 @@ module Mutations
         end
       end
     end
+
+    field :deletePost, Types::PostType do
+      argument :id, types.ID, 'The ID of the post you want to delete'
+
+      type types.ID
+
+      resolve ->(_obj, args, ctx) do
+        break unless args[:id]
+
+        current_user = ctx[:current_user]
+
+        if current_user.blank?
+          raise GraphQL::ExecutionError.new("Authentication required")
+        end
+
+        post = Post.find(args[:id])
+
+        unless post.sender == current_user || current_user.admin_of?(post.team) || current_user.admin?
+          raise GraphQL::ExecutionError.new("Permissioned denied: You are not authorized to perform this action")
+        end
+
+        if post.created_at < Post.editable_time
+          unless current_user.admin? || current_user.admin_of?(post.team)
+            raise GraphQL::ExecutionError.new("Permissioned denied: You are not authorized to perform this action")
+          end
+        end
+
+        if post.destroy
+          return post.id
+        else
+          raise GraphQL::ExecutionError.new(post.errors.full_messages.join(', '))
+        end
+      end
+    end
   end
 end
