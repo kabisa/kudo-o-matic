@@ -1,5 +1,7 @@
 defaults: &defaults
   token_expiration_time: <%= 1.month %>
+  gravatar_style: 'retro'
+  gravatar_size: '200'
 
 development:
   <<: *defaults

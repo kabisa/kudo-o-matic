@@ -7,6 +7,7 @@ module Types
     field :id, !types.ID
     field :name, !types.String
     field :email, !Types::EmailAddress
+    field :avatar, !types.String, property: :picture_url
 
     field :sentPosts, !types[Types::PostType], 'The sent posts of the user' do
       resolve ->(obj, args, ctx) { Util::RecordLoader.for(Post).load_many(obj.sent_post_ids) }

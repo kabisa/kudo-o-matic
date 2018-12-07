@@ -2,14 +2,8 @@
 
 class User < ApplicationRecord
   validates :name, presence: true
-  validates :avatar, file_content_type: {
-      allow: %w[image/jpeg image/png],
-      if: -> { avatar.attached? }
-  }
-  
-  after_create :send_welcome_email
 
-  has_one_attached :avatar
+  after_create :send_welcome_email
 
   acts_as_voter
   # Include default devise modules. Others available are:
@@ -66,7 +60,10 @@ class User < ApplicationRecord
   end
 
   def picture_url
-    avatar_url.presence || "/no-picture-icon.jpg"
+    return avatar_url if avatar_url.present?
+
+    gravatar = Digest::MD5::hexdigest(email).downcase
+    "http://gravatar.com/avatar/#{gravatar}.png?d=#{Settings.gravatar_style}&s=#{Settings.gravatar_size}"
   end
 
   def deactivate

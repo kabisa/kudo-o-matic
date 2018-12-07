@@ -22,11 +22,6 @@ RSpec.describe User, type: :model do
       expect { user.destroy }.to change { PostReceiver.count }
     end
 
-    it "should have one attached avatar" do
-      user.avatar.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
-      expect(user).to have_attached_file(:avatar)
-    end
-
     it "should destroy dependent ReceivedPosts" do
       expect { user.destroy }.to change { PostReceiver.count }
     end
@@ -119,8 +114,11 @@ RSpec.describe User, type: :model do
       expect(user_with_avatar.picture_url).to eq(user_with_avatar.avatar_url)
     end
 
-    it 'returns a default avatar if user has no avatar' do
-      expect(user.picture_url).to eq("/no-picture-icon.jpg")
+    it 'returns a gravatar if user has no avatar' do
+      user = create(:user, email: "my@email.com")
+      gravatar = Digest::MD5::hexdigest(user.email).downcase
+
+      expect(user.picture_url).to eq("http://gravatar.com/avatar/#{gravatar}.png?d=retro&s=200")
     end
   end
 
