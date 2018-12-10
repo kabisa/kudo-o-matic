@@ -5,39 +5,44 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
   let!(:team) { create(:team) }
   let(:kudos_meter) { team.active_kudos_meter }
   let(:goals) { kudos_meter.goals }
-  let!(:team_member) { create(:team_member) }
+
+  before do
+    team.add_member(users.last)
+  end
 
   context "create valid post" do
     let(:ctx) { { current_user: users.first } }
 
     it "creates a new post with existing users" do
       args = {
-          message: 'message',
-          amount: 50,
-          receiver_ids: [users.last.id],
-          team_id: team.id,
-          kudos_meter_id: kudos_meter.id
+        message: 'message',
+        amount: 50,
+        receiver_ids: [users.last.id],
+        team_id: team.id,
+        kudos_meter_id: kudos_meter.id
       }
 
       expect do
         subject.fields["createPost"].resolve(nil, args, ctx)
       end.to change { Post.count }.by(1)
-     .and change { ActionMailer::Base.deliveries.count }.by(1)
+      .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(1)
+
+      expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last[:args]).to include('PostMailer', 'post_email', 'deliver_now')
     end
 
     it "creates a new post with non-existing users" do
       args = {
-          message: 'message',
-          amount: 50,
-          null_receivers: ["Harry"],
-          team_id: team.id,
-          kudos_meter_id: kudos_meter.id
+        message: 'message',
+        amount: 50,
+        null_receivers: ["Harry"],
+        team_id: team.id,
+        kudos_meter_id: kudos_meter.id
       }
 
       expect do
         subject.fields["createPost"].resolve(nil, args, ctx)
       end.to change { Post.count }.by(1)
-      .and change { ActionMailer::Base.deliveries.count }.by(0)
+      .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(0)
       .and change { User.count }.by(1)
       .and change { TeamMember.count }.by(1)
     end
@@ -55,9 +60,11 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
       expect do
         subject.fields["createPost"].resolve(nil, args, ctx)
       end.to change { Post.count }.by(1)
-      .and change { ActionMailer::Base.deliveries.count }.by(1)
+      .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(1)
       .and change { User.count }.by(1)
-       .and change { TeamMember.count }.by(1)
+      .and change { TeamMember.count }.by(1)
+
+      expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last[:args]).to include('PostMailer', 'post_email', 'deliver_now')
     end
 
     it 'checks and sends an email if a goal is reached' do
@@ -71,7 +78,11 @@ RSpec.describe Mutations::PostMutation, ":createPost" do
 
       expect do
         subject.fields["createPost"].resolve(nil, args, ctx)
-      end.to change { ActionMailer::Base.deliveries.count }.by(2)
+      end.to change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(2)
+      .and have_enqueued_job(ActionMailer::DeliveryJob)
+        .with('GoalMailer', 'goal_email', 'deliver_now', users.last, team, goals.first)
+
+      expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last(2)[0][:args]).to include('PostMailer', 'post_email', 'deliver_now')
     end
   end
 

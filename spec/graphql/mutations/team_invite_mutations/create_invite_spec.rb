@@ -14,7 +14,10 @@ RSpec.describe Mutations::TeamInviteMutation, ":createInvite" do
 
         expect do
           subject.fields["createInvite"].resolve(nil, args, ctx)
-        end.to change { TeamInvite.count && ActionMailer::Base.deliveries.count }.by(1)
+        end.to change {  TeamInvite.count }.by(1)
+        .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(1)
+        .and have_enqueued_job(ActionMailer::DeliveryJob)
+          .with('UserMailer', 'invite_email', 'deliver_now', args[:emails][0], team)
       end
 
       it 'can create multiple invites' do
@@ -24,7 +27,11 @@ RSpec.describe Mutations::TeamInviteMutation, ":createInvite" do
 
         expect do
           subject.fields["createInvite"].resolve(nil, args, ctx)
-        end.to change { TeamInvite.count && ActionMailer::Base.deliveries.count }.by(2)
+        end.to change { TeamInvite.count }.by(2)
+        .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(2)
+        .and have_enqueued_job(ActionMailer::DeliveryJob)
+          .with('UserMailer', 'invite_email', 'deliver_now', args[:emails][0], team)
+          .with('UserMailer', 'invite_email', 'deliver_now', args[:emails][1], team)
       end
 
       it 'creates only one invite per email address' do
@@ -34,10 +41,10 @@ RSpec.describe Mutations::TeamInviteMutation, ":createInvite" do
 
         expect do
           subject.fields["createInvite"].resolve(nil, args, ctx)
-        end.to change {
-          TeamInvite.count
-          ActionMailer::Base.deliveries.count
-        }.by(1)
+        end.to change { TeamInvite.count }.by(1)
+        .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(1)
+        .and have_enqueued_job(ActionMailer::DeliveryJob)
+          .with('UserMailer', 'invite_email', 'deliver_now', args[:emails][0], team)
       end
 
       it 'creates no invites if one teaminvite is not valid' do

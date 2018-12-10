@@ -206,7 +206,7 @@ RSpec.describe User, type: :model do
 
     it 'sends a welcome email to the user' do
       expect { user.send(:send_welcome_email) }.to change {
-        ActionMailer::Base.deliveries.count
+        ActiveJob::Base.queue_adapter.enqueued_jobs.size
       }.by(1)
     end
   end

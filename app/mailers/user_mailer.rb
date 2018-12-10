@@ -8,7 +8,6 @@ class UserMailer < ApplicationMailer
   end
 
   def welcome_email(user)
-    return if user.email.blank?
     @user = user
 
     mail(to: user.email, subject: "Welcome to the ₭udo-o-Matic!")

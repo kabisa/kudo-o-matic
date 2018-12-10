@@ -9,7 +9,9 @@ RSpec.describe Mutations::UserMutation, ":forgotPassword" do
     it "sends email instructions to reset password" do
       expect do
         subject.fields["forgotPassword"].resolve(nil, args, nil)
-      end.to change{ ActionMailer::Base.deliveries.count }.by(1)
+      end.to change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(1)
+
+      expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last[:args]).to include('KudosDeviseMailer', 'reset_password_instructions', 'deliver_now')
     end
   end
 
@@ -19,7 +21,7 @@ RSpec.describe Mutations::UserMutation, ":forgotPassword" do
     it "doesn't send an email and returns nil" do
       query_result = subject.fields["forgotPassword"].resolve(nil, args, nil)
 
-      expect { query_result }.to_not change{ ActionMailer::Base.deliveries.count }
+      expect { query_result }.to_not change{ ActiveJob::Base.queue_adapter.enqueued_jobs.size }
 
       expect(query_result).to be_nil
     end

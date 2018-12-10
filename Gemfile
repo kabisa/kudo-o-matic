@@ -13,6 +13,7 @@ gem 'aws-sdk-s3', '~> 1.23', '>= 1.23.1', require: false
 gem "chronic", "~> 0.10.2"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
 gem "devise", "~> 4.3"
+gem 'devise-async', '~> 1.0'
 gem "doorkeeper", "~> 4.3"
 gem "delayed_paperclip", "~> 3.0.1"
 gem "daemons"
@@ -51,6 +52,7 @@ gem "rubyzip", "~> 1.2.2", require: "zip"
 gem "sentry-raven"
 gem "settingslogic", "~> 2.0", ">= 2.0.9"
 gem "scss_lint", "~> 0.54", require: false
+gem 'sidekiq', '~> 5.2', '>= 5.2.3'
 gem "slack-ruby-client", "~> 0.11.0"
 gem "uglifier", "~> 3.2"
 

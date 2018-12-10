@@ -28,6 +28,9 @@ module KudoOMatic
     # Rails doesn't know about native enum column type
     config.active_record.schema_format = :sql
 
+    # async active job
+    config.active_job.queue_adapter = :sidekiq
+
     # CORS
     config.middleware.insert_before 0, Rack::Cors do
       allow do

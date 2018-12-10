@@ -33,9 +33,14 @@ RSpec.describe Mutations::UserMutation, ":createUser" do
     end
 
     it "sends a confirmation instruction and welcome email" do
-      expect { subject.fields["createUser"].resolve(nil, args, nil) }.to change {
-        ActionMailer::Base.deliveries.count
+      expect do
+        subject.fields["createUser"].resolve(nil, args, nil)
+      end.to change {
+        ActiveJob::Base.queue_adapter.enqueued_jobs.size
       }.by(2)
+
+      expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last(2)[0][:args]).to include('UserMailer', 'welcome_email', 'deliver_now')
+      expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last(2)[1][:args]).to include('KudosDeviseMailer', 'confirmation_instructions', 'deliver_now')
     end
   end
 

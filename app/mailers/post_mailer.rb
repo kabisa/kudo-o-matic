@@ -11,7 +11,7 @@ class PostMailer < ApplicationMailer
 
     receivers.each do |receiver|
       if receiver.email.present? && receiver.post_received_mail && receiver.deactivated_at.nil?
-        suppress(Exception) { post_email(receiver, post).deliver_now }
+        suppress(Exception) { post_email(receiver, post).deliver_later }
       end
     end
 

@@ -3,7 +3,7 @@
 class GoalMailer < ApplicationMailer
   def self.new_goal(goal, team)
     team.users.where.not(email: "").where(deactivated_at: nil).each do |user|
-      suppress(Exception) { goal_email(user, team, goal).deliver_now if user.goal_reached_mail }
+      suppress(Exception) { goal_email(user, team, goal).deliver_later if user.goal_reached_mail }
     end
   end
 

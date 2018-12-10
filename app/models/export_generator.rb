@@ -10,7 +10,7 @@ class ExportGenerator
     export = Export.create(uuid: SecureRandom.uuid, user: user)
 
     # Notify user via email that the export has started
-    UserMailer.export_start_email(user).deliver_now
+    UserMailer.export_start_email(user).deliver_later
 
     # Render data in given format (JSON or XML)
     data = render_data(user, posts, likes, dataformat)
@@ -57,7 +57,7 @@ class ExportGenerator
     export.save
 
     # Notify user via email that the export is available for download
-    UserMailer.export_done_email(user, export).deliver_now
+    UserMailer.export_done_email(user, export).deliver_later
 
     # Delete local data and zip file
     File.delete(data_file_path) if File.exist?(data_file_path)

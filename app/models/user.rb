@@ -10,7 +10,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # :database_authenticatable, :registerable,
   # :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, :registerable, :confirmable, :database_authenticatable,
+  devise :async, :omniauthable, :registerable, :confirmable, :database_authenticatable,
          :validatable, :lockable, :recoverable, omniauth_providers: [:slack]
 
   has_many :sent_posts,
@@ -106,6 +106,8 @@ class User < ApplicationRecord
 
   def send_welcome_email
     user = User.find(id)
-    UserMailer.welcome_email(user).deliver_now
+    return if user.email.blank?
+
+    UserMailer.welcome_email(user).deliver_later
   end
 end

@@ -44,6 +44,6 @@ class TeamInvite < ApplicationRecord
   private
 
   def send_invite
-    UserMailer.invite_email(email, team).deliver_now
+    UserMailer.invite_email(email, team).deliver_later
   end
 end

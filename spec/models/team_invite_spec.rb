@@ -68,7 +68,7 @@ RSpec.describe TeamInvite, type: :model do
     it "sends an invite if invite is not a duplicate" do
       expect { create(:team_invite, team: team) }.to change {
         TeamInvite.count
-        ActionMailer::Base.deliveries.count
+        ActiveJob::Base.queue_adapter.enqueued_jobs.size
       }.by(1)
     end
 
@@ -77,7 +77,7 @@ RSpec.describe TeamInvite, type: :model do
 
       expect { create(:team_invite, email: 'email@example.com', team: team) }.to change {
         TeamInvite.count
-        ActionMailer::Base.deliveries.count
+        ActiveJob::Base.queue_adapter.enqueued_jobs.size
       }.by(1)
     end
 
