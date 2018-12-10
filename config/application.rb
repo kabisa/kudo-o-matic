@@ -41,10 +41,6 @@ module KudoOMatic
       end
     end
 
-    Raven.configure do |config|
-      config.dsn = ENV['SENTRY_DSN']
-    end
-
     # Autoload libs
     config.autoload_paths += %W[#{config.root}/lib]
   end

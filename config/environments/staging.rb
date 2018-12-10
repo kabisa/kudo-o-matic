@@ -3,6 +3,11 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Sentry
+  Raven.configure do |config|
+    config.dsn = ENV['SENTRY_DSN']
+  end
+
   # Store files on amazon.
   config.active_storage.service = :amazon
 
