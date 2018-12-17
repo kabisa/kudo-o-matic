@@ -32,5 +32,6 @@ module Types
     end
 
     field :admin, types.Boolean, 'Admin of the application'
+    field :virtualUser, types.Boolean, 'User is a virtual user (non-existing)'
   end
 end
