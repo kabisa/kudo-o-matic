@@ -118,7 +118,7 @@ RSpec.describe User, type: :model do
       user = create(:user, email: "my@email.com")
       gravatar = Digest::MD5::hexdigest(user.email).downcase
 
-      expect(user.picture_url).to eq("http://gravatar.com/avatar/#{gravatar}.png?d=retro&s=200")
+      expect(user.picture_url).to eq("https://gravatar.com/avatar/#{gravatar}.png?d=retro&s=200")
     end
   end
 

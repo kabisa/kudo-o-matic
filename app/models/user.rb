@@ -63,7 +63,7 @@ class User < ApplicationRecord
     return avatar_url if avatar_url.present?
 
     gravatar = Digest::MD5::hexdigest(email).downcase
-    "http://gravatar.com/avatar/#{gravatar}.png?d=#{Settings.gravatar_style}&s=#{Settings.gravatar_size}"
+    "https://gravatar.com/avatar/#{gravatar}.png?d=#{Settings.gravatar_style}&s=#{Settings.gravatar_size}"
   end
 
   def deactivate

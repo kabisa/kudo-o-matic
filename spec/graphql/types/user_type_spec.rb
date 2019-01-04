@@ -31,8 +31,8 @@ RSpec.describe Types::UserType do
     expect(subject).to have_field(:teams).that_returns(!types[Types::TeamType])
   end
 
-  it "has a :membership field of an array TeamMemberType" do
-    expect(subject).to have_field(:membership).that_returns(!types[Types::TeamMemberType])
+  it "has a :memberships field of an array TeamMemberType" do
+    expect(subject).to have_field(:memberships).that_returns(!types[Types::TeamMemberType])
   end
 
   it "has an :admin field of Boolean type" do
