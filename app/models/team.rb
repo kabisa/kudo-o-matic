@@ -88,7 +88,7 @@ class Team < ApplicationRecord
     Goal.create(name: "Third goal", amount: 1500, kudos_meter_id: kudos_meter.id)
 
     # Create company user
-    user = User.new(name: name, company_user: true)
+    user = User.new(name: name, company_user: true, virtual_user: true)
     user.save(validate: false)
     add_member(user)
   end
