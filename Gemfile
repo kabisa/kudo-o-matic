@@ -24,6 +24,7 @@ gem "friendly_id", "~> 5.2.4"
 gem "google-id-token", "~> 1.4"
 gem "graphql", "~> 1.8", ">= 1.8.10"
 gem "graphql-batch", "~> 0.3.10"
+gem 'graphql-guard', '~> 1.2', '>= 1.2.1'
 gem "haml-rails", "~> 1.0"
 gem "jbuilder", "~> 2.0"
 gem "json_web_token", "~> 0.3.5"

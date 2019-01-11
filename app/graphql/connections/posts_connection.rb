@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
-Connections::PostsConnection = Types::PostType.define_connection do
-  name "PostConnection"
+module Connections
+  class PostsConnection < GraphQL::Types::Relay::BaseConnection
+    edge_type(Edges::PostsEdge)
 
-  field :totalCount do
-    description "Count the number of total posts"
+    field :total_count, Int, null: false
 
-    # define return type
-    type types.Int
-
-    resolve ->(obj, _args, _ctx) {
-      obj.nodes.count
-    }
+    def total_count
+      object.nodes.size
+    end
   end
 end
+

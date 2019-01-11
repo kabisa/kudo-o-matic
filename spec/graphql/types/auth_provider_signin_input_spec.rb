@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe Types::AuthProviderSigninInput do
-  # available type definer in our tests
-  types = GraphQL::Define::TypeDefiner.instance
+  set_graphql_type
 
-  it "has an :email input field of String type" do
-    expect(subject).to have_an_input_field(:email).of_type(!Types::EmailAddress)
+  it "has an :email input field of EmailAddress! type" do
+    expect(subject.arguments['email'].type.to_type_signature).to eq('EmailAddress!')
   end
 
-  it "has an :password input field of String type" do
-    expect(subject).to have_an_input_field(:password).of_type(!types.String)
+  it "has an :password input field of String! type" do
+    expect(subject.arguments['password'].type.to_type_signature).to eq('String!')
   end
 end

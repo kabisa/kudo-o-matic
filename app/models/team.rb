@@ -21,6 +21,7 @@ class Team < ApplicationRecord
   has_many :goals, through: :kudos_meters
   has_many :posts
   has_many :guidelines
+  has_many :team_invites
   has_many :likes, class_name: "Vote"
 
   has_one_attached :logo

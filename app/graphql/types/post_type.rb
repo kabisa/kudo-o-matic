@@ -1,36 +1,40 @@
 # frozen_string_literal: true
 
 module Types
-  PostType = GraphQL::ObjectType.define do
-    name "Post"
+  class PostType < Types::BaseObject
+    graphql_name "Post"
 
-    field :id, !types.ID
-    field :message, !types.String
-    field :amount, !types.Int
-
-    field :sender, !Types::UserType do
-      resolve ->(obj, args, ctx) { Util::RecordLoader.for(User).load(obj.sender_id) }
-    end
-
-    field :receivers, !types[Types::UserType] do
-      resolve ->(obj, args, ctx) { Util::RecordLoader.for(User).load_many(obj.receiver_ids) }
-    end
-
-    field :team, !Types::TeamType do
-      resolve ->(obj, args, ctx) { Util::RecordLoader.for(Team).load(obj.team_id) }
-    end
-
-    field :kudosMeter, !Types::KudosMeterType do
-      resolve ->(obj, args, ctx) { Util::RecordLoader.for(KudosMeter).load(obj.kudos_meter_id) }
-    end
-
-    field :votes, !types[Types::VoteType] do
-      resolve ->(obj, args, ctx) { Util::RecordLoader.for(Vote).load_many(obj.votes.ids) }
-    end
-
-    field :createdAt, GraphQL::Types::ISO8601DateTime, 'The time the post was created',
-          property: :created_at
-    field :updatedAt, GraphQL::Types::ISO8601DateTime, 'The time the post was last updated',
-          property: :updated_at
+    field :id, ID, null: false
+    field :message, String,
+          null: false,
+          description: 'The reason the kudos are given'
+    field :amount, Int,
+          null: false,
+          description: 'The amount of kudos that are given'
+    field :sender, UserType,
+          null: false,
+          description: 'The sender of the post',
+          resolve: ->(obj, _args, _ctx) { Util::RecordLoader.for(User).load(obj.sender_id) }
+    field :receivers, [UserType],
+          null: false,
+          description: 'The receiver(s) of the post',
+          resolve: ->(obj, _args, _ctx) { Util::RecordLoader.for(User).load_many(obj.receivers.ids) }
+    field :team, TeamType,
+          null: false,
+          description: 'The team the post belongs to',
+          resolve: ->(obj, _args, _ctx) { Util::RecordLoader.for(Team).load(obj.team_id) }
+    field :kudos_meter, KudosMeterType,
+          null: false,
+          description: 'The kudometer that collects the kudos of the post',
+          resolve: ->(obj, _args, _ctx) { Util::RecordLoader.for(KudosMeter).load(obj.kudos_meter_id) }
+    field :votes, [VoteType],
+          null: false,
+          resolve: ->(obj, _args, _ctx) { Util::RecordLoader.for(Vote).load_many(obj.votes.ids) }
+    field :created_at, GraphQL::Types::ISO8601DateTime,
+          null: false,
+          description: 'The time the post was created'
+    field :updated_at, GraphQL::Types::ISO8601DateTime,
+          null: false,
+          description: 'The time the post was last updated'
   end
 end

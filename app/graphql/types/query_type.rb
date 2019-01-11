@@ -1,20 +1,11 @@
 # frozen_string_literal: true
 
 module Types
-  QueryType = GraphQL::ObjectType.new.tap do |root_type|
-    root_type.name = "Query"
-    root_type.description = "The query root"
-    root_type.interfaces = []
-    root_type.fields = Util::FieldCombiner.combine([
-      QueryTypes::GoalQueryType,
-      QueryTypes::GuidelineQueryType,
-      QueryTypes::KudosMeterQueryType,
-      QueryTypes::PostQueryType,
-      QueryTypes::PostReceiverQueryType,
-      QueryTypes::TeamQueryType,
-      QueryTypes::TeamMemberQueryType,
-      QueryTypes::UserQueryType,
-      QueryTypes::ViewerQueryType
-    ])
+  class QueryType < BaseObject
+    guard ->(_obj, _args, ctx) { ctx[:current_user].present? }
+
+    field :team_by_id, resolver: Queries::TeamByIdQuery
+
+    field :viewer, resolver: Queries::ViewerQuery
   end
 end

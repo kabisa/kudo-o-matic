@@ -10,8 +10,6 @@ require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 require "database_cleaner"
 
-# shared context
-require "support/graphql/client"
 # custom matcher for ActiveStorage
 require "support/matchers/have_attached_file"
 
@@ -56,6 +54,12 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     DatabaseCleaner.strategy = :transaction
+  end
+
+  def set_graphql_type
+    self.let(:subject) do
+      self.described_class
+    end
   end
 
   # start the transaction strategy as examples are run

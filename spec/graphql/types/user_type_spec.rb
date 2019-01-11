@@ -1,41 +1,49 @@
 # frozen_string_literal: true
 
 RSpec.describe Types::UserType do
-  types = GraphQL::Define::TypeDefiner.instance
+  set_graphql_type
 
   it "has an :id field of ID type" do
-    expect(subject).to have_field(:id).that_returns(!types.ID)
+    expect(subject.fields['id'].type.to_type_signature).to eq('ID!')
   end
 
   it "has a :name field of String type" do
-    expect(subject).to have_field(:name).that_returns(!types.String)
+    expect(subject.fields['name'].type.to_type_signature).to eq('String!')
   end
 
   it "has a :email field of EmailAddress type" do
-    expect(subject).to have_field(:email).that_returns(!Types::EmailAddress)
+    expect(subject.fields['email'].type.to_type_signature).to eq('EmailAddress!')
   end
 
   it "has a :sent_posts field of an array PostType" do
-    expect(subject).to have_field(:sentPosts).that_returns(!types[Types::PostType])
+    expect(subject.fields['sentPosts'].type.to_type_signature).to eq('[Post!]!')
   end
 
   it "has a :received_posts field of an array PostType" do
-    expect(subject).to have_field(:receivedPosts).that_returns(!types[Types::PostType])
+    expect(subject.fields['receivedPosts'].type.to_type_signature).to eq('[Post!]!')
   end
 
   it "has a :teamInvites field of an array TeamInviteType" do
-    expect(subject).to have_field(:teamInvites).that_returns(!types[Types::TeamInviteType])
+    expect(subject.fields['teamInvites'].type.to_type_signature).to eq('[TeamInvite!]!')
   end
 
   it "has a :teams field of an array TeamType" do
-    expect(subject).to have_field(:teams).that_returns(!types[Types::TeamType])
+    expect(subject.fields['teams'].type.to_type_signature).to eq('[Team!]!')
+  end
+
+  it "has a :teams field of an array TeamType!" do
+    expect(subject.fields['teams'].type.to_type_signature).to eq('[Team!]!')
   end
 
   it "has a :memberships field of an array TeamMemberType" do
-    expect(subject).to have_field(:memberships).that_returns(!types[Types::TeamMemberType])
+    expect(subject.fields['memberships'].type.to_type_signature).to eq('[TeamMember!]!')
   end
 
   it "has an :admin field of Boolean type" do
-    expect(subject).to have_field(:admin).that_returns(types.Boolean)
+    expect(subject.fields['admin'].type.to_type_signature).to eq('Boolean')
+  end
+
+  it "has an :virtual_user field of Boolean type" do
+    expect(subject.fields['virtualUser'].type.to_type_signature).to eq('Boolean')
   end
 end

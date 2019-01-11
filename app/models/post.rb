@@ -12,6 +12,8 @@ class Post < ApplicationRecord
       if: -> { image.attached? }
   }
 
+  validate :is_receiver_team_member?
+
   has_one_attached :image
 
   acts_as_votable
@@ -62,5 +64,15 @@ class Post < ApplicationRecord
       avatars << receiver.picture_url
     end
     avatars.join(", ")
+  end
+
+  private
+
+  def is_receiver_team_member?
+    receivers.each do |receiver|
+      errors.add(:receivers, ": One or more receivers is not a team member") unless receiver.member_of?(team)
+    end
+
+    return false if errors.any?
   end
 end
