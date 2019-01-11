@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Types
-  AuthProviderSigninInput = GraphQL::InputObjectType.define do
-    name "AUTH_PROVIDER_SIGNIN_INPUT"
+  class AuthProviderSigninInput < BaseInputObject
+    graphql_name "AUTH_PROVIDER_SIGNIN_INPUT"
 
-    argument :email, !Types::EmailAddress
-    argument :password, !types.String
+    argument :email, Types::EmailAddress, required: true
+    argument :password, String, required: true
   end
 end

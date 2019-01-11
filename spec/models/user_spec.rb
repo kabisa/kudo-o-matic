@@ -13,11 +13,21 @@ RSpec.describe User, type: :model do
   let(:user) { create(:user, :admin) }
   let(:user_2) { create(:user) }
   let(:team) { create(:team) }
+
+  before do
+    team.add_member(user)
+    team.add_member(user_2)
+  end
+
   let(:kudos_meter) { team.active_kudos_meter }
   let!(:post) { create(:post, sender: user, receivers: [user_2], team: team, kudos_meter: kudos_meter) }
   let!(:post_2) { create(:post, sender: user_2, receivers: [user], team: team, kudos_meter: kudos_meter) }
 
   describe "model destroy dependencies" do
+    before do
+      TeamMember.where(user: user).first.destroy
+    end
+
     it "should destroy dependent SentPosts" do
       expect { user.destroy }.to change { PostReceiver.count }
     end
@@ -30,7 +40,6 @@ RSpec.describe User, type: :model do
   describe "model validations" do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }
-    it { is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity }
     it "should validate content type of avatar" do
       skip("Create custom content type matcher")
     end
@@ -49,12 +58,11 @@ RSpec.describe User, type: :model do
 
   describe '#member_of?(team)' do
     it 'returns true if user is member of the team' do
-      team.add_member(user)
-
       expect(user.member_of?(team)).to be true
     end
 
     it 'returns false if user is not member of the team' do
+      TeamMember.where(user: user).first.destroy
       expect(user.member_of?(team)).to be false
     end
   end
@@ -67,12 +75,14 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns nil if user is not member of the team' do
+      TeamMember.where(user: user).first.destroy
       expect(user.member_since(team)).to be_nil
     end
   end
 
   describe '#admin_of?(team)' do
     it 'returns true if user is admin of the team' do
+      TeamMember.where(user: user).first.destroy
       team.add_member(user, 'admin')
 
       expect(user.admin_of?(team)).to be true
@@ -158,6 +168,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'returns false if user has not multiple teams' do
+      TeamMember.where(user: user).first.destroy
       team.add_member(user)
 
       expect(user.multiple_teams?).to be false

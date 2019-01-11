@@ -1,18 +1,25 @@
 # frozen_string_literal: true
 
 RSpec.describe Types::PostReceiverType do
-  # available type definer in tests
-  types = GraphQL::Define::TypeDefiner.instance
+  set_graphql_type
 
   it "has an :id field of ID type" do
-    expect(subject).to have_field(:id).that_returns(!types.ID)
+    expect(subject.fields['id'].type.to_type_signature).to eq('ID!')
   end
 
-  it "has an :user_id field of UserType" do
-    expect(subject).to have_field(:userId).that_returns(!Types::UserType)
+  it "has an :user field of UserType" do
+    expect(subject.fields['user'].type.to_type_signature).to eq('User!')
   end
 
-  it "has an :post_id field of PostType" do
-    expect(subject).to have_field(:postId).that_returns(!Types::PostType)
+  it "has an :post field of PostType" do
+    expect(subject.fields['post'].type.to_type_signature).to eq('Post!')
+  end
+
+  it "has a :created_at field of ISO8601DateTime type" do
+    expect(subject.fields['createdAt'].type.to_type_signature).to eq('ISO8601DateTime!')
+  end
+
+  it "has a :updated_at field of ISO8601DateTime type" do
+    expect(subject.fields['updatedAt'].type.to_type_signature).to eq('ISO8601DateTime!')
   end
 end

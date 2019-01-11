@@ -3,6 +3,11 @@ RSpec.describe PostMailer, type: :mailer do
     let(:team) { create(:team) }
     let(:kudos_meter) { create(:kudos_meter, team: team) }
     let(:user) { (create :user, name: 'John Doe', email: 'johndoe@example.com') }
+
+    before do
+      team.add_member(user)
+    end
+
     let!(:post) { create(:post, sender: user, receivers: [user], team: team, kudos_meter: kudos_meter) }
     let(:mail) { described_class.post_email(user, post) }
 

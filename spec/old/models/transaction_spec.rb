@@ -29,6 +29,11 @@ describe Post do
   context "given a receiver" do
     let(:user) { create(:user, avatar_url: "/kabisa_lizard.png") }
     let(:team) { create(:team) }
+
+    before do
+      team.add_member(user)
+    end
+
     let(:kudos_meter) { team.active_kudos_meter }
     let(:post) { create(:post, sender: user, receivers: [user], team: team, kudos_meter: kudos_meter) }
 

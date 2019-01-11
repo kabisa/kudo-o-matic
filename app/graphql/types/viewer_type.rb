@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 module Types
-  ViewerType = GraphQL::ObjectType.define do
-    name "ViewerType"
+  class ViewerType < Types::BaseObject
+    graphql_name 'Viewer'
 
-    field :self, Types::UserType do
-      resolve ->(object, _a, _c) do
-        object
-      end
-    end
+    field :self, UserType,
+          null: false,
+          description: 'The current user',
+          resolve: ->(obj, _args, _ctx) { obj }
   end
 end

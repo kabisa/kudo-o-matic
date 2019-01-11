@@ -4,6 +4,12 @@ RSpec.describe Post, type: :model do
   let(:user) { create(:user) }
   let(:users) { create_list(:user, 4) }
   let(:team) { create(:team) }
+
+  before do
+    team.add_member(user)
+    users.each { |user| team.add_member(user) }
+  end
+
   let(:kudos_meter) { team.active_kudos_meter }
 
   it "should have a valid factory" do
@@ -47,8 +53,18 @@ RSpec.describe Post, type: :model do
     it { is_expected.to have_many(:votes).with_foreign_key("votable_id") }
   end
 
-  describe "model delegations" do
-    it { should delegate_method(:name).to(:sender).with_prefix(true) }
+  describe "validation #is_receiver_team_member?" do
+    it 'should validate if all receivers are member of the team' do
+      new_user = create(:user)
+      expect do
+        create(:post, sender: user, receivers: [new_user], team: team, kudos_meter: kudos_meter)
+      end.to raise_error(ActiveRecord::RecordInvalid)
+
+    end
+  end
+
+  describe 'custom validations' do
+
   end
 
   describe '#kudos_amount' do

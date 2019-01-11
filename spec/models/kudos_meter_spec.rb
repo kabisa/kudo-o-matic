@@ -5,6 +5,11 @@ RSpec.describe KudosMeter, type: :model do
   let(:team) { create(:team) }
   let!(:kudos_meter) { team.active_kudos_meter }
   let!(:goal) { team.current_goals }
+
+  before do
+    users.each { |user| team.add_member(user) }
+  end
+
   let!(:post) { create(:post, sender: users.first, receivers: [users.second], kudos_meter: kudos_meter, team: team) }
   let!(:vote) { create(:vote, voter_id: users.first.id, voter_type: "User", votable_id: post.id, votable_type: "Post") }
   let!(:vote_2) { create(:vote, voter_id: users.second.id, voter_type: "User", votable_id: post.id, votable_type: "Post") }

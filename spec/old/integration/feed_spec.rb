@@ -16,6 +16,12 @@ describe "/feed", type: :request do
   context "given many posts" do
     let(:user) { create(:user) }
     let(:user_2) { create(:user) }
+
+    before do
+      team.add_member(user)
+      team.add_member(user_2)
+    end
+
     let(:kudos_meter) { create :kudos_meter, team: team }
     let!(:posts) { create_list(:post, 26, sender: user, receivers: [user, user_2], kudos_meter: kudos_meter, created_at: Date.yesterday.to_time, team: team) }
 

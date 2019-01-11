@@ -1,17 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe Types::ViewerType do
-  # available type definer in our tests
-  types = GraphQL::Define::TypeDefiner.instance
+  set_graphql_type
 
-  it "has an :self field of UserType" do
-    expect(subject).to have_field(:self).that_returns(Types::UserType)
-  end
-
-  it "returns an user object" do
-    user = create(:user)
-    query_result = subject.fields["self"].resolve(user, nil, nil)
-
-    expect(query_result).to eq(user)
+  it "has a :self field of UserType!" do
+    expect(subject.fields['self'].type.to_type_signature).to eq('User!')
   end
 end

@@ -7,6 +7,11 @@ describe KudosMeterDecorator do
   let!(:next_goal) { create :goal, amount: 1000 }
   let(:team) { create :team }
   let(:user) { create(:user, avatar_url: "/kabisa_lizard.png") }
+
+  before do
+    team.add_member(user)
+  end
+
   let(:kudos_meter) { team.active_kudos_meter }
   let!(:post) { create(:post, sender: user, receivers: [user], amount: 100, team_id: team.id, kudos_meter: kudos_meter) }
   let!(:post_2) { create(:post, sender: user, receivers: [user],  amount: 100, team_id: team.id, kudos_meter: kudos_meter) }

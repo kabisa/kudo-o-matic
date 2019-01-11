@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Types
-  AuthenticateType = GraphQL::ObjectType.define do
-    name "Authenticate"
+  class AuthenticateType < BaseObject
+    graphql_name "Authenticate"
 
-    field :token, types.String
-    field :user, Types::UserType
+    field :token, String, null: true
+    field :user, Types::UserType, null: true
   end
 end
