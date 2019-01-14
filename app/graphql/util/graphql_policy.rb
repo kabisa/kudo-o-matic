@@ -57,6 +57,30 @@ module Util
           return false unless current_user.present?
 
           current_user.admin? || team_invite.email == current_user.email
+        end,
+        updateGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Guideline.find(args[:guidelineId]).team
+          
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Guideline.find(args[:guidelineId]).team
+          
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        createGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
         end
       },
       #################

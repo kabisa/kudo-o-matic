@@ -2,6 +2,11 @@
 
 module Types
   class MutationType < BaseObject
+    ### Guideline
+    field :create_guideline, mutation: Mutations::Guideline::CreateGuideline
+    field :delete_guideline, mutation: Mutations::Guideline::DeleteGuideline
+    field :update_guideline, mutation: Mutations::Guideline::UpdateGuideline
+
     ### Post
     field :create_post, mutation: Mutations::Post::CreatePost
     field :delete_post, mutation: Mutations::Post::DeletePost
