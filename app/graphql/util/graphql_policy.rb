@@ -4,7 +4,7 @@ module Util
   class GraphqlPolicy
     RULES = {
       #################
-      # UserMutations
+      # Mutations
       #################
       Types::MutationType => {
         resetPassword: ->(_obj, _args, ctx) { ctx[:current_user].present? },
@@ -52,11 +52,20 @@ module Util
           current_user.admin? || team_invite.email == current_user.email
         end,
         declineTeamInvite: ->(_obj, args, ctx) do
-          team_invite = TeamInvite.find(args[:teamInviteId])
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
+          team_invite = TeamInvite.find(args[:teamInviteId])
+
           current_user.admin? || team_invite.email == current_user.email
+        end,
+        updateTeamMemberRole: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
         end,
         updateGuideline: ->(_obj, args, ctx) do
           current_user = ctx[:current_user]
