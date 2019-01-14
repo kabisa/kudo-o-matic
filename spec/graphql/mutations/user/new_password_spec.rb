@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mutations::NewPasswordMutation do
+RSpec.describe Mutations::User::NewPassword do
   set_graphql_type
 
   let!(:user) { create(:user) }

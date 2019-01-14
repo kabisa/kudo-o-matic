@@ -1,5 +1,5 @@
 module Mutations
-  class DeletePostMutation < BaseMutation
+  class Post::DeletePost < BaseMutation
     null true
 
     argument :id, ID, required: true, description: 'The ID of the post you want to delete'
@@ -8,7 +8,7 @@ module Mutations
     field :errors, [String], null: false
 
     def resolve(id:)
-      post = Post.find(id)
+      post = ::Post.find(id)
 
       if post.destroy
         { post_id: id, errors: [] }

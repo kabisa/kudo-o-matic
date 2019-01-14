@@ -1,5 +1,5 @@
 module Mutations
-  class ForgotPasswordMutation < BaseMutation
+  class User::ForgotPassword < BaseMutation
     null true
 
     argument :credentials, Types::AuthProviderEmailInput, required: false
@@ -7,7 +7,7 @@ module Mutations
     field :email, Types::EmailAddress, null: true
 
     def resolve(credentials:)
-      user = User.find_by(email: credentials[:email])
+      user = ::User.find_by(email: credentials[:email])
 
       user&.send_reset_password_instructions
 

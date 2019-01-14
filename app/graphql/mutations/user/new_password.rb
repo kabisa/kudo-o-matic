@@ -1,5 +1,5 @@
 module Mutations
-  class NewPasswordMutation < BaseMutation
+  class User::NewPassword < BaseMutation
     null true
 
     argument :reset_password_token, String, required: false
@@ -10,7 +10,7 @@ module Mutations
     field :errors, [String], null: false
 
     def resolve(reset_password_token:, password:, password_confirmation:)
-      user = User.reset_password_by_token(
+      user = ::User.reset_password_by_token(
         reset_password_token: reset_password_token,
         password: password,
         password_confirmation: password_confirmation
@@ -18,15 +18,9 @@ module Mutations
 
       # reset_password_by_token returns a new user if no user is found
       if user.id.nil?
-        {
-          user: nil,
-          errors: user.errors.full_messages
-        }
+        { user: nil, errors: user.errors.full_messages }
       else
-        {
-          user: user,
-          errors: []
-        }
+        { user: user, errors: [] }
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mutations::AcceptTeamInviteMutation do
+RSpec.describe Mutations::TeamInvite::DeclineInvite do
   set_graphql_type
 
   let(:user) { create(:user) }
@@ -19,7 +19,7 @@ RSpec.describe Mutations::AcceptTeamInviteMutation do
   end
 
   let(:mutation_string) do
-    %( mutation { acceptTeamInvite(
+    %( mutation { declineTeamInvite(
       teamInviteId: "#{variables[:team_invite_id]}"
     ) { teamInvite { email team { id } } errors } } )
   end
@@ -34,34 +34,38 @@ RSpec.describe Mutations::AcceptTeamInviteMutation do
         user.update(admin: true)
       end
 
-      it 'can accept team invites' do
-        expect { result }.to change { team.users.count }.by(1)
+      it 'can decline team invites' do
+        result
+        team_invite_2.reload
+        expect(team_invite_2).to_not be_nil
       end
 
       it 'returns no errors' do
-        expect(result['data']['acceptTeamInvite']['errors']).to be_empty
+        expect(result['data']['declineTeamInvite']['errors']).to be_empty
       end
     end
 
     describe 'user is invited user' do
-      it 'can accept team invites' do
-        expect { result }.to change { team.users.count }.by(1)
+      it 'can decline team invites' do
+        result
+        team_invite_2.reload
+        expect(team_invite_2).to_not be_nil
       end
 
       it 'returns no errors' do
-        expect(result['data']['acceptTeamInvite']['errors']).to be_empty
+        expect(result['data']['declineTeamInvite']['errors']).to be_empty
       end
     end
 
     describe 'user is not invited user' do
       let(:variables) { { team_invite_id: team_invite_2.id } }
 
-      it 'can\'t accept the team invite' do
-        expect(result['data']['acceptTeamInvite']).to be_nil
+      it 'can\'t decline the team invite' do
+        expect(result['data']['declineTeamInvite']).to be_nil
       end
 
-      it 'returns a not authorized error for Mutation.acceptTeamInvite' do
-        expect(result['errors'].first['message']).to eq('Not authorized to access Mutation.acceptTeamInvite')
+      it 'returns a not authorized error for Mutation.declineTeamInvite' do
+        expect(result['errors'].first['message']).to eq('Not authorized to access Mutation.declineTeamInvite')
       end
     end
   end
@@ -69,12 +73,12 @@ RSpec.describe Mutations::AcceptTeamInviteMutation do
   context 'not authenticated' do
     let(:context) { { current_user: nil } }
 
-    it 'can\'t accept team invites' do
-      expect(result['data']['acceptTeamInvite']).to be_nil
+    it 'can\'t decline team invites' do
+      expect(result['data']['declineTeamInvite']).to be_nil
     end
 
-    it 'returns a not authorized error for Mutation.acceptTeamInvite' do
-      expect(result['errors'].first['message']).to eq('Not authorized to access Mutation.acceptTeamInvite')
+    it 'returns a not authorized error for Mutation.declineTeamInvite' do
+      expect(result['errors'].first['message']).to eq('Not authorized to access Mutation.declineTeamInvite')
     end
   end
 end

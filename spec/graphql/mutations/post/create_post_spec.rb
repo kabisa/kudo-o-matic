@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mutations::CreatePostMutation do
+RSpec.describe Mutations::Post::CreatePost do
   set_graphql_type
 
   let!(:user) { create(:user) }

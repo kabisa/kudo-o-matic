@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mutations::CreateTeamInviteMutation do
+RSpec.describe Mutations::TeamInvite::CreateInvite do
   set_graphql_type
 
   let(:user) { create(:user) }

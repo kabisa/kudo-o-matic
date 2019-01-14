@@ -1,5 +1,5 @@
 module Mutations
-  class SignUpUserMutation < BaseMutation
+  class User::SignUp < BaseMutation
     null true
 
     argument :credentials, Types::AuthProviderSignupInput, required: false
@@ -8,7 +8,7 @@ module Mutations
     field :errors, [String], null: false
 
     def resolve(credentials:)
-      user = User.new(
+      user = ::User.new(
         name: credentials[:name],
         email: credentials[:email],
         password: credentials[:password],
@@ -16,15 +16,9 @@ module Mutations
       )
 
       if user.save
-        {
-          authenticate_data: OpenStruct.new(token: AuthToken.new.token(user), user: user),
-          errors: []
-        }
+        { authenticate_data: OpenStruct.new(token: AuthToken.new.token(user), user: user), errors: [] }
       else
-        {
-          authenticate_data: nil,
-          errors: user.errors.full_messages
-        }
+        { authenticate_data: nil, errors: user.errors.full_messages }
       end
     end
   end

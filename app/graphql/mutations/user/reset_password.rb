@@ -1,5 +1,5 @@
 module Mutations
-  class ResetPasswordMutation < BaseMutation
+  class User::ResetPassword < BaseMutation
     null true
 
     argument :current_password, String, required: false
@@ -16,16 +16,10 @@ module Mutations
         if user.reset_password(new_password, new_password_confirmation)
           { user: user, errors: [] }
         else
-          {
-            user: nil,
-            errors: ['New password is not matching, please try again']
-          }
+          { user: nil, errors: ['New password is not matching, please try again'] }
         end
       else
-        {
-          user: nil,
-          errors: ['Incorrect current password, please try again']
-        }
+        { user: nil, errors: ['Incorrect current password, please try again'] }
       end
     end
   end

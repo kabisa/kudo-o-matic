@@ -2,22 +2,26 @@
 
 module Types
   class MutationType < BaseObject
-    field :sign_up_user, mutation: Mutations::SignUpUserMutation
-    field :sign_in_user, mutation: Mutations::SignInUserMutation
+    ### Post
+    field :create_post, mutation: Mutations::Post::CreatePost
+    field :delete_post, mutation: Mutations::Post::DeletePost
 
-    field :accept_team_invite, mutation: Mutations::AcceptTeamInviteMutation
-    field :decline_team_invite, mutation: Mutations::DeclineTeamInviteMutation
+    ### Team
+    field :create_team, mutation: Mutations::Team::CreateTeam
 
-    field :forgot_password, mutation: Mutations::ForgotPasswordMutation
-    field :new_password, mutation: Mutations::NewPasswordMutation
-    field :reset_password, mutation: Mutations::ResetPasswordMutation
+    ### TeamInvite
+    field :create_team_invite, mutation: Mutations::TeamInvite::CreateInvite
+    field :accept_team_invite, mutation: Mutations::TeamInvite::AcceptInvite
+    field :decline_team_invite, mutation: Mutations::TeamInvite::DeclineInvite
 
-    field :create_post, mutation: Mutations::CreatePostMutation
-    field :delete_post, mutation: Mutations::DeletePostMutation
+    ### User
+    field :forgot_password, mutation: Mutations::User::ForgotPassword
+    field :new_password, mutation: Mutations::User::NewPassword
+    field :reset_password, mutation: Mutations::User::ResetPassword
+    field :sign_in_user, mutation: Mutations::User::SignIn
+    field :sign_up_user, mutation: Mutations::User::SignUp
 
-    field :create_team, mutation: Mutations::CreateTeamMutation
-    field :create_team_invite, mutation: Mutations::CreateTeamInviteMutation
-
-    field :toggle_like_post, mutation: Mutations::ToggleLikePostMutation
+    ### Vote
+    field :toggle_like_post, mutation: Mutations::Vote::ToggleLikePost
   end
 end

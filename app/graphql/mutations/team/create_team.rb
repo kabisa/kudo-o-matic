@@ -1,5 +1,5 @@
 module Mutations
-  class CreateTeamMutation < BaseMutation
+  class Team::CreateTeam < BaseMutation
     null true
 
     argument :name, String, required: true, description: 'The name of the team to create'
@@ -8,7 +8,7 @@ module Mutations
     field :errors, [String], null: false
 
     def resolve(name:)
-      team = Team.new(name: name)
+      team = ::Team.new(name: name)
 
       if team.save
         team.add_member(context[:current_user], 'admin')

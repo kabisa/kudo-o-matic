@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mutations::SignUpUserMutation do
+RSpec.describe Mutations::User::SignIn do
   set_graphql_type
 
   let(:context) { {} }

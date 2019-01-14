@@ -1,5 +1,5 @@
 module Mutations
-  class CreatePostMutation < BaseMutation
+  class Post::CreatePost < BaseMutation
     null true
 
     argument :message, String, required: false, description: 'The reason you are giving kudos'
@@ -12,13 +12,13 @@ module Mutations
     field :errors, [String], null: false
 
     def resolve(**kwargs)
-      team = Team.find(kwargs[:team_id])
+      team = ::Team.find(kwargs[:team_id])
       receivers = []
       receiver_ids = kwargs[:receiver_ids]
 
       unless receiver_ids.blank?
         receiver_ids.each do |receiver|
-          receivers << User.find(receiver)
+          receivers << ::User.find(receiver)
         end
       end
 
@@ -26,10 +26,7 @@ module Mutations
 
       unless null_receivers.blank?
         null_receivers.each do |receiver|
-          user = User.new(
-            name: receiver,
-            virtual_user: true
-          )
+          user = ::User.new(name: receiver, virtual_user: true)
 
           user.save
           team.add_member(user)
@@ -37,7 +34,7 @@ module Mutations
         end
       end
 
-      post = Post.new(
+      post = ::Post.new(
         message: kwargs[:message],
         amount: kwargs[:amount],
         sender: context[:current_user],

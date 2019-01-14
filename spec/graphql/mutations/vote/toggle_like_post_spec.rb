@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mutations::ToggleLikePostMutation do
+RSpec.describe Mutations::Vote::ToggleLikePost do
   set_graphql_type
 
   before do
