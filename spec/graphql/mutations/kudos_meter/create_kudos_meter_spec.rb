@@ -9,9 +9,9 @@ RSpec.describe Mutations::KudosMeter::CreateKudosMeter do
   let(:variables) { { name: 'The kudos meter name', kudos: 5, team_id: team.id } }
   let(:result) do
     res = KudoOMaticSchema.execute(
-        mutation_string,
-        context: context,
-        variables: variables
+      mutation_string,
+      context: context,
+      variables: variables
     )
     res
   end
