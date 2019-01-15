@@ -10,7 +10,7 @@ module Types
     ### KudosMeter
     field :create_kudos_meter, mutation: Mutations::KudosMeter::CreateKudosMeter
     field :delete_kudos_meter, mutation: Mutations::KudosMeter::DeleteKudosMeter
-    # field :update_kudos_meter, mutation: Mutations::KudosMeter::UpdateKudosMeter
+    field :update_kudos_meter, mutation: Mutations::KudosMeter::UpdateKudosMeter
 
     ### Post
     field :create_post, mutation: Mutations::Post::CreatePost
