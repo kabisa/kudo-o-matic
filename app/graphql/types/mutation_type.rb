@@ -9,7 +9,7 @@ module Types
 
     ### Goal
     field :create_goal, mutation: Mutations::Goal::CreateGoal
-    # field :delete_goal, mutation: Mutations::Goal::DeleteGoal
+    field :delete_goal, mutation: Mutations::Goal::DeleteGoal
     # field :update_goal, mutation: Mutations::Goal::UpdateGoal
 
     ### KudosMeter
