@@ -26,6 +26,7 @@ module Types
 
     ### TeamInvite
     field :create_team_invite, mutation: Mutations::TeamInvite::CreateInvite
+    field :delete_team_invite, mutation: Mutations::TeamInvite::DeleteInvite
     field :accept_team_invite, mutation: Mutations::TeamInvite::AcceptInvite
     field :decline_team_invite, mutation: Mutations::TeamInvite::DeclineInvite
     
