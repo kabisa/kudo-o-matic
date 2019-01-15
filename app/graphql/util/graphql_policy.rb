@@ -111,6 +111,14 @@ module Util
 
         ### Team
         createTeam: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+        updateTeam: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
 
         ### TeamInvite
         createTeamInvite: ->(_obj, args, ctx) do
