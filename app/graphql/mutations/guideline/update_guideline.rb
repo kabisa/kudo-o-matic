@@ -4,7 +4,7 @@ module Mutations
 
     argument :guideline_id, ID, required: true, description: 'The ID of the guideline to update'
     argument :name, String, required: true, description: 'The name of the guideline to update'
-    argument :kudos, ID, required: true, description: 'The suggest kudos of the guideline to update'
+    argument :kudos, Int, required: true, description: 'The suggest kudos of the guideline to update'
 
     field :guideline, Types::GuidelineType, null: true
     field :errors, [String], null: false
