@@ -7,6 +7,11 @@ module Types
     field :delete_guideline, mutation: Mutations::Guideline::DeleteGuideline
     field :update_guideline, mutation: Mutations::Guideline::UpdateGuideline
 
+    ### Goal
+    field :create_goal, mutation: Mutations::Goal::CreateGoal
+    field :delete_goal, mutation: Mutations::Goal::DeleteGoal
+    field :update_goal, mutation: Mutations::Goal::UpdateGoal
+
     ### KudosMeter
     field :create_kudos_meter, mutation: Mutations::KudosMeter::CreateKudosMeter
     field :delete_kudos_meter, mutation: Mutations::KudosMeter::DeleteKudosMeter

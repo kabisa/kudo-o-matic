@@ -34,6 +34,32 @@ module Util
           current_user.admin? || current_user.admin_of?(team)
         end,
 
+        ### Goal
+        createGoal: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = KudosMeter.find(args[:kudosMeterId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteGoal: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Goal.find(args[:goalId]).kudos_meter.team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        updateGoal: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Goal.find(args[:goalId]).kudos_meter.team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+
         ### KudosMeter
         createKudosMeter: ->(_obj, args, ctx) do
           current_user = ctx[:current_user]
