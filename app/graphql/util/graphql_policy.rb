@@ -122,9 +122,18 @@ module Util
 
         ### TeamInvite
         createTeamInvite: ->(_obj, args, ctx) do
-          team = Team.find(args[:teamId])
           current_user = ctx[:current_user]
           return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteTeamInvite: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = TeamInvite.find(args[:teamInviteId]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
