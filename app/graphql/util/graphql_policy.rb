@@ -7,8 +7,60 @@ module Util
       # Mutations
       #################
       Types::MutationType => {
-        resetPassword: ->(_obj, _args, ctx) { ctx[:current_user].present? },
-        createTeam: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+
+        ### Guideline
+        createGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Guideline.find(args[:guidelineId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        updateGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Guideline.find(args[:guidelineId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+
+        ### KudosMeter
+        createKudosMeter: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteKudosMeter: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = KudosMeter.find(args[:kudosMeterId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        updateKudosMeter: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = KudosMeter.find(args[:kudosMeterId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+
+        ### Post
         createPost: ->(_obj, args, ctx) do
           team = Team.find(args[:teamId])
           current_user = ctx[:current_user]
@@ -30,13 +82,11 @@ module Util
             end
           end
         end,
-        toggleLikePost: ->(_obj, args, ctx) do
-          team = Post.find(args[:postId]).team
-          current_user = ctx[:current_user]
-          return false unless current_user.present?
 
-          current_user.admin? || current_user.member_of?(team)
-        end,
+        ### Team
+        createTeam: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+
+        ### TeamInvite
         createTeamInvite: ->(_obj, args, ctx) do
           team = Team.find(args[:teamId])
           current_user = ctx[:current_user]
@@ -59,6 +109,8 @@ module Util
 
           current_user.admin? || team_invite.email == current_user.email
         end,
+
+        ### TeamMember
         updateTeamMemberRole: ->(_obj, args, ctx) do
           current_user = ctx[:current_user]
           return false unless current_user.present?
@@ -67,29 +119,17 @@ module Util
 
           current_user.admin? || current_user.admin_of?(team)
         end,
-        updateGuideline: ->(_obj, args, ctx) do
+
+        ### User
+        resetPassword: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+
+        ### Vote
+        toggleLikePost: ->(_obj, args, ctx) do
+          team = Post.find(args[:postId]).team
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Guideline.find(args[:guidelineId]).team
-          
-          current_user.admin? || current_user.admin_of?(team)
-        end,
-        deleteGuideline: ->(_obj, args, ctx) do
-          current_user = ctx[:current_user]
-          return false unless current_user.present?
-
-          team = Guideline.find(args[:guidelineId]).team
-          
-          current_user.admin? || current_user.admin_of?(team)
-        end,
-        createGuideline: ->(_obj, args, ctx) do
-          current_user = ctx[:current_user]
-          return false unless current_user.present?
-
-          team = Team.find(args[:teamId])
-
-          current_user.admin? || current_user.admin_of?(team)
+          current_user.admin? || current_user.member_of?(team)
         end
       },
       #################
