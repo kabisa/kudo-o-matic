@@ -31,6 +31,7 @@ module Types
     field :decline_team_invite, mutation: Mutations::TeamInvite::DeclineInvite
     
     ### TeamMember
+    field :delete_team_member, mutation: Mutations::TeamMember::DeleteMember
     field :update_team_member_role, mutation: Mutations::TeamMember::UpdateRole
 
     ### User
