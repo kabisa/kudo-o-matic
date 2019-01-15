@@ -154,6 +154,14 @@ module Util
         end,
 
         ### TeamMember
+        deleteTeamMember: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = TeamMember.find(args[:id]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
         updateTeamMemberRole: ->(_obj, args, ctx) do
           current_user = ctx[:current_user]
           return false unless current_user.present?

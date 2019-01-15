@@ -31,20 +31,24 @@ RSpec.describe Types::TeamType do
     expect(subject.fields['activeKudosMeter'].type.to_type_signature).to eq('KudosMeter!')
   end
 
-  xit "has a :goals field of an array GoalType! type" do
-    expect(subject).to have_field(:kudosMeters).that_returns(!types[Types::KudosMeterType])
+  it "has a :goals field of an array GoalType! type" do
+    expect(subject.fields['goals'].type.to_type_signature).to eq('[Goal!]!')
   end
 
-  xit "has a :activeGoals field of an array GoalType! type" do
-    expect(subject).to have_field(:activeGoals).that_returns(!types[Types::GoalType])
+  it "has a :activeGoals field of an array GoalType! type" do
+    expect(subject.fields['activeGoals'].type.to_type_signature).to eq('[Goal!]!')
+  end
+
+  it "has a :memberships field of an array TeamMemberType!" do
+    expect(subject.fields['memberships'].type.to_type_signature).to eq('[TeamMember!]!')
   end
 
   it "has a :teamInvites field of an array TeamInviteType!" do
     expect(subject.fields['teamInvites'].type.to_type_signature).to eq('[TeamInvite!]!')
   end
 
-  xit "has a :guidelines field of an array GuidelineType! type" do
-    expect(subject).to have_field(:guidelines).that_returns(!types[Types::GuidelineType])
+  it "has a :guidelines field of an array GuidelineType! type" do
+    expect(subject.fields['guidelines'].type.to_type_signature).to eq('[Guideline!]!')
   end
 
   it "has a :created_at field of ISO8601DateTime type" do
