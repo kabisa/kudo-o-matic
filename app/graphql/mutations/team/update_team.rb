@@ -3,7 +3,7 @@ module Mutations
     null true
 
     argument :name, String, required: true, description: 'The updated name of the team'
-    argument :team_id, String, required: true, description: 'The ID of the team to update'
+    argument :team_id, ID, required: true, description: 'The ID of the team to update'
 
     field :team, Types::TeamType, null: true
     field :errors, [String], null: false
