@@ -11,9 +11,8 @@ module Mutations
 
     def resolve(id:)
       team_member = ::TeamMember.find(id)
-      team = team_member.team
 
-      if team.remove_member(team_member.user)
+      if team_member.destroy
         { team_member_id: team_member.id, errors: [] }
       else
         { team_member_id: nil, errors: team_member.errors.full_messages }

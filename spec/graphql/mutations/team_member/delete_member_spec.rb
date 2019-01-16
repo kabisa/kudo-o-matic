@@ -61,6 +61,18 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
       end
     end
 
+    describe 'user is last team admin' do
+      before do
+        team.add_member(user, 'admin')
+      end
+
+      let(:variables) { { id: TeamMember.find_by_user_id(user.id).id } }
+
+      it 'can\'t delete a team member if that member is the only team admin' do
+        expect(result['data']['deleteTeamMember']['errors'].first).to eq("Role 'admin' should be assigned to at least 1 other team member.")
+      end
+    end
+
     describe 'user is team member' do
       before do
         team.add_member(user)
