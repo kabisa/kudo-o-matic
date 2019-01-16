@@ -48,9 +48,21 @@ class Team < ApplicationRecord
   end
 
   def remove_member(user)
+    team_member = TeamMember.find_by_user_id_and_team_id(user.id, id)
+
+    Team.check_if_last_team_admin?(team_member)
+
+    return team_member.errors.full_messages if team_member.errors.any?
+
     transaction do
-      TeamMember.find_by_user_id_and_team_id(user.id, id).delete
+      team_member.delete
       TeamInvite.where(email: user.email, team_id: id).delete_all
+    end
+  end
+
+  def self.check_if_last_team_admin?(team_member)
+    if team_member.role == 'admin' && TeamMember.where(team_id: team_member.team_id, role: 'admin').count == 1
+      team_member.errors.add(:role, "'admin' should be assigned to at least 1 other team member.")
     end
   end
 

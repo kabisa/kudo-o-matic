@@ -55,6 +55,7 @@ RSpec.describe Team, type: :model do
   end
 
   let!(:user) { create(:user) }
+  let!(:users) { create_list(:user, 3) }
 
   describe "#add_member(user, admin = false)" do
     it 'creates a new TeamMember' do
@@ -83,12 +84,27 @@ RSpec.describe Team, type: :model do
       end
 
       it 'removes a TeamMember with admin rights' do
+        team.add_member(users.first, 'admin')
+
         team_invite = TeamInvite.create(email: user.email, team: team)
         team_invite.accept
+        team_member = TeamMember.find_by_user_id_and_team_id(user.id, team.id)
+        team_member.update(role: 'admin')
 
         team.remove_member(user)
 
         expect(team.member?(user)).to be false
+      end
+
+      it 'can\'t remove a TeamMember with admin rights that is the only admin' do
+        team_invite = TeamInvite.create(email: user.email, team: team)
+        team_invite.accept
+        team_member = TeamMember.find_by_user_id_and_team_id(user.id, team.id)
+        team_member.update(role: 'admin')
+
+        team.remove_member(user)
+
+        expect(team.member?(user)).to be true
       end
     end
 

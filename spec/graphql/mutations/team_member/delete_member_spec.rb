@@ -11,7 +11,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
     users.each { |user| team.add_member(user) }
   end
 
-  let(:variables) { { id: team.memberships.last.id } }
+  let(:variables) { { id: team.memberships.second.id } }
 
   let(:result) do
     res = KudoOMaticSchema.execute(

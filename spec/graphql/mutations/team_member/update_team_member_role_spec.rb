@@ -65,6 +65,18 @@ RSpec.describe Mutations::TeamMember::UpdateRole do
       end
     end
 
+    describe 'user is last team admin' do
+      before do
+        team.add_member(user, 'admin')
+      end
+
+      let(:variables) { { role: 'member', user_id: user.id, team_id: team.id } }
+
+      it 'can\'t update a team member if that member is the only team admin' do
+        expect(result['data']['updateTeamMemberRole']['errors'].first).to eq("Role 'admin' should be assigned to at least 1 other team member.")
+      end
+    end
+
     describe 'user is team member' do
       before do
         team.add_member(user)
