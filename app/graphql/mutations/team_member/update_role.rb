@@ -13,8 +13,9 @@ module Mutations
 
     def resolve(role:, user_id:, team_id:)
       team_member = ::TeamMember.find_by_user_id_and_team_id(user_id, team_id)
+      team_member.role = role
 
-      if team_member.update(role: role)
+      if team_member.save
         { team_member: team_member, errors: [] }
       else
         { team_member: nil, errors: team_member.errors.full_messages }
