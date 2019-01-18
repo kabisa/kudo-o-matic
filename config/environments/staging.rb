@@ -1,20 +1,15 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # paperclip S3
-  config.paperclip_defaults = {
-      storage: :s3,
-      s3_protocol: :https,
-      bucket: ENV["AWS_S3_BUCKET"],
-      s3_credentials: {
-          s3_host_name: ENV["AWS_S3_HOST_NAME"],
-          s3_region: ENV["AWS_S3_REGION"],
-          access_key_id: ENV["AWS_ACCESS_KEY_ID"],
-          secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"],
-          path: "image/:id/:filename",
-          url: ':s3_domain_url'
-      }
-  }
+  # Sentry
+  Raven.configure do |config|
+    config.dsn = ENV['SENTRY_DSN']
+  end
+
+  # Store files on amazon.
+  config.active_storage.service = :amazon
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -31,7 +26,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -74,15 +69,15 @@ Rails.application.configure do
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
-      address: ENV['MAIL_ADDRESS'],
-      port: ENV['MAIL_PORT'] || 587,
-      user_name: ENV['MAIL_USERNAME'],
-      password: ENV['MAIL_PASSWORD'],
-      authentication: ENV['MAIL_AUTHENTICATION'] || 'plain',
-      enable_starttls_auto: ENV['MAIL_ENABLE_STARTTLS_AUTO'] || true,
+      address: ENV["MAIL_ADDRESS"],
+      port: ENV["MAIL_PORT"] || 587,
+      user_name: ENV["MAIL_USERNAME"],
+      password: ENV["MAIL_PASSWORD"],
+      authentication: ENV["MAIL_AUTHENTICATION"] || "plain",
+      enable_starttls_auto: ENV["MAIL_ENABLE_STARTTLS_AUTO"] || true,
   }
 
-  config.action_mailer.default_url_options = {host: 'kudo-o-matic-staging.dokku.kabisa.io'}
+  config.action_mailer.default_url_options = { host: "kudo-o-matic-staging.dokku.kabisa.io" }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

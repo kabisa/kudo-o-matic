@@ -1,6 +1,8 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
 
-class BalanceDashboard < Administrate::BaseDashboard
+require "administrate/base_dashboard"
+
+class KudosMeterDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -13,7 +15,7 @@ class BalanceDashboard < Administrate::BaseDashboard
       current: Field::Boolean,
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      transactions: Field::HasMany
+      posts: Field::HasMany
   }
 
   # COLLECTION_ATTRIBUTES
@@ -25,7 +27,7 @@ class BalanceDashboard < Administrate::BaseDashboard
       :id,
       :name,
       :current,
-      :transactions
+      :posts
   ]
 
   # SHOW_PAGE_ATTRIBUTES
@@ -36,7 +38,7 @@ class BalanceDashboard < Administrate::BaseDashboard
       :current,
       :created_at,
       :updated_at,
-      :transactions
+      :posts
   ]
 
   # FORM_ATTRIBUTES
@@ -47,9 +49,9 @@ class BalanceDashboard < Administrate::BaseDashboard
       :current
   ]
 
-  # Overwrite this method to customize how balances are displayed
+  # Overwrite this method to customize how kudos_meters are displayed
   # across all pages of the admin dashboard.
-  def display_resource(balance)
-    balance.name
+  def display_resource(kudos_meter)
+    kudos_meter.name
   end
 end

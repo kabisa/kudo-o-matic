@@ -2,16 +2,11 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  before_action :set_raven_context
   around_action :catch_not_found
-  before_action :authenticate_user!
-  before_action :configure_permitted_parameters, if: :devise_controller?
   helper_method :current_team
-  rescue_from ActionController::InvalidAuthenticityToken, with: :handle_token_issues
 
-  def handle_token_issues
-    redirect_to(root_path)
-  end
-
+  def index; end
 
   def new_session_path(_scope)
     new_user_session_path
@@ -19,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def check_team_membership
     unless current_user.member_of?(current_team)
-      render 'teams/access_denied', status: 403
+      render "teams/access_denied", status: 403
     end
   end
 
@@ -33,23 +28,20 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  # Set custom fields for registration form
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys:
-        %i[name email password password_confirmation])
-    devise_parameter_sanitizer.permit(:account_update, keys:
-        %i[name email password password_confirmation])
-  end
-
   def team_by_slug
     Team.friendly.find(params[:team]) if params[:team]
   end
 
   private
 
+  def set_raven_context
+    Raven.user_context(id: session[:current_user_id]) # or anything else in session
+    Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+  end
+
   def catch_not_found
     yield
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_url
+    raise ActiveRecord::RecordNotFound
   end
 end

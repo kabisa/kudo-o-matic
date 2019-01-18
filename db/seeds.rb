@@ -1,68 +1,149 @@
-require 'database_cleaner'
+# frozen_string_literal: true
+
+require "database_cleaner"
 
 DatabaseCleaner.clean_with(:truncation)
 
-adminUser = User.new
-adminUser.email = 'admin@example.com'
-adminUser.name = 'John Doe'
-adminUser.password = 'password'
-adminUser.password_confirmation = 'password'
-adminUser.admin = true
-adminUser.save!
+teams = ['Kabisa', 'Kiota', 'Dovetail']
 
-teamUser = User.new
-teamUser.email = 'ariejan@example.com'
-teamUser.name = 'Ariejan de Vroom'
-teamUser.password = 'password'
-teamUser.password_confirmation = 'password'
-teamUser.save!
-
-team = Team.create(name: "Test Team")
-
-team.add_member(adminUser, true)
-team.add_member(teamUser)
-
-GUIDELINES =
-    [['Margin / month super (>=15% ROS)', 500],
-     ['Turnover / month super (>= 350k)', 500],
-     ['Score a project of >50 hours', 250],
-     ['Margin / month fine (>= 10% ROS <=15%)', 200],
-     ['Turnover / month fine (>= 300k; <= 350k)', 200],
-     ['Get a client quote for the website', 100],
-     ['Margin / month reasonable (>= 5% ROS <= 10%)', 100],
-     ['New colleague', 100],
-     ['Speak at a conference', 100],
-     ['Turnover / month reasonable (>= 280k <= 300k)', 100],
-     ['Get a great client satisfaction score', 80],
-     ['Organize event for external relations (workshop, coderetreat)', 50],
-     ['Score consultancy project', 50],
-     ['BlogPost Inbound', 40],
-     ['Project RefCase', 40],
-     ['Get a client satisfaction score', 40],
-     ['Pizza Session', 40],
-     ['Introduce a new potential client (ZOHO)', 40],
-     ['Blog tech', 20],
-     ['Call for Proposal for a conference', 20],
-     ['Lunch&Learn', 20],
-     ['Visit conference', 20],
-     ['Be a special help for someone', 10],
-     ['Be a quick help for someone', 5],
-     ['Start a meeting in time', 1]]
-
-guidelines = GUIDELINES.each do |g|
-  Guideline.create(name: g[0], kudos: g[1], team: team)
+teams.each do |team|
+  Team.create(name: team)
 end
 
-activity = Activity.new(name: "testing the kudo app")
-activity2 = Activity.new(name: "helping me with testing")
-activity3 = Activity.new(name: "transaction with awesome image")
+users = ['Ariejan', 'Stefan', 'Marijn', 'Egon', 'Ralph', 'Guido']
 
-image = File.open(File.join(Rails.root,'app/assets/images/test-image.png'))
 
-transaction = Transaction.create(sender: adminUser, receiver: teamUser, activity: activity, amount: 10, team: team, balance: Balance.current(team))
-transaction2 = Transaction.create(sender: teamUser, receiver: teamUser, activity: activity2, amount: 50, team: team, balance: Balance.current(team))
-transaction3 = Transaction.create(sender: teamUser, receiver: teamUser, activity: activity3, amount: 1, image: image, team: team, balance: Balance.current(team))
+users.each do |user|
+  user = User.create(
+    name: user,
+    email: "#{user}@example.com",
+    password: 'password',
+    password_confirmation: 'password'
+  )
+  team_invite = TeamInvite.create(email: user.email, team: Team.first)
+  team_invite.accept
+  TeamMember.where(user: user).first.update(role: 'admin')
+end
 
-teamInvitePending = TeamInvite.create(team: team, email: 'test@example.com', sent_at: DateTime.now)
-teamInviteDeclined = TeamInvite.create(team: team, email: 'test2@example.com', sent_at: DateTime.now, declined_at: DateTime.now)
+##################
+###
+### Team Kabisa
+###
+##################
 
+20.times do
+  kudos = [1, 5, 10, 20, 50]
+  Guideline.create(
+    name: Faker::Lorem.sentence(4),
+    kudos: kudos.sample,
+    team: Team.first
+  )
+end
+
+25.times do
+  sender = Team.first.users.order('RANDOM()').first
+
+  post = Post.create(
+    sender: sender,
+    receivers: Team.first.users.limit(rand(1..2)).order("RANDOM()").where.not(company_user: true),
+    message: Faker::Lorem.sentence(3),
+    amount: rand(1..10),
+    kudos_meter: Team.first.active_kudos_meter,
+    team: Team.first
+  )
+  if rand(1..5) == 1
+    User.all.each do |user|
+      post.liked_by user
+    end
+  end
+end
+
+##################
+###
+### Team Kiota
+###
+##################
+
+10.times do
+  kudos = [1, 5, 10, 20, 50]
+  Guideline.create(
+    name: Faker::Lorem.sentence(4),
+    kudos: kudos.sample,
+    team: Team.second
+  )
+
+end
+
+users.last(3).each do |user|
+  team_invite = TeamInvite.create(email: "#{user.downcase}@example.com", team: Team.second)
+  team_invite.accept
+end
+
+TeamMember.last.update(role: 'admin')
+
+users.first(3).each do |user|
+  TeamInvite.create(email: "#{user.downcase}@example.com", team: Team.second)
+end
+
+5.times do
+  sender = Team.second.users.order('RANDOM()').first
+
+  post = Post.create(
+    sender: sender,
+    receivers: Team.second.users.limit(rand(1..2)).order("RANDOM()").where.not(company_user: true),
+    message: Faker::Lorem.sentence(3),
+    amount: rand(1..10),
+    kudos_meter: Team.second.active_kudos_meter,
+    team: Team.second
+  )
+  if rand(1..5) == 1
+    Team.second.users.each do |user|
+      post.liked_by user
+    end
+  end
+end
+
+##################
+###
+### Team Dovetail
+###
+##################
+
+15.times do
+  kudos = [1, 5, 10, 20, 50]
+  Guideline.create(
+    name: Faker::Lorem.sentence(4),
+    kudos: kudos.sample,
+    team: Team.third
+  )
+end
+
+users.last(3).each do |user|
+  team_invite = TeamInvite.create(email: "#{user.downcase}@example.com", team: Team.third)
+  team_invite.accept
+end
+
+TeamMember.last.update(role: 'admin')
+
+users.first(3).each do |user|
+  TeamInvite.create(email: "#{user.downcase}@example.com", team: Team.third)
+end
+
+5.times do
+  sender = Team.third.users.order('RANDOM()').first
+
+  post = Post.create(
+    sender: sender,
+    receivers: Team.third.users.limit(rand(1..2)).order("RANDOM()").where.not(company_user: true),
+    message: Faker::Lorem.sentence(3),
+    amount: rand(1..10),
+    kudos_meter: Team.third.active_kudos_meter,
+    team: Team.third
+  )
+
+  if rand(1..5) == 1
+    Team.third.users.each do |user|
+      post.liked_by user
+    end
+  end
+end

@@ -1,4 +1,6 @@
-class CreateGoals < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateGoals < ActiveRecord::Migration[4.2]
   def change
     create_table :goals do |t|
       t.string :name, limit: 32

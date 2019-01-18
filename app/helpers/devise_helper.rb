@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module DeviseHelper
   def devise_error_messages!
-    return '' if resource.errors.empty?
+    return "" if resource.errors.empty?
 
     messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
     html = <<-HTML
@@ -23,7 +25,7 @@ module DeviseHelper
     ((expiration - Time.now) / 1.hour).round
   end
 
-  def confirm_within()
+  def confirm_within
     distance_of_time_in_words(Devise.confirm_within.seconds)
   end
 end

@@ -1,34 +1,19 @@
-# == Schema Information
-#
-# Table name: goals
-#
-#  id          :integer          not null, primary key
-#  name        :string(32)
-#  amount      :integer
-#  achieved_on :date
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  balance_id  :integer
-#
+# frozen_string_literal: true
 
-class Goal < ActiveRecord::Base
+class Goal < ApplicationRecord
   acts_as_votable
 
   validates :name, presence: true
   validates :amount, presence: true
 
-  belongs_to :balance
-
-  def self.achieved(team)
-    where(balance: Balance.current(team)).where.not(achieved_on: nil).order("amount ASC")
-  end
+  belongs_to :kudos_meter
 
   def self.previous(team)
-    where(balance: Balance.current(team)).where.not(achieved_on: nil).order("amount DESC").first || Goal.new(name: "N/A", amount: 0)
+    where(kudos_meter: team.active_kudos_meter).where.not(achieved_on: nil).order("amount DESC").first
   end
 
   def self.next(team)
-    where(balance: Balance.current(team)).where(achieved_on: nil).order("amount ASC").first || Goal.create(name: 'TBD', amount: Goal.previous(team).amount + 1000, balance: Balance.current(team), achieved_on: nil)
+    where(kudos_meter: team.active_kudos_meter).where(achieved_on: nil).order("amount ASC").first
   end
 
   def achieved?
@@ -38,5 +23,4 @@ class Goal < ActiveRecord::Base
   def achieve!
     touch(:achieved_on)
   end
-
 end

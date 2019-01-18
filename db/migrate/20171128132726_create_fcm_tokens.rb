@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateFcmTokens < ActiveRecord::Migration[5.0]
   def change
     create_table :fcm_tokens do |t|

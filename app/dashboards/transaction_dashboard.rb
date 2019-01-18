@@ -1,6 +1,8 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
 
-class TransactionDashboard < Administrate::BaseDashboard
+require "administrate/base_dashboard"
+
+class PostDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -9,13 +11,13 @@ class TransactionDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
       id: Field::Number,
-      amount: Field::Number.with_options(suffix: ' ₭'),
+      amount: Field::Number.with_options(suffix: " ₭"),
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      sender: Field::BelongsTo.with_options(class_name: 'User'),
-      receiver: Field::BelongsTo.with_options(class_name: 'User'),
+      sender: Field::BelongsTo.with_options(class_name: "User"),
+      receiver: Field::BelongsTo.with_options(class_name: "User"),
       activity: Field::BelongsTo,
-      balance: Field::BelongsTo
+      kudos_meter: Field::BelongsTo
   }
 
   # COLLECTION_ATTRIBUTES
@@ -29,7 +31,7 @@ class TransactionDashboard < Administrate::BaseDashboard
       :sender,
       :receiver,
       :activity,
-      :balance
+      :kudos_meter
   ]
 
   # SHOW_PAGE_ATTRIBUTES
@@ -40,26 +42,26 @@ class TransactionDashboard < Administrate::BaseDashboard
       :sender,
       :receiver,
       :activity,
-      :balance,
+      :kudos_meter,
       :created_at,
       :updated_at
   ]
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
-  # on the model's form #{transaction.sender}(`new` and `edit`) pages.
+  # on the model's form #{post.sender}(`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
       :amount,
       :sender,
       :receiver,
       :activity,
-      :balance
+      :kudos_meter
   ]
 
-  # Overwrite this method to customize how transactions are displayed
+  # Overwrite this method to customize how posts are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(transaction)
-  #   "Transaction ##{transaction.id}"
+  # def display_resource(post)
+  #   "Post ##{post.id}"
   # end
 end

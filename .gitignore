@@ -24,3 +24,11 @@ config/database.yml
 !/.gitignore
 
 /public/system/*
+
+coverage
+
+tmp/storage
+storage
+
+# redis
+dump.rdb

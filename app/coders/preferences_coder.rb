@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # Encodes User preferences to JSON data
 module PreferencesCoder
-  extend self
+  module_function
 
   def load(data)
     data || {}

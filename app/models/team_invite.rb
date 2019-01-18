@@ -1,46 +1,49 @@
 # frozen_string_literal: true
-# == Schema Information
-#
-# Table name: team_invites
-#
-#  id          :integer          not null, primary key
-#  team_id     :integer
-#  sent_at     :datetime
-#  accepted_at :datetime
-#  declined_at :datetime
-#  email       :string
-#
 
-class TeamInvite < ActiveRecord::Base
+class TeamInvite < ApplicationRecord
+  validates :email, presence: true
+  validates :team, presence: true
+
   belongs_to :team
 
-  after_create :send_invite
+  before_create :duplicate?
 
   def complete?
-    accepted_at || declined_at
+    accepted_at || declined_at ? true : false
+  end
+
+  def declined?
+    declined_at ? true : false
   end
 
   def accept
-    TeamInvite.transaction do
-      update_attribute(:accepted_at, Time.now)
+    transaction do
+      touch(:accepted_at)
+      user = User.find_by_email(email)
+      TeamMember.create(team: team, user: user, role: 'member')
     end
-    user = User.find_by_email(email)
-    TeamMember.create(team: team, user: user, admin: false)
   end
 
   def decline
-    TeamInvite.transaction do
-      update_attribute(:declined_at, Time.now)
-    end
+    touch(:declined_at)
   end
 
   def self.open
     where(accepted_at: nil).where(declined_at: nil)
   end
 
+  def duplicate?
+    invite = TeamInvite.where(email: email, team: team).first
+
+    send_invite and return if invite.nil?
+    send_invite and return if invite.declined?
+
+    throw :abort
+  end
+
   private
 
   def send_invite
-    UserMailer.invite_email(self.email, self.team).deliver_now
+    UserMailer.invite_email(email, team).deliver_later
   end
 end

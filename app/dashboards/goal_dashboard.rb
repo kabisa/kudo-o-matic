@@ -1,4 +1,6 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
+
+require "administrate/base_dashboard"
 
 class GoalDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -10,11 +12,11 @@ class GoalDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
       id: Field::Number,
       name: Field::String,
-      amount: Field::Number.with_options(suffix: ' ₭'),
+      amount: Field::Number.with_options(suffix: " ₭"),
       achieved_on: Field::DateTime,
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      balance: Field::BelongsTo
+      kudos_meter: Field::BelongsTo
   }
 
   # COLLECTION_ATTRIBUTES
@@ -26,7 +28,7 @@ class GoalDashboard < Administrate::BaseDashboard
       :id,
       :name,
       :amount,
-      :balance,
+      :kudos_meter,
       :achieved_on
   ]
 
@@ -36,7 +38,7 @@ class GoalDashboard < Administrate::BaseDashboard
       :id,
       :name,
       :amount,
-      :balance,
+      :kudos_meter,
       :achieved_on,
       :created_at,
       :updated_at
@@ -47,7 +49,7 @@ class GoalDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
       :name,
-      :balance,
+      :kudos_meter,
       :amount,
       :achieved_on
   ]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateGuidelines < ActiveRecord::Migration[5.0]
   def change
     create_table :guidelines do |t|

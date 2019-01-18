@@ -1,5 +1,5 @@
 namespace :teams do
-  desc 'Connect all users, balances and transactions to a new team.'
+  desc 'Connect all users, kudos_meters and transactions to a new team.'
   task setup: :environment do
     slug = ENV['COMPANY_USER'].downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
 
@@ -13,8 +13,8 @@ namespace :teams do
     Transaction.all.each do |transaction|
       transaction.update_attribute(:team_id, team.id)
     end
-    Balance.all.each do |balance|
-      balance.update_attribute(:team_id, team.id)
+    KudosMeter.all.each do |kudos_meter|
+      kudos_meter.update_attribute(:team_id, team.id)
     end
   end
 

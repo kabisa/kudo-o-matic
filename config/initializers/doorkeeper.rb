@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (needs plugins)
   orm :active_record
@@ -15,11 +17,10 @@ Doorkeeper.configure do
     if Doorkeeper::Application.by_uid_and_secret(params[:client_id],
                                                  params[:client_credential])
       user = User.find_for_database_authentication(email: params[:username])
-      if user&.valid_for_authentication? { user.valid_password?(params[:password])}
+      if user&.valid_for_authentication? { user.valid_password?(params[:password]) }
         user
       end
     end
-
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.

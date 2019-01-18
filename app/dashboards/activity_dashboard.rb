@@ -1,4 +1,6 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
+
+require "administrate/base_dashboard"
 
 class ActivityDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -13,7 +15,7 @@ class ActivityDashboard < Administrate::BaseDashboard
       suggested_amount: Field::Number,
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      transactions: Field::HasMany
+      posts: Field::HasMany
   }
 
   # COLLECTION_ATTRIBUTES
@@ -24,7 +26,7 @@ class ActivityDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
       :id,
       :name,
-      :transactions
+      :posts
   ]
 
   # SHOW_PAGE_ATTRIBUTES
@@ -34,7 +36,7 @@ class ActivityDashboard < Administrate::BaseDashboard
       :name,
       :created_at,
       :updated_at,
-      :transactions
+      :posts
   ]
 
   # FORM_ATTRIBUTES

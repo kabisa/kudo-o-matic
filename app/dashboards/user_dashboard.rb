@@ -1,4 +1,6 @@
-require 'administrate/base_dashboard'
+# frozen_string_literal: true
+
+require "administrate/base_dashboard"
 
 class UserDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -14,15 +16,15 @@ class UserDashboard < Administrate::BaseDashboard
       avatar_url: Field::String,
       slack_name: Field::String,
       admin: Field::Boolean,
-      transaction_received_mail: Field::Boolean,
+      post_received_mail: Field::Boolean,
       goal_reached_mail: Field::Boolean,
       summary_mail: Field::Boolean,
       api_token: Field::String,
       deactivated_at: Field::DateTime,
       created_at: Field::DateTime,
       updated_at: Field::DateTime,
-      sent_transactions: Field::HasMany.with_options(class_name: 'Transaction'),
-      received_transactions: Field::HasMany.with_options(class_name: 'Transaction'),
+      sent_posts: Field::HasMany.with_options(class_name: "Post"),
+      received_posts: Field::HasMany.with_options(class_name: "Post"),
       votes: Field::HasMany,
       fcm_tokens: Field::HasMany
   }
@@ -38,8 +40,8 @@ class UserDashboard < Administrate::BaseDashboard
       :email,
       :slack_name,
       :admin,
-      :sent_transactions,
-      :received_transactions,
+      :sent_posts,
+      :received_posts,
       :deactivated_at
   ]
 
@@ -52,15 +54,15 @@ class UserDashboard < Administrate::BaseDashboard
       :avatar_url,
       :slack_name,
       :admin,
-      :transaction_received_mail,
+      :post_received_mail,
       :goal_reached_mail,
       :summary_mail,
       :api_token,
       :created_at,
       :updated_at,
       :deactivated_at,
-      :sent_transactions,
-      :received_transactions,
+      :sent_posts,
+      :received_posts,
       :votes,
       :fcm_tokens
   ]
@@ -74,7 +76,7 @@ class UserDashboard < Administrate::BaseDashboard
       :slack_name,
       :avatar_url,
       :admin,
-      :transaction_received_mail,
+      :post_received_mail,
       :goal_reached_mail,
       :summary_mail,
       :api_token
@@ -83,6 +85,6 @@ class UserDashboard < Administrate::BaseDashboard
   # Overwrite this method to customize how users are displayed
   # across all pages of the admin dashboard.
   def display_resource(user)
-    user.restricted? ? 'Hidden' : user.name
+    user.restricted? ? "Hidden" : user.name
   end
 end

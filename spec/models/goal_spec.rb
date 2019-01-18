@@ -1,43 +1,62 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
 RSpec.describe Goal, type: :model do
+  let(:team) { create(:team) }
+  let!(:kudos_meter) { team.active_kudos_meter }
+  let!(:goals) { team.current_goals }
+  let!(:goal) { goals.first }
 
-  # Skip the after_create callback in this spec, because we are working with specific balances and goals
-  before do
-    Team.skip_callback(:create, :after, :setup_team)
+  it "should have a valid factory" do
+    expect(build(:goal)).to be_valid
   end
 
-  # After this spec, set the callback again, so other specs can make use of it
-  after do
-    Team.set_callback(:create, :after, :setup_team)
+  describe "model validations" do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:amount) }
   end
 
-  context '.previous and .next goals' do
-    let!(:team) { create(:team) }
-    let!(:old_balance)   { create :balance, name: 'closed balance', current: false, team_id: team.id  }
-    let!(:current_balance)   { create :balance, name: 'current balance', current: true, team_id: team.id  }
-    let!(:old_goal)   { create :goal, :achieved, achieved_on: 100.days.ago, amount: 600, balance: old_balance }
-    let!(:goal_one)   { create :goal, :achieved, achieved_on: 60.days.ago, amount: 100, balance: current_balance }
-    let!(:goal_two)   { create :goal, :achieved, achieved_on: 30.day.ago, amount: 200,  balance: current_balance }
-    let!(:goal_three) { create :goal, amount: 300,  balance: current_balance }
-    let!(:goal_four)  { create :goal, amount: 400,  balance: current_balance }
+  describe "model associations" do
+    it { is_expected.to belong_to(:kudos_meter) }
+  end
 
-    it 'finds the previous goal' do
-      expect(Goal.previous(team)).to eq(goal_two)
+  describe '.previous(team)' do
+    it 'returns the previous goal of the team' do
+      goal.achieve!
+
+      expect(Goal.previous(team)).to eq(goal)
     end
 
-    it 'finds the next goal' do
-      expect(Goal.next(team)).to eq(goal_three)
+    it 'returns nil if no record is found' do
+      expect(Goal.previous(team)).to be_nil
     end
   end
 
-  context '#achieve' do
-    let(:goal) { create :goal }
+  describe '.next(team)' do
+    it 'returns the next goal of the team' do
+      expect(Goal.next(team)).to eq(goals.first)
+    end
 
-    it 'marks goals as achieved' do
-      expect {
-        goal.achieve!
-      }.to change { goal.achieved? }.from(false).to(true)
+    it 'returns nil if no record is found' do
+      goals.all.map(&:achieve!)
+
+      expect(Goal.next(team)).to be_nil
+    end
+  end
+
+  describe '#achieved?' do
+    it 'returns true if :achieved_on is present' do
+      goal.achieve!
+      expect(goal.achieved?).to be true
+    end
+
+    it 'returns false if :achieved_on is not present' do
+      expect(goal.achieved?).to be false
+    end
+  end
+
+  describe '#achieve!' do
+    it 'marks goal as achieved' do
+      expect { goal.achieve! }.to change { goal.achieved? }.from(false).to(true)
     end
   end
 end

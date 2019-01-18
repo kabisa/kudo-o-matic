@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -6,7 +8,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.secret_key = ENV['DEVISE_SECRET_KEY']
+  config.secret_key = ENV["DEVISE_SECRET_KEY"]
 
 
   # ==> Mailer Configuration
@@ -15,7 +17,7 @@ Devise.setup do |config|
   # with default "from" parameter.
 
   # Configure the class responsible to send e-mails.
-  config.mailer = 'KudosDeviseMailer'
+  config.mailer = "KudosDeviseMailer"
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
@@ -24,7 +26,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -248,14 +250,11 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], {
-      scope: 'email,profile',
-      prompt: 'select_account',
-      image_aspect_ration: 'square',
+  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"],
+      scope: "email,profile",
+      prompt: "select_account",
+      image_aspect_ration: "square",
       image_size: 512
-  }
-
-  config.omniauth :slack, ENV['SLACK_CLIENT_ID'], ENV["SLACK_CLIENT_SECRET"], scope: 'team:read,users:read,identify,bot,commands'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

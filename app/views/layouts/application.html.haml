@@ -9,7 +9,5 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
     = favicon_link_tag image_path('favicon.ico')
-    - if current_team
-      = render 'layouts/team_style'
-  %body{:class => ("team-page" unless current_team.nil?)}
+  %body
     = yield

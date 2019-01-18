@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rubygems'
+require "rubygems"
 
 Export::CreateExportJob = Struct.new(:user, :dataformat) do
   def perform
@@ -8,6 +8,6 @@ Export::CreateExportJob = Struct.new(:user, :dataformat) do
   end
 
   def queue_name
-    'exports'
+    "exports"
   end
 end

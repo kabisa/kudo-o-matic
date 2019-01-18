@@ -1,9 +1,10 @@
-class ActsAsVotableMigration < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class ActsAsVotableMigration < ActiveRecord::Migration[5.0]
   def self.up
     create_table :votes do |t|
-
-      t.references :votable, :polymorphic => true
-      t.references :voter, :polymorphic => true
+      t.references :votable, polymorphic: true
+      t.references :voter, polymorphic: true
 
       t.boolean :vote_flag
       t.string :vote_scope

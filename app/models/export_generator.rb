@@ -1,40 +1,42 @@
-require 'zip'
-require 'open-uri'
+# frozen_string_literal: true
+
+require "zip"
+require "open-uri"
 
 class ExportGenerator
   def self.create_and_send_zip(user, dataformat)
-    transactions = Transaction.all_for_user(user)
+    posts = Post.all_for_user(user)
     likes = Vote.all_for_user(user)
     export = Export.create(uuid: SecureRandom.uuid, user: user)
 
     # Notify user via email that the export has started
-    UserMailer.export_start_email(user).deliver_now
+    UserMailer.export_start_email(user).deliver_later
 
     # Render data in given format (JSON or XML)
-    data = render_data(user, transactions, likes, dataformat)
+    data = render_data(user, posts, likes, dataformat)
     data_file_path = generate_data_file_path(user, export, dataformat)
 
     # Create export folder for the current user if it doesn't exist
-    user_dir = Rails.root.join('exports', 'users', user.id.to_s)
+    user_dir = Rails.root.join("exports", "users", user.id.to_s)
     FileUtils.mkdir_p(user_dir) unless File.directory?(user_dir)
 
     # Create tmp folder if it doesn't exist
     FileUtils.mkdir_p(tmp_folder) unless File.directory?(tmp_folder)
 
     # Write temporary data file
-    File.open(data_file_path, 'w') do |f|
+    File.open(data_file_path, "w") do |f|
       f.write(data)
     end
 
     # Create the zip file and add the data file to it
     tmp_images = []
     zip_file = File.new(
-      File.join(tmp_folder, "export_#{user.id}_#{export.uuid}.zip"), 'w'
+      File.join(tmp_folder, "export_#{user.id}_#{export.uuid}.zip"), "w"
     )
     tmp_imgs_to_delete = []
     Zip::File.open(zip_file.path, Zip::File::CREATE) do |zip|
       zip.add("user_#{user.id}_data.#{dataformat}", data_file_path)
-      transactions.each do |t|
+      posts.each do |t|
         next unless t.image.exists?
         tmp_file_path = generate_tmp_img_path(export, t.image_file_name)
         tmp_images.push(tmp_file_path)
@@ -55,7 +57,7 @@ class ExportGenerator
     export.save
 
     # Notify user via email that the export is available for download
-    UserMailer.export_done_email(user, export).deliver_now
+    UserMailer.export_done_email(user, export).deliver_later
 
     # Delete local data and zip file
     File.delete(data_file_path) if File.exist?(data_file_path)
@@ -64,18 +66,18 @@ class ExportGenerator
 
   private_class_method
 
-  def self.render_data(user, transactions, likes, format)
-    Rabl.render(user, 'users/export',
-                view_path: 'app/views',
+  def self.render_data(user, posts, likes, format)
+    Rabl.render(user, "users/export",
+                view_path: "app/views",
                 locals: {
-                  transactions: transactions,
+                  posts: posts,
                   votes: likes
                 },
                 format: format)
   end
 
   def self.tmp_folder
-    Rails.root.join('tmp', 'exports')
+    Rails.root.join("tmp", "exports")
   end
 
   def self.generate_data_file_path(_user, export, format)

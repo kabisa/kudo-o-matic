@@ -6,7 +6,7 @@ namespace :notifications do
 
   desc 'Send a kudos reminder to all slack users'
   task slack_reminder: :environment do
-    SlackService.instance.send_reminder
+    # SlackService.instance.send_reminder
   end
 
   desc 'Send a kudos reminder to all mobile users'
