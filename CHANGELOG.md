@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - [Apple App Store](https://itunes.apple.com/nl/app/kudometer/id1445165688?mt=8)
 - Give Kudos to multiple users at once (multiple receivers)
 - Improved test coverage of the backend (from 49% to 92%)
+- Maintability improved (from D to A)
 
 ### Changed
 - Model name changed from Transaction to Post
