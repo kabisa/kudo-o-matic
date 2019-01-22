@@ -11,7 +11,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
     users.each { |user| team.add_member(user) }
   end
 
-  let(:variables) { { id: team.memberships.last.id } }
+  let(:variables) { { id: team.memberships.second.id } }
 
   let(:result) do
     res = KudoOMaticSchema.execute(
@@ -58,6 +58,18 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
 
       it 'returns no errors' do
         expect(result['data']['deleteTeamMember']['errors']).to be_empty
+      end
+    end
+
+    describe 'user is last team admin' do
+      before do
+        team.add_member(user, 'admin')
+      end
+
+      let(:variables) { { id: TeamMember.find_by_user_id(user.id).id } }
+
+      it 'can\'t delete a team member if that member is the only team admin' do
+        expect(result['data']['deleteTeamMember']['errors'].first).to eq("Role 'admin' should be assigned to at least 1 other team member.")
       end
     end
 

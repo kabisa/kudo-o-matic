@@ -47,13 +47,6 @@ class Team < ApplicationRecord
     TeamMember.create(user: user, team: self, role: role)
   end
 
-  def remove_member(user)
-    transaction do
-      TeamMember.find_by_user_id_and_team_id(user.id, id).delete
-      TeamInvite.where(email: user.email, team_id: id).delete_all
-    end
-  end
-
   def member?(user)
     TeamMember.find_by_user_id_and_team_id(user.id, id).present?
   end
