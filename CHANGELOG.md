@@ -4,16 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [4.0]
 ### Added
-- GraphQL API for backend
+- GraphQL API
+- New app for web and mobile
+    - [Web app](https://kudos.kabisa.io)
+    - [Google Play Store](https://play.google.com/store/apps/details?id=nl.kabisa.kudometer)
+    - [Apple App Store](https://itunes.apple.com/nl/app/kudometer/id1445165688?mt=8)
+- Give Kudos to multiple users at once (multiple receivers)
+- Improved test coverage of the backend (from 49% to 92%)
+- Maintability improved (from D to A)
 
 ### Changed
-- Name change Transaction to Post
-- Name change Balance to KudosMeter
-- Deleted Slack integration
+- Model name changed from Transaction to Post
+- Model name changed from Balance to KudosMeter
 - Active KudosMeter is set on team instead of on KudosMeter itself
 - Activities migrated to Message on Post
+- Migrated from Paperclip to Rails ActiveStorage for images
+- Non-existing receivers are now treated as 'virtual users'
+
+### Removed
+- Rails webviews
+- REST API for mobile app
+- Slack integration (temporarily)
+- Firebase integration
+- Editing a post (temporarily)
+- Adding images to a post (temporarily)
+- User notification preferences (temporarily)
+- User data export (temporarily)
 
 ## [3.4.0]
 ### Added

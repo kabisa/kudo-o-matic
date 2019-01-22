@@ -244,8 +244,13 @@ module Util
           current_user = ctx[:current_user]
           user = obj.object
 
-          current_user.id == user.id ||
-            current_user.admin?
+          same_teams = (user.teams && current_user.teams)
+
+          if same_teams.any?
+            same_teams.each { |team| current_user.admin_of?(team) }
+          else
+            current_user.id == user.id || current_user.admin?
+          end
         end
       }
     }.freeze
