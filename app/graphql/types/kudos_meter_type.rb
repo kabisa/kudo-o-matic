@@ -13,8 +13,16 @@ module Types
           description: 'The collect amount of kudos'
     field :goals, [Types::GoalType],
           null: false,
-          description: 'The goals that belong to the KudosMeter',
-          resolve: ->(obj, _args, _ctx) { Util::RecordLoader.for(Goal).load_many(obj.goal_ids) }
+          description: 'The goals that belong to the KudosMeter' do
+            argument :order_by, String, required: false, default_value: "amount asc"
+          end
+
+    def goals(order_by:)
+      result = object.goals
+      result = result.order(order_by) unless order_by.blank?
+      result
+    end
+
     field :team, Types::TeamType,
           null: false,
           description: 'The team the KudosMeter belongs to',

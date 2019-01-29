@@ -4,11 +4,89 @@ module Util
   class GraphqlPolicy
     RULES = {
       #################
-      # UserMutations
+      # Mutations
       #################
       Types::MutationType => {
-        resetPassword: ->(_obj, _args, ctx) { ctx[:current_user].present? },
-        createTeam: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+
+        ### Guideline
+        createGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Guideline.find(args[:guidelineId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        updateGuideline: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Guideline.find(args[:guidelineId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+
+        ### Goal
+        createGoal: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = KudosMeter.find(args[:kudosMeterId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteGoal: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Goal.find(args[:goalId]).kudos_meter.team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        updateGoal: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Goal.find(args[:goalId]).kudos_meter.team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+
+        ### KudosMeter
+        createKudosMeter: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteKudosMeter: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = KudosMeter.find(args[:kudosMeterId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        updateKudosMeter: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = KudosMeter.find(args[:kudosMeterId]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+
+        ### Post
         createPost: ->(_obj, args, ctx) do
           team = Team.find(args[:teamId])
           current_user = ctx[:current_user]
@@ -30,17 +108,32 @@ module Util
             end
           end
         end,
-        toggleLikePost: ->(_obj, args, ctx) do
-          team = Post.find(args[:postId]).team
+
+        ### Team
+        createTeam: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+        updateTeam: ->(_obj, args, ctx) do
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          current_user.admin? || current_user.member_of?(team)
-        end,
-        createTeamInvite: ->(_obj, args, ctx) do
           team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+
+        ### TeamInvite
+        createTeamInvite: ->(_obj, args, ctx) do
           current_user = ctx[:current_user]
           return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        deleteTeamInvite: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = TeamInvite.find(args[:teamInviteId]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -52,11 +145,42 @@ module Util
           current_user.admin? || team_invite.email == current_user.email
         end,
         declineTeamInvite: ->(_obj, args, ctx) do
-          team_invite = TeamInvite.find(args[:teamInviteId])
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
+          team_invite = TeamInvite.find(args[:teamInviteId])
+
           current_user.admin? || team_invite.email == current_user.email
+        end,
+
+        ### TeamMember
+        deleteTeamMember: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = TeamMember.find(args[:id]).team
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+        updateTeamMemberRole: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
+
+        ### User
+        resetPassword: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+
+        ### Vote
+        toggleLikePost: ->(_obj, args, ctx) do
+          team = Post.find(args[:postId]).team
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          current_user.admin? || current_user.member_of?(team)
         end
       },
       #################
@@ -120,8 +244,13 @@ module Util
           current_user = ctx[:current_user]
           user = obj.object
 
-          current_user.id == user.id ||
-            current_user.admin?
+          same_teams = (user.teams && current_user.teams)
+
+          if same_teams.any?
+            same_teams.each { |team| current_user.admin_of?(team) }
+          else
+            current_user.id == user.id || current_user.admin?
+          end
         end
       }
     }.freeze

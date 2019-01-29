@@ -55,6 +55,7 @@ RSpec.describe Team, type: :model do
   end
 
   let!(:user) { create(:user) }
+  let!(:users) { create_list(:user, 3) }
 
   describe "#add_member(user, admin = false)" do
     it 'creates a new TeamMember' do
@@ -69,27 +70,6 @@ RSpec.describe Team, type: :model do
 
       expect(team_member).to eq(TeamMember.last)
       expect(team_member.role).to eq('admin')
-    end
-
-    describe "#remove_member(user)" do
-      it 'removes a TeamMember' do
-        team_invite = TeamInvite.create(email: user.email, team: team)
-        team_invite.accept
-
-        team.remove_member(user)
-
-        expect(team.member?(user)).to be false
-        expect { team_invite.reload }.to raise_error { ActiveRecord::RecordNotFound }
-      end
-
-      it 'removes a TeamMember with admin rights' do
-        team_invite = TeamInvite.create(email: user.email, team: team)
-        team_invite.accept
-
-        team.remove_member(user)
-
-        expect(team.member?(user)).to be false
-      end
     end
 
     describe "#member?(user)" do

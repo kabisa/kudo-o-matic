@@ -27,12 +27,12 @@ RSpec.describe Types::PostType do
     expect(subject.fields['team'].type.to_type_signature).to eq('Team!')
   end
 
-  xit "has a :kudosMeter field of KudosMeterType" do
-    expect(subject).to have_field(:kudosMeter).that_returns('KudosMeterType!')
+  it "has a :kudosMeter field of KudosMeterType!" do
+    expect(subject.fields['kudosMeter'].type.to_type_signature).to eq('KudosMeter!')
   end
 
-  xit "has a :votes field of VoteType" do
-    expect(subject).to have_field(:votes).that_returns('[VoteType]!')
+  it "has a :votes field of VoteType!" do
+    expect(subject.fields['votes'].type.to_type_signature).to eq('[Vote!]!')
   end
 
   it "has a :created_at field of ISO8601DateTime type" do

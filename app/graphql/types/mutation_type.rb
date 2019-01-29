@@ -2,22 +2,47 @@
 
 module Types
   class MutationType < BaseObject
-    field :sign_up_user, mutation: Mutations::SignUpUserMutation
-    field :sign_in_user, mutation: Mutations::SignInUserMutation
+    ### Guideline
+    field :create_guideline, mutation: Mutations::Guideline::CreateGuideline
+    field :delete_guideline, mutation: Mutations::Guideline::DeleteGuideline
+    field :update_guideline, mutation: Mutations::Guideline::UpdateGuideline
 
-    field :accept_team_invite, mutation: Mutations::AcceptTeamInviteMutation
-    field :decline_team_invite, mutation: Mutations::DeclineTeamInviteMutation
+    ### Goal
+    field :create_goal, mutation: Mutations::Goal::CreateGoal
+    field :delete_goal, mutation: Mutations::Goal::DeleteGoal
+    field :update_goal, mutation: Mutations::Goal::UpdateGoal
 
-    field :forgot_password, mutation: Mutations::ForgotPasswordMutation
-    field :new_password, mutation: Mutations::NewPasswordMutation
-    field :reset_password, mutation: Mutations::ResetPasswordMutation
+    ### KudosMeter
+    field :create_kudos_meter, mutation: Mutations::KudosMeter::CreateKudosMeter
+    field :delete_kudos_meter, mutation: Mutations::KudosMeter::DeleteKudosMeter
+    field :update_kudos_meter, mutation: Mutations::KudosMeter::UpdateKudosMeter
 
-    field :create_post, mutation: Mutations::CreatePostMutation
-    field :delete_post, mutation: Mutations::DeletePostMutation
+    ### Post
+    field :create_post, mutation: Mutations::Post::CreatePost
+    field :delete_post, mutation: Mutations::Post::DeletePost
 
-    field :create_team, mutation: Mutations::CreateTeamMutation
-    field :create_team_invite, mutation: Mutations::CreateTeamInviteMutation
+    ### Team
+    field :create_team, mutation: Mutations::Team::CreateTeam
+    field :update_team, mutation: Mutations::Team::UpdateTeam
 
-    field :toggle_like_post, mutation: Mutations::ToggleLikePostMutation
+    ### TeamInvite
+    field :create_team_invite, mutation: Mutations::TeamInvite::CreateInvite
+    field :delete_team_invite, mutation: Mutations::TeamInvite::DeleteInvite
+    field :accept_team_invite, mutation: Mutations::TeamInvite::AcceptInvite
+    field :decline_team_invite, mutation: Mutations::TeamInvite::DeclineInvite
+    
+    ### TeamMember
+    field :delete_team_member, mutation: Mutations::TeamMember::DeleteMember
+    field :update_team_member_role, mutation: Mutations::TeamMember::UpdateRole
+
+    ### User
+    field :forgot_password, mutation: Mutations::User::ForgotPassword
+    field :new_password, mutation: Mutations::User::NewPassword
+    field :reset_password, mutation: Mutations::User::ResetPassword
+    field :sign_in_user, mutation: Mutations::User::SignIn
+    field :sign_up_user, mutation: Mutations::User::SignUp
+
+    ### Vote
+    field :toggle_like_post, mutation: Mutations::Vote::ToggleLikePost
   end
 end
