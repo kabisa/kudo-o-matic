@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.5.1'
+ruby '2.5.4'
 
 gem "activerecord-typedstore", "~> 1.1.1"
 gem "actionpack", "~> 5.2", ">= 5.2.1"
