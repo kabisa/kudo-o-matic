@@ -30,6 +30,8 @@ namespace :post_receivers do
           else
             user = find_user
           end
+          team = post.team
+          team.add_member(user)
 
           users << user
         end
