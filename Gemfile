@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.5.1'
+ruby '2.5.4'
 
 gem "activerecord-typedstore", "~> 1.1.1"
 gem "actionpack", "~> 5.2", ">= 5.2.1"
@@ -25,6 +25,7 @@ gem "google-id-token", "~> 1.4"
 gem "graphql", "~> 1.8", ">= 1.8.10"
 gem "graphql-batch", "~> 0.3.10"
 gem 'graphql-guard', '~> 1.2', '>= 1.2.1'
+gem 'graphql_playground-rails', '~> 2.0', '>= 2.0.1'
 gem "haml-rails", "~> 1.0"
 gem "jbuilder", "~> 2.0"
 gem "json_web_token", "~> 0.3.5"
@@ -59,7 +60,6 @@ gem "uglifier", "~> 3.2"
 
 group :development, :staging, :test do
   # GraphQL UI similar to GraphiQL but better
-  gem 'graphql_playground-rails', '~> 2.0', '>= 2.0.1'
   gem 'database_cleaner', '~> 1.7'
   gem 'faker', '~> 1.9', '>= 1.9.1'
 end

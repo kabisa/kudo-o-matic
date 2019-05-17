@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  skip_before_action :verify_authenticity_token unless Rails.env.production?
+  skip_before_action :verify_authenticity_token
 
   include AuthenticateUser
 
