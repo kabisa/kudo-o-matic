@@ -1,1 +1,557 @@
-<svg height="1076pt" viewBox="0 0 2024.6 1075.6" width="2025pt" xmlns="http://www.w3.org/2000/svg"><g transform="translate(28.8 1046.8)"><path d="m-28.8 28.8v-1075.6h2024.6v1075.6z" fill="#fff"/><text font-family="Arial BoldMT" font-size="13" text-anchor="middle" x="983.5" y="-1003.6">Class Diagram PGP</text><path d="m146-26.5h120c6 0 12-6 12-12v-31c0-6-6-12-12-12h-120c-6 0-12 6-12 12v31c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="138.884" y="-68.2">ActiveStorage::Attachment</text><path d="m134-62.5h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="141" y="-49.5">name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="168.793" y="-49.5">string ∗</text><text font-family="ArialMT" font-size="10" x="141" y="-36.5">record_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="196.586" y="-36.5">string ∗</text><path d="m12-164h120c6 0 12-6 12-12v-83c0-6-6-12-12-12h-120c-6 0-12 6-12 12v83c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="21.6951" y="-257.7">ActiveStorage::Blob</text><path d="m0-252h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="7" y="-239">byte_size</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="52.0244" y="-239">integer (8) ∗</text><text font-family="ArialMT" font-size="10" x="7" y="-226">checksum</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="54.793" y="-226">string ∗</text><text font-family="ArialMT" font-size="10" x="7" y="-213">content_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="67.0439" y="-213">string</text><text font-family="ArialMT" font-size="10" x="7" y="-200">filename</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="47.5762" y="-200">string ∗</text><text font-family="ArialMT" font-size="10" x="7" y="-187">key</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="25.3398" y="-187">string ∗</text><text font-family="ArialMT" font-size="10" x="7" y="-174">metadata</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="51.4727" y="-174">text</text><path d="m119.101-159.733c20.725 24.979 44.245 53.326 61.584 74.2234" fill="none" stroke="#000"/><ellipse cx="117.409" cy="-161.772" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="182.317" cy="-83.5438" rx="2.40002" ry="2.40002" stroke="#000"/><path d="m149.094-246.199c14.053 3.64 23.906 13.206 23.906 28.699s-9.853 25.059-23.906 28.699" fill="none" stroke="#000" stroke-dasharray="1 5"/><ellipse cx="146.527" cy="-246.724" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><ellipse cx="146.527" cy="-188.276" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m298-522.5h120c6 0 12-6 12-12v-18c0-6-6-12-12-12h-120c-6 0-12 6-12 12v18c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="338.582" y="-551.2">Activity</text><path d="m286-545.5h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="293" y="-532">suggested_amount</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="380.842" y="-532">integer</text><path d="m339-.5h120c6 0 12-6 12-12v-83c0-6-6-12-12-12h-120c-6 0-12 6-12 12v83c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="347.462" y="-94.2">ActsAsVotable::Vote</text><path d="m327-88.5h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="334" y="-75.5">votable_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="393.487" y="-75.5">string</text><text font-family="ArialMT" font-size="10" x="334" y="-62.5">vote_flag</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="377.364" y="-62.5">boolean</text><text font-family="ArialMT" font-size="10" x="334" y="-49.5">vote_scope</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="387.926" y="-49.5">string</text><text font-family="ArialMT" font-size="10" x="334" y="-36.5">vote_weight</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="390.147" y="-36.5">integer</text><text font-family="ArialMT" font-size="10" x="334" y="-23.5">voter_id</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="372.354" y="-23.5">integer ∗</text><text font-family="ArialMT" font-size="10" x="334" y="-10.5">voter_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="383.473" y="-10.5">string</text><path d="m344.849-517.884c-32.586 64.555-110.209 242.785-49.849 373.884 5.821 12.643 14.422 24.16 24.227 34.404" fill="none" stroke="#000"/><ellipse cx="346.026" cy="-520.195" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="325.223" cy="-103.697" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m320.708-111.085 2.804 5.705-5.75-2.712z" stroke="#000"/><path d="m321.5-144.5h155c6 0 12-6 12-12v-122c0-6-6-12-12-12h-155c-6 0-12 6-12 12v122c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="385.995" y="-277.2">Post</text><path d="m309.5-271.5h179" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="317" y="-258">amount</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="353.133" y="-258">integer ∗</text><text font-family="ArialMT" font-size="10" x="317" y="-245">image_content_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="409.842" y="-245">string</text><text font-family="ArialMT" font-size="10" x="317" y="-232">image_file_name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="395.936" y="-232">string</text><text font-family="ArialMT" font-size="10" x="317" y="-219">image_file_size</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="388.704" y="-219">integer</text><text font-family="ArialMT" font-size="10" x="317" y="-206">image_updated_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="402.625" y="-206">datetime</text><text font-family="ArialMT" font-size="10" x="317" y="-193">message</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="360.354" y="-193">string ∗</text><text font-family="ArialMT" font-size="10" x="316.946" y="-180">slack_kudos_left_on_creation</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="451.478" y="-180">integer</text><text font-family="ArialMT" font-size="10" x="317" y="-167">slack_reaction_created_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="436.517" y="-167">string</text><text font-family="ArialMT" font-size="10" x="317" y="-154">slack_transaction_updated_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="452.649" y="-154">string</text><path d="m361.201-517.206c5.795 45.795 18.261 144.312 27.297 215.713" fill="none" stroke="#000"/><ellipse cx="360.866" cy="-519.851" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><ellipse cx="389.559" cy="-293.103" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m390.588-301.7-1.33 6.216-2.837-5.689z" stroke="#000"/><path d="m1629-490h120c6 0 12-6 12-12v-83c0-6-6-12-12-12h-120c-6 0-12 6-12 12v83c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="1623.72" y="-583.7">Doorkeeper::AccessGrant</text><path d="m1617-578h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="1624" y="-565">expires_in</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1672.36" y="-565">integer ∗</text><text font-family="ArialMT" font-size="10" x="1624" y="-552">redirect_uri</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1676.8" y="-552">text ∗</text><text font-family="ArialMT" font-size="10" x="1624" y="-539">resource_owner_id</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1711.83" y="-539">integer ∗</text><text font-family="ArialMT" font-size="10" x="1624" y="-526">revoked_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1676.26" y="-526">datetime</text><text font-family="ArialMT" font-size="10" x="1624" y="-513">scopes</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1658.46" y="-513">string</text><text font-family="ArialMT" font-size="10" x="1624" y="-500">token</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1651.24" y="-500">string ∗ U</text><path d="m1802.5-483.5h127c6 0 12-6 12-12v-96c0-6-6-12-12-12h-127c-6 0-12 6-12 12v96c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="1799.8" y="-590.2">Doorkeeper::AccessToken</text><path d="m1790.5-584.5h151" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="1798" y="-571">expires_in</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1846.36" y="-571">integer</text><text font-family="ArialMT" font-size="10" x="1797.66" y="-558">previous_refresh_token</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1904.95" y="-558">string ∗</text><text font-family="ArialMT" font-size="10" x="1798" y="-545">refresh_token</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1861.93" y="-545">string U</text><text font-family="ArialMT" font-size="10" x="1798" y="-532">resource_owner_id</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1885.83" y="-532">integer</text><text font-family="ArialMT" font-size="10" x="1798" y="-519">revoked_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1850.26" y="-519">datetime</text><text font-family="ArialMT" font-size="10" x="1798" y="-506">scopes</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1832.46" y="-506">string</text><text font-family="ArialMT" font-size="10" x="1798" y="-493">token</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1825.24" y="-493">string ∗ U</text><path d="m1806-842h120c6 0 12-6 12-12v-70c0-6-6-12-12-12h-120c-6 0-12 6-12 12v70c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="1805.3" y="-922.7">Doorkeeper::Application</text><path d="m1794-917h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="1801" y="-903.5">name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1828.79" y="-903.5">string ∗</text><text font-family="ArialMT" font-size="10" x="1801" y="-890.5">redirect_uri</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1853.8" y="-890.5">text ∗</text><text font-family="ArialMT" font-size="10" x="1801" y="-877.5">scopes</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1835.46" y="-877.5">string ∗</text><text font-family="ArialMT" font-size="10" x="1801" y="-864.5">secret</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1831.01" y="-864.5">string ∗</text><text font-family="ArialMT" font-size="10" x="1801" y="-851.5">uid</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1817.12" y="-851.5">string ∗ U</text><path d="m1826.84-838.021c-16.93 22.974-36.17 51.065-50.84 78.021-26.78 49.217-50.1 108.449-65.84 152.35" fill="none" stroke="#000"/><ellipse cx="1828.33" cy="-840.027" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="1707.32" cy="-599.662" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m1712.11-606.876-3.99 4.952.03-6.357z" stroke="#000"/><path d="m1866-836.515v221.818" fill="none" stroke="#000"/><ellipse cx="1866" cy="-839.274" fill="none" rx="2.4" ry="2.4" stroke="#000"/><ellipse cx="1866" cy="-605.991" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m1868.1-614.391-2.1 6-2.1-6z" stroke="#000"/><path d="m1898.24-939.487c32.58-29.385 68.76-12.556 68.76 50.487 0 59.98-32.75 78.127-63.99 54.442" fill="none" stroke="#000" stroke-dasharray="1 5"/><ellipse cx="1896.43" cy="-937.751" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="1896.49" cy="-840.32" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m1901.39-833.182-3.1-5.548 5.88 2.401z" stroke="#000"/><path d="m762-170.5h120c6 0 12-6 12-12v-70c0-6-6-12-12-12h-120c-6 0-12 6-12 12v70c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="804.104" y="-251.2">Export</text><path d="m750-245.5h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="757" y="-232">uuid</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="778.685" y="-232">string</text><text font-family="ArialMT" font-size="10" x="757" y="-219">zip_content_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="835.389" y="-219">string</text><text font-family="ArialMT" font-size="10" x="757" y="-206">zip_file_name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="821.482" y="-206">string</text><text font-family="ArialMT" font-size="10" x="757" y="-193">zip_file_size</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="814.251" y="-193">integer</text><text font-family="ArialMT" font-size="10" x="757" y="-180">zip_updated_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="828.172" y="-180">datetime</text><path d="m935-196.5h120c6 0 12-6 12-12v-18c0-6-6-12-12-12h-120c-6 0-12 6-12 12v18c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="967.632" y="-225.2">FcmToken</text><path d="m923-219.5h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="930" y="-206">token</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="957.241" y="-206">string U</text><path d="m530-183.5h120c6 0 12-6 12-12v-44c0-6-6-12-12-12h-120c-6 0-12 6-12 12v44c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="576.382" y="-238.2">Goal</text><path d="m518-232.5h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="525" y="-219">achieved_on</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="584.492" y="-219">date</text><text font-family="ArialMT" font-size="10" x="525" y="-206">amount</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="561.133" y="-206">integer ∗</text><text font-family="ArialMT" font-size="10" x="525" y="-193">name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="552.793" y="-193">string (32) ∗</text><path d="m547.21-180.319c-22.814 19.29-51.472 43.523-77.494 65.525" fill="none" stroke="#000"/><ellipse cx="549.055" cy="-181.879" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="463.204" cy="-109.288" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m470.974-113.108-5.937 2.271 3.225-5.478z" stroke="#000"/><path d="m1283-516h120c6 0 12-6 12-12v-31c0-6-6-12-12-12h-120c-6 0-12 6-12 12v31c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="1317.76" y="-557.7">Guideline</text><path d="m1271-552h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="1278" y="-539">kudos</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1307.46" y="-539">integer ∗</text><text font-family="ArialMT" font-size="10" x="1278" y="-526">name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1305.79" y="-526">string ∗</text><path d="m530-522.5h120c6 0 12-6 12-12v-18c0-6-6-12-12-12h-120c-6 0-12 6-12 12v18c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="558.346" y="-551.2">KudosMeter</text><path d="m518-545.5h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="525" y="-532">name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="552.793" y="-532">string ∗</text><path d="m590-517.213v254.797" fill="none" stroke="#000"/><ellipse cx="590" cy="-519.832" fill="none" rx="2.4" ry="2.4" stroke="#000"/><ellipse cx="590" cy="-253.927" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m592.1-262.327-2.1 6-2.1-6z" stroke="#000"/><path d="m582.133-517.842c-13.825 41.405-44.961 126.666-86.133 190.842-5.997 9.347-12.794 18.683-19.939 27.736" fill="none" stroke="#000"/><ellipse cx="582.899" cy="-520.152" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><ellipse cx="470.627" cy="-292.545" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m477.542-297.756-5.406 3.345 2.141-5.986z" stroke="#000"/><path d="m309.176-141.336c-23.967 20.055-48.485 40.571-67.604 56.5699" fill="none" stroke="#000"/><ellipse cx="311.102" cy="-142.948" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="239.662" cy="-83.1683" rx="2.40002" ry="2.40002" stroke="#000"/><path d="m304.399-217.5c-51.796 0-103.592 0-155.388 0" fill="none" stroke="#000" stroke-dasharray="1 5"/><ellipse cx="307.011" cy="-217.5" fill="none" rx="2.4" ry="2.4" stroke="#000"/><ellipse cx="146.57" cy="-217.5" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m399-139.356v20.426" fill="none" stroke="#000"/><ellipse cx="399" cy="-141.853" fill="none" rx="2.4" ry="2.4" stroke="#000"/><ellipse cx="399" cy="-110.222" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m401.1-118.622-2.1 6-2.1-6z" stroke="#000"/><path d="m579-36h120c6 0 12-6 12-12v-12c0-6-6-12-12-12h-120c-6 0-12 6-12 12v12c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="604.293" y="-50.2">PostReceiver</text><path d="m492.632-151.038c3.495 2.383 6.96 4.736 10.368 7.038 33.779 22.82 72.744 48.2271 100.285 66.0343" fill="none" stroke="#000"/><ellipse cx="490.499" cy="-152.495" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="610.507" cy="-73.3026" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m604.589-79.6235 3.901 5.019-6.179-1.4906z" stroke="#000"/><path d="m1051-7h120c6 0 12-6 12-12v-70c0-6-6-12-12-12h-120c-6 0-12 6-12 12v70c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="1097.99" y="-87.7">Vote</text><path d="m1039-82h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="1046" y="-68.5">votable_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1105.49" y="-68.5">string</text><text font-family="ArialMT" font-size="10" x="1046" y="-55.5">vote_flag</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1089.36" y="-55.5">boolean</text><text font-family="ArialMT" font-size="10" x="1046" y="-42.5">vote_scope</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1099.93" y="-42.5">string</text><text font-family="ArialMT" font-size="10" x="1046" y="-29.5">vote_weight</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1102.15" y="-29.5">integer</text><text font-family="ArialMT" font-size="10" x="1046" y="-16.5">voter_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1095.47" y="-16.5">string</text><path d="m493.104-148.278c3.287 1.536 6.59 2.969 9.896 4.278 24.179 9.575 364.359 56.2111 525.05 77.8857" fill="none" stroke="#000"/><ellipse cx="490.794" cy="-149.391" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="1036.46" cy="-64.9812" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m1028.42-68.1844 5.66 2.8827-6.22 1.2797z" stroke="#000"/><path d="m527-796.5h126c6 0 12-6 12-12v-161c0-6-6-12-12-12h-126c-6 0-12 6-12 12v161c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="574.551" y="-968.2">Team</text><path d="m515-962.5h150" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="522" y="-949.5">channel_id</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="573.152" y="-949.5">string</text><text font-family="ArialMT" font-size="10" x="522" y="-936.5">general_info</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="579.822" y="-936.5">text</text><text font-family="ArialMT" font-size="10" x="522" y="-923.5">logo_content_type</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="606.512" y="-923.5">string</text><text font-family="ArialMT" font-size="10" x="522" y="-910.5">logo_file_name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="592.605" y="-910.5">string</text><text font-family="ArialMT" font-size="10" x="522" y="-897.5">logo_file_size</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="585.374" y="-897.5">integer</text><text font-family="ArialMT" font-size="10" x="522" y="-884.5">logo_updated_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="599.295" y="-884.5">datetime</text><text font-family="ArialMT" font-size="10" x="522" y="-871.5">name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="549.793" y="-871.5">string ∗</text><text font-family="ArialMT" font-size="10" x="522" y="-858.5">preferences</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="577.586" y="-858.5">json</text><text font-family="ArialMT" font-size="10" x="522" y="-845.5">rss_token</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="568.133" y="-845.5">string</text><text font-family="ArialMT" font-size="10" x="521.907" y="-832.5">slack_bot_access_token</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="633.64" y="-832.5">string</text><text font-family="ArialMT" font-size="10" x="522" y="-819.5">slack_team_id</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="588.699" y="-819.5">string</text><text font-family="ArialMT" font-size="10" x="522" y="-806.5">slug</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="543.123" y="-806.5">string ∗</text><path d="m206-542.5c-44.548 77.731-15.414 360.31-4 455.7562" fill="none" stroke="#000"/><ellipse cx="202.308" cy="-84.1852" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m510.191-875.983c-72.195 14.971-176.514 47.489-239.191 115.983-67.535 73.803-15.256 128.704-65 215.5" fill="none" stroke="#000" stroke-dasharray="1 5"/><ellipse cx="512.547" cy="-876.464" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m206-542.5c-50.766 88.58-92.531 200.167-115.2975 266.591" fill="none" stroke="#000" stroke-dasharray="1 5"/><ellipse cx="89.8719" cy="-273.477" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m1227-542.5c48.23 160.337-154.89 150.05-309 215.5-76.297 32.403-104.552 9.222-183 36-26.337 8.99-53.96 21.851-77.947 34.252" fill="none" stroke="#000" stroke-dasharray="1 5"/><ellipse cx="649.483" cy="-252.776" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m657.897-254.82-6.289.929 4.337-4.648z" stroke="#000"/><path d="m670.112-878.619c154.899 23.288 486.448 99.932 556.888 334.119" fill="none" stroke="#000" stroke-dasharray="1 5"/><ellipse cx="667.503" cy="-879.007" fill="none" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m670.185-881.69c155.449 13.692 490.315 50.754 578.815 121.69 55.85 44.761 79.29 129.303 88.52 178.133" fill="none" stroke="#000"/><ellipse cx="667.575" cy="-881.918" fill="none" rx="2.4" ry="2.4" stroke="#000"/><ellipse cx="1339" cy="-573.505" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m1339.6-582.143-1.02 6.275-3.11-5.54z" stroke="#000"/><path d="m590-791.262v215.684" fill="none" stroke="#000"/><ellipse cx="590" cy="-794" fill="none" rx="2.4" ry="2.4" stroke="#000"/><ellipse cx="590" cy="-567.039" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m592.1-575.439-2.1 6-2.1-6z" stroke="#000"/><path d="m518.081-791.934c-5.772 10.434-10.956 21.178-15.081 31.934-69.544 181.345-8.264 245.521-59 433-2.336 8.63-5.191 17.487-8.32 26.24" fill="none" stroke="#000"/><ellipse cx="519.411" cy="-794.295" fill="none" rx="2.40002" ry="2.40002" stroke="#000"/><ellipse cx="432.731" cy="-292.804" rx="2.40001" ry="2.40001" stroke="#000"/><path d="m437.62-299.95-4.055 4.896.116-6.356z" stroke="#000"/><path d="m1456-503h120c6 0 12-6 12-12v-57c0-6-6-12-12-12h-120c-6 0-12 6-12 12v57c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="1487.41" y="-570.7">TeamInvite</text><path d="m1444-565h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="1451" y="-552">accepted_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1508.27" y="-552">datetime</text><text font-family="ArialMT" font-size="10" x="1451" y="-539">declined_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1504.93" y="-539">datetime</text><text font-family="ArialMT" font-size="10" x="1451" y="-526">email</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1477.67" y="-526">string ∗</text><text font-family="ArialMT" font-size="10" x="1451" y="-513">sent_at</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1486.58" y="-513">datetime</text><path d="m670.091-885.662c186.358 6.963 642.069 33.241 758.909 125.662 50.89 40.259 72.18 114.993 80.97 164.992" fill="none" stroke="#000"/><ellipse cx="667.596" cy="-885.754" fill="none" rx="2.4" ry="2.4" stroke="#000"/><ellipse cx="1511.37" cy="-586.482" rx="2.4" ry="2.4" stroke="#000"/><path d="m1512.08-595.111-1.1 6.261-3.04-5.581z" stroke="#000"/><path d="m1167-177h120c6 0 12-6 12-12v-57c0-6-6-12-12-12h-120c-6 0-12 6-12 12v57c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="1191.38" y="-244.7">TeamMember</text><path d="m1155-239h144" fill="none" stroke="#000"/><text font-family="ArialMT" font-size="10" x="1162" y="-226">role</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1181.45" y="-226">enum</text><text font-family="ArialMT" font-size="10" x="1162" y="-213">slack_id</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1200.91" y="-213">string</text><text font-family="ArialMT" font-size="10" x="1162" y="-200">slack_name</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1218.14" y="-200">string</text><text font-family="ArialMT" font-size="10" x="1162" y="-187">slack_username</text><text fill="#999" font-family="Arial ItalicMT" font-size="10" x="1237.59" y="-187">string</text><path d="m1227-542.5c28.07 93.312 18.15 208.696 8.8 273.554" fill="none" stroke="#000"/><ellipse cx="1234.55" cy="-260.584" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m1237.87-268.58-2.97 5.622-1.18-6.245z" stroke="#000"/><path d="m1227-542.5c27.84 92.546-23.2 134.17 29 215.5 16.18 25.216 42.54 9.759 57 36 31.54 57.218 35.69 92.276 0 147-26.45 40.552-75.98 62.7547-119.38 74.8424" fill="none" stroke="#000"/><ellipse cx="1185.35" cy="-66.9803" fill="none" rx="2.4" ry="2.4" stroke="#000"/><path d="m1194-67.0877-6.33-.5035 5.26-3.5581z" stroke="#000"/><path d="m752-327.5h140c6 0 12-6 12-12v-408c0-6-6-12-12-12h-140c-6 0-12 6-12 12v408c0 6 6 12 12 12" fill="none" stroke="#000"/><text font-family="Arial BoldMT" font-size="11" x="808.388" y="-746.2">User</text><path d="m740-740.5h164" fill="none" stroke="#000"/><g font-size="10"><text font-family="ArialMT" x="747" y="-727">admin</text><text fill="#999" font-family="Arial ItalicMT" x="777.015" y="-727">boolean</text><text font-family="ArialMT" x="747" y="-714">api_token</text><text fill="#999" font-family="Arial ItalicMT" x="793.147" y="-714">string</text><text font-family="ArialMT" x="747" y="-701">avatar_url</text><text fill="#999" font-family="Arial ItalicMT" x="794.246" y="-701">string</text><text font-family="ArialMT" x="747" y="-688">company_user</text><text fill="#999" font-family="Arial ItalicMT" x="815.369" y="-688">boolean</text><text font-family="ArialMT" x="747" y="-675">confirmation_sent_at</text><text fill="#999" font-family="Arial ItalicMT" x="842.61" y="-675">datetime</text><text font-family="ArialMT" x="747" y="-662">confirmation_token</text><text fill="#999" font-family="Arial ItalicMT" x="834.271" y="-662">string</text><text font-family="ArialMT" x="747" y="-649">confirmed_at</text><text fill="#999" font-family="Arial ItalicMT" x="807.586" y="-649">datetime</text><text font-family="ArialMT" x="747" y="-636">current_sign_in_at</text><text fill="#999" font-family="Arial ItalicMT" x="832.054" y="-636">datetime</text><text font-family="ArialMT" x="747" y="-623">current_sign_in_ip</text><text fill="#999" font-family="Arial ItalicMT" x="831.497" y="-623">inet</text><text font-family="ArialMT" x="747" y="-610">deactivated_at</text><text fill="#999" font-family="Arial ItalicMT" x="814.827" y="-610">datetime</text><text font-family="ArialMT" x="747" y="-597">email</text><text fill="#999" font-family="Arial ItalicMT" x="773.675" y="-597">string ∗ U</text><text font-family="ArialMT" x="747" y="-584">encrypted_password</text><text fill="#999" font-family="Arial ItalicMT" x="842.054" y="-584">string ∗</text><text font-family="ArialMT" x="747" y="-571">failed_attempts</text><text fill="#999" font-family="Arial ItalicMT" x="817.596" y="-571">integer ∗</text><text font-family="ArialMT" x="747" y="-558">last_sign_in_at</text><text fill="#999" font-family="Arial ItalicMT" x="816.492" y="-558">datetime</text><text font-family="ArialMT" x="747" y="-545">last_sign_in_ip</text><text fill="#999" font-family="Arial ItalicMT" x="815.936" y="-545">inet</text><text font-family="ArialMT" x="747" y="-532">locked_at</text><text fill="#999" font-family="Arial ItalicMT" x="792.586" y="-532">datetime</text><text font-family="ArialMT" x="747" y="-519">name</text><text fill="#999" font-family="Arial ItalicMT" x="774.793" y="-519">string ∗</text><text font-family="ArialMT" x="747" y="-506">preferences</text><text fill="#999" font-family="Arial ItalicMT" x="802.586" y="-506">json</text><text font-family="ArialMT" x="747" y="-493">provider</text><text fill="#999" font-family="Arial ItalicMT" x="785.906" y="-493">string</text><text font-family="ArialMT" x="747" y="-480">remember_created_at</text><text fill="#999" font-family="Arial ItalicMT" x="848.162" y="-480">datetime</text><text font-family="ArialMT" x="746.956" y="-467">reset_password_sent_at</text><text fill="#999" font-family="Arial ItalicMT" x="858.689" y="-467">datetime</text><text font-family="ArialMT" x="747" y="-454">reset_password_token</text><text fill="#999" font-family="Arial ItalicMT" x="850.394" y="-454">string</text><text font-family="ArialMT" x="747" y="-441">restricted</text><text fill="#999" font-family="Arial ItalicMT" x="790.901" y="-441">boolean</text><text font-family="ArialMT" x="747" y="-428">sign_in_count</text><text fill="#999" font-family="Arial ItalicMT" x="811.492" y="-428">integer ∗</text><text font-family="ArialMT" x="747" y="-415">slack_id</text><text fill="#999" font-family="Arial ItalicMT" x="785.906" y="-415">string</text><text font-family="ArialMT" x="747" y="-402">slack_name</text><text fill="#999" font-family="Arial ItalicMT" x="803.138" y="-402">string</text><text font-family="ArialMT" x="747" y="-389">slack_username</text><text fill="#999" font-family="Arial ItalicMT" x="822.591" y="-389">string</text><text font-family="ArialMT" x="747" y="-376">uid</text><text fill="#999" font-family="Arial ItalicMT" x="763.123" y="-376">string</text><text font-family="ArialMT" x="747" y="-363">unconfirmed_email</text><text fill="#999" font-family="Arial ItalicMT" x="834.266" y="-363">string</text><text font-family="ArialMT" x="747" y="-350">unlock_token</text><text fill="#999" font-family="Arial ItalicMT" x="808.709" y="-350">string</text><text font-family="ArialMT" x="747" y="-337">virtual_user</text><text fill="#999" font-family="Arial ItalicMT" x="801.468" y="-337">boolean ∗</text></g><g stroke="#000"><path d="m822-322.408v46.861" fill="none"/><ellipse cx="822" cy="-324.889" fill="none" rx="2.4" ry="2.4"/><ellipse cx="822" cy="-267.083" fill="none" rx="2.4" ry="2.4"/><path d="m824.1-275.483-2.1 6-2.1-6z"/><path d="m906.599-384.061c27.659 51.801 55.577 104.087 72.435 135.66" fill="none"/><ellipse cx="905.324" cy="-386.448" fill="none" rx="2.40002" ry="2.40002"/><ellipse cx="983.181" cy="-240.635" fill="none" rx="2.40001" ry="2.40001"/><path d="m981.077-249.034.973 6.281-4.678-4.303z"/><path d="m736.964-384.808c-17.645 22.06-37.983 42.413-60.964 57.808-65.248 43.711-100.879 4.913-173 36-1.484.64-2.969 1.303-4.453 1.986" fill="none"/><ellipse cx="738.512" cy="-386.769" rx="2.40002" ry="2.40002"/><ellipse cx="490.932" cy="-285.272" rx="2.40001" ry="2.40001"/><path d="m499.397-287.092-6.311.762 4.459-4.531z"/><path d="m743.4-322.75c-21.372 58.294-44.853 121.063-67.4 178.75-8.122 20.78-17.82 44.0556-25.249 61.5912" fill="none"/><ellipse cx="744.24" cy="-325.043" fill="none" rx="2.40001" ry="2.40001"/><ellipse cx="647.392" cy="-74.5143" fill="none" rx="2.40001" ry="2.40001"/><path d="m652.613-81.4216-4.281 4.6989.416-6.3432z"/><path d="m736.97-670.395c-26.022-38.529-54.288-80.38-79.016-116.992" fill="none" stroke-dasharray="1 5"/><ellipse cx="738.462" cy="-668.186" fill="none" rx="2.40002" ry="2.40002"/><ellipse cx="653.21" cy="-794.411" fill="none" rx="2.40001" ry="2.40001"/><path d="m656.172-786.274-1.618-6.148 5.098 3.797z"/><path d="m908.319-473.445c78.588 62.871 192.461 153.966 260.671 208.537" fill="none"/><ellipse cx="906.32" cy="-475.044" fill="none" rx="2.40002" ry="2.40002"/><ellipse cx="1175.61" cy="-259.611" fill="none" rx="2.40001" ry="2.40001"/><path d="m1170.36-266.498 3.38 5.388-6-2.108z"/><path d="m908.049-483.613c58.999 45.379 133.481 113.606 172.951 192.613 28.14 56.335 33.4 129.279 33.06 179.065" fill="none"/><ellipse cx="906.092" cy="-485.11" fill="none" rx="2.40002" ry="2.40002"/><ellipse cx="1113.93" cy="-103.453" fill="none" rx="2.4" ry="2.4"/><path d="m1116.15-111.82-2.19 5.967-2-6.031z"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.38.0 (20140413.2041)
+ -->
+<!-- Title: KudoOMatic Pages: 1 -->
+<svg width="2025pt" height="1076pt"
+ viewBox="0.00 0.00 2024.60 1075.60" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 1046.8)">
+<title>KudoOMatic</title>
+<polygon fill="white" stroke="none" points="-28.8,28.8 -28.8,-1046.8 1995.8,-1046.8 1995.8,28.8 -28.8,28.8"/>
+<text text-anchor="middle" x="983.5" y="-1003.6" font-family="Arial BoldMT" font-size="13.00">Class Diagram Kudos&#45;o&#45;matic</text>
+<!-- m_ActiveStorage::Attachment -->
+<g id="node1" class="node"><title>m_ActiveStorage::Attachment</title>
+<path fill="none" stroke="black" d="M146,-26.5C146,-26.5 266,-26.5 266,-26.5 272,-26.5 278,-32.5 278,-38.5 278,-38.5 278,-69.5 278,-69.5 278,-75.5 272,-81.5 266,-81.5 266,-81.5 146,-81.5 146,-81.5 140,-81.5 134,-75.5 134,-69.5 134,-69.5 134,-38.5 134,-38.5 134,-32.5 140,-26.5 146,-26.5"/>
+<text text-anchor="start" x="138.884" y="-68.2" font-family="Arial BoldMT" font-size="11.00">ActiveStorage::Attachment</text>
+<polyline fill="none" stroke="black" points="134,-62.5 278,-62.5 "/>
+<text text-anchor="start" x="141" y="-49.5" font-family="ArialMT" font-size="10.00">name </text>
+<text text-anchor="start" x="168.793" y="-49.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="141" y="-36.5" font-family="ArialMT" font-size="10.00">record_type </text>
+<text text-anchor="start" x="196.586" y="-36.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+</g>
+<!-- m_ActiveStorage::Blob -->
+<g id="node2" class="node"><title>m_ActiveStorage::Blob</title>
+<path fill="none" stroke="black" d="M12,-164C12,-164 132,-164 132,-164 138,-164 144,-170 144,-176 144,-176 144,-259 144,-259 144,-265 138,-271 132,-271 132,-271 12,-271 12,-271 6,-271 0,-265 0,-259 0,-259 0,-176 0,-176 0,-170 6,-164 12,-164"/>
+<text text-anchor="start" x="21.6951" y="-257.7" font-family="Arial BoldMT" font-size="11.00">ActiveStorage::Blob</text>
+<polyline fill="none" stroke="black" points="0,-252 144,-252 "/>
+<text text-anchor="start" x="7" y="-239" font-family="ArialMT" font-size="10.00">byte_size </text>
+<text text-anchor="start" x="52.0244" y="-239" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer (8) ∗</text>
+<text text-anchor="start" x="7" y="-226" font-family="ArialMT" font-size="10.00">checksum </text>
+<text text-anchor="start" x="54.793" y="-226" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="7" y="-213" font-family="ArialMT" font-size="10.00">content_type </text>
+<text text-anchor="start" x="67.0439" y="-213" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="7" y="-200" font-family="ArialMT" font-size="10.00">filename </text>
+<text text-anchor="start" x="47.5762" y="-200" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="7" y="-187" font-family="ArialMT" font-size="10.00">key </text>
+<text text-anchor="start" x="25.3398" y="-187" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="7" y="-174" font-family="ArialMT" font-size="10.00">metadata </text>
+<text text-anchor="start" x="51.4727" y="-174" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">text</text>
+</g>
+<!-- m_ActiveStorage::Blob&#45;&gt;m_ActiveStorage::Attachment -->
+<g id="edge7" class="edge"><title>m_ActiveStorage::Blob&#45;&gt;m_ActiveStorage::Attachment</title>
+<path fill="none" stroke="black" d="M119.101,-159.733C139.826,-134.754 163.346,-106.407 180.685,-85.5096"/>
+<ellipse fill="none" stroke="black" cx="117.409" cy="-161.772" rx="2.40002" ry="2.40002"/>
+<ellipse fill="black" stroke="black" cx="182.317" cy="-83.5438" rx="2.40002" ry="2.40002"/>
+</g>
+<!-- m_ActiveStorage::Blob&#45;&gt;m_ActiveStorage::Blob -->
+<g id="edge11" class="edge"><title>m_ActiveStorage::Blob&#45;&gt;m_ActiveStorage::Blob</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M149.094,-246.199C163.147,-242.559 173,-232.993 173,-217.5 173,-202.007 163.147,-192.441 149.094,-188.801"/>
+<ellipse fill="none" stroke="black" cx="146.527" cy="-246.724" rx="2.40001" ry="2.40001"/>
+<ellipse fill="none" stroke="black" cx="146.527" cy="-188.276" rx="2.40001" ry="2.40001"/>
+</g>
+<!-- m_Activity -->
+<g id="node3" class="node"><title>m_Activity</title>
+<path fill="none" stroke="black" d="M298,-522.5C298,-522.5 418,-522.5 418,-522.5 424,-522.5 430,-528.5 430,-534.5 430,-534.5 430,-552.5 430,-552.5 430,-558.5 424,-564.5 418,-564.5 418,-564.5 298,-564.5 298,-564.5 292,-564.5 286,-558.5 286,-552.5 286,-552.5 286,-534.5 286,-534.5 286,-528.5 292,-522.5 298,-522.5"/>
+<text text-anchor="start" x="338.582" y="-551.2" font-family="Arial BoldMT" font-size="11.00">Activity</text>
+<polyline fill="none" stroke="black" points="286,-545.5 430,-545.5 "/>
+<text text-anchor="start" x="293" y="-532" font-family="ArialMT" font-size="10.00">suggested_amount </text>
+<text text-anchor="start" x="380.842" y="-532" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+</g>
+<!-- m_ActsAsVotable::Vote -->
+<g id="node4" class="node"><title>m_ActsAsVotable::Vote</title>
+<path fill="none" stroke="black" d="M339,-0.5C339,-0.5 459,-0.5 459,-0.5 465,-0.5 471,-6.5 471,-12.5 471,-12.5 471,-95.5 471,-95.5 471,-101.5 465,-107.5 459,-107.5 459,-107.5 339,-107.5 339,-107.5 333,-107.5 327,-101.5 327,-95.5 327,-95.5 327,-12.5 327,-12.5 327,-6.5 333,-0.5 339,-0.5"/>
+<text text-anchor="start" x="347.462" y="-94.2" font-family="Arial BoldMT" font-size="11.00">ActsAsVotable::Vote</text>
+<polyline fill="none" stroke="black" points="327,-88.5 471,-88.5 "/>
+<text text-anchor="start" x="334" y="-75.5" font-family="ArialMT" font-size="10.00">votable_type </text>
+<text text-anchor="start" x="393.487" y="-75.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="334" y="-62.5" font-family="ArialMT" font-size="10.00">vote_flag </text>
+<text text-anchor="start" x="377.364" y="-62.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">boolean</text>
+<text text-anchor="start" x="334" y="-49.5" font-family="ArialMT" font-size="10.00">vote_scope </text>
+<text text-anchor="start" x="387.926" y="-49.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="334" y="-36.5" font-family="ArialMT" font-size="10.00">vote_weight </text>
+<text text-anchor="start" x="390.147" y="-36.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+<text text-anchor="start" x="334" y="-23.5" font-family="ArialMT" font-size="10.00">voter_id </text>
+<text text-anchor="start" x="372.354" y="-23.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer ∗</text>
+<text text-anchor="start" x="334" y="-10.5" font-family="ArialMT" font-size="10.00">voter_type </text>
+<text text-anchor="start" x="383.473" y="-10.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+</g>
+<!-- m_Activity&#45;&gt;m_ActsAsVotable::Vote -->
+<g id="edge1" class="edge"><title>m_Activity&#45;&gt;m_ActsAsVotable::Vote</title>
+<path fill="none" stroke="black" d="M344.849,-517.884C312.263,-453.329 234.64,-275.099 295,-144 300.821,-131.357 309.422,-119.84 319.227,-109.596"/>
+<ellipse fill="none" stroke="black" cx="346.026" cy="-520.195" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="325.223" cy="-103.697" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="320.708,-111.085 323.512,-105.38 317.762,-108.092 320.708,-111.085"/>
+</g>
+<!-- m_Post -->
+<g id="node13" class="node"><title>m_Post</title>
+<path fill="none" stroke="black" d="M321.5,-144.5C321.5,-144.5 476.5,-144.5 476.5,-144.5 482.5,-144.5 488.5,-150.5 488.5,-156.5 488.5,-156.5 488.5,-278.5 488.5,-278.5 488.5,-284.5 482.5,-290.5 476.5,-290.5 476.5,-290.5 321.5,-290.5 321.5,-290.5 315.5,-290.5 309.5,-284.5 309.5,-278.5 309.5,-278.5 309.5,-156.5 309.5,-156.5 309.5,-150.5 315.5,-144.5 321.5,-144.5"/>
+<text text-anchor="start" x="385.995" y="-277.2" font-family="Arial BoldMT" font-size="11.00">Post</text>
+<polyline fill="none" stroke="black" points="309.5,-271.5 488.5,-271.5 "/>
+<text text-anchor="start" x="317" y="-258" font-family="ArialMT" font-size="10.00">amount </text>
+<text text-anchor="start" x="353.133" y="-258" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer ∗</text>
+<text text-anchor="start" x="317" y="-245" font-family="ArialMT" font-size="10.00">image_content_type </text>
+<text text-anchor="start" x="409.842" y="-245" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="317" y="-232" font-family="ArialMT" font-size="10.00">image_file_name </text>
+<text text-anchor="start" x="395.936" y="-232" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="317" y="-219" font-family="ArialMT" font-size="10.00">image_file_size </text>
+<text text-anchor="start" x="388.704" y="-219" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+<text text-anchor="start" x="317" y="-206" font-family="ArialMT" font-size="10.00">image_updated_at </text>
+<text text-anchor="start" x="402.625" y="-206" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="317" y="-193" font-family="ArialMT" font-size="10.00">message </text>
+<text text-anchor="start" x="360.354" y="-193" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="316.946" y="-180" font-family="ArialMT" font-size="10.00">slack_kudos_left_on_creation </text>
+<text text-anchor="start" x="451.478" y="-180" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+<text text-anchor="start" x="317" y="-167" font-family="ArialMT" font-size="10.00">slack_reaction_created_at </text>
+<text text-anchor="start" x="436.517" y="-167" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="317" y="-154" font-family="ArialMT" font-size="10.00">slack_transaction_updated_at </text>
+<text text-anchor="start" x="452.649" y="-154" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+</g>
+<!-- m_Activity&#45;&gt;m_Post -->
+<g id="edge24" class="edge"><title>m_Activity&#45;&gt;m_Post</title>
+<path fill="none" stroke="black" d="M361.201,-517.206C366.996,-471.411 379.462,-372.894 388.498,-301.493"/>
+<ellipse fill="none" stroke="black" cx="360.866" cy="-519.851" rx="2.40001" ry="2.40001"/>
+<ellipse fill="none" stroke="black" cx="389.559" cy="-293.103" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="390.588,-301.7 389.258,-295.484 386.421,-301.173 390.588,-301.7"/>
+</g>
+<!-- m_Doorkeeper::AccessGrant -->
+<g id="node5" class="node"><title>m_Doorkeeper::AccessGrant</title>
+<path fill="none" stroke="black" d="M1629,-490C1629,-490 1749,-490 1749,-490 1755,-490 1761,-496 1761,-502 1761,-502 1761,-585 1761,-585 1761,-591 1755,-597 1749,-597 1749,-597 1629,-597 1629,-597 1623,-597 1617,-591 1617,-585 1617,-585 1617,-502 1617,-502 1617,-496 1623,-490 1629,-490"/>
+<text text-anchor="start" x="1623.72" y="-583.7" font-family="Arial BoldMT" font-size="11.00">Doorkeeper::AccessGrant</text>
+<polyline fill="none" stroke="black" points="1617,-578 1761,-578 "/>
+<text text-anchor="start" x="1624" y="-565" font-family="ArialMT" font-size="10.00">expires_in </text>
+<text text-anchor="start" x="1672.36" y="-565" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer ∗</text>
+<text text-anchor="start" x="1624" y="-552" font-family="ArialMT" font-size="10.00">redirect_uri </text>
+<text text-anchor="start" x="1676.8" y="-552" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">text ∗</text>
+<text text-anchor="start" x="1624" y="-539" font-family="ArialMT" font-size="10.00">resource_owner_id </text>
+<text text-anchor="start" x="1711.83" y="-539" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer ∗</text>
+<text text-anchor="start" x="1624" y="-526" font-family="ArialMT" font-size="10.00">revoked_at </text>
+<text text-anchor="start" x="1676.26" y="-526" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="1624" y="-513" font-family="ArialMT" font-size="10.00">scopes </text>
+<text text-anchor="start" x="1658.46" y="-513" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="1624" y="-500" font-family="ArialMT" font-size="10.00">token </text>
+<text text-anchor="start" x="1651.24" y="-500" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗ U</text>
+</g>
+<!-- m_Doorkeeper::AccessToken -->
+<g id="node6" class="node"><title>m_Doorkeeper::AccessToken</title>
+<path fill="none" stroke="black" d="M1802.5,-483.5C1802.5,-483.5 1929.5,-483.5 1929.5,-483.5 1935.5,-483.5 1941.5,-489.5 1941.5,-495.5 1941.5,-495.5 1941.5,-591.5 1941.5,-591.5 1941.5,-597.5 1935.5,-603.5 1929.5,-603.5 1929.5,-603.5 1802.5,-603.5 1802.5,-603.5 1796.5,-603.5 1790.5,-597.5 1790.5,-591.5 1790.5,-591.5 1790.5,-495.5 1790.5,-495.5 1790.5,-489.5 1796.5,-483.5 1802.5,-483.5"/>
+<text text-anchor="start" x="1799.8" y="-590.2" font-family="Arial BoldMT" font-size="11.00">Doorkeeper::AccessToken</text>
+<polyline fill="none" stroke="black" points="1790.5,-584.5 1941.5,-584.5 "/>
+<text text-anchor="start" x="1798" y="-571" font-family="ArialMT" font-size="10.00">expires_in </text>
+<text text-anchor="start" x="1846.36" y="-571" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+<text text-anchor="start" x="1797.66" y="-558" font-family="ArialMT" font-size="10.00">previous_refresh_token </text>
+<text text-anchor="start" x="1904.95" y="-558" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="1798" y="-545" font-family="ArialMT" font-size="10.00">refresh_token </text>
+<text text-anchor="start" x="1861.93" y="-545" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string U</text>
+<text text-anchor="start" x="1798" y="-532" font-family="ArialMT" font-size="10.00">resource_owner_id </text>
+<text text-anchor="start" x="1885.83" y="-532" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+<text text-anchor="start" x="1798" y="-519" font-family="ArialMT" font-size="10.00">revoked_at </text>
+<text text-anchor="start" x="1850.26" y="-519" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="1798" y="-506" font-family="ArialMT" font-size="10.00">scopes </text>
+<text text-anchor="start" x="1832.46" y="-506" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="1798" y="-493" font-family="ArialMT" font-size="10.00">token </text>
+<text text-anchor="start" x="1825.24" y="-493" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗ U</text>
+</g>
+<!-- m_Doorkeeper::Application -->
+<g id="node7" class="node"><title>m_Doorkeeper::Application</title>
+<path fill="none" stroke="black" d="M1806,-842C1806,-842 1926,-842 1926,-842 1932,-842 1938,-848 1938,-854 1938,-854 1938,-924 1938,-924 1938,-930 1932,-936 1926,-936 1926,-936 1806,-936 1806,-936 1800,-936 1794,-930 1794,-924 1794,-924 1794,-854 1794,-854 1794,-848 1800,-842 1806,-842"/>
+<text text-anchor="start" x="1805.3" y="-922.7" font-family="Arial BoldMT" font-size="11.00">Doorkeeper::Application</text>
+<polyline fill="none" stroke="black" points="1794,-917 1938,-917 "/>
+<text text-anchor="start" x="1801" y="-903.5" font-family="ArialMT" font-size="10.00">name </text>
+<text text-anchor="start" x="1828.79" y="-903.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="1801" y="-890.5" font-family="ArialMT" font-size="10.00">redirect_uri </text>
+<text text-anchor="start" x="1853.8" y="-890.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">text ∗</text>
+<text text-anchor="start" x="1801" y="-877.5" font-family="ArialMT" font-size="10.00">scopes </text>
+<text text-anchor="start" x="1835.46" y="-877.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="1801" y="-864.5" font-family="ArialMT" font-size="10.00">secret </text>
+<text text-anchor="start" x="1831.01" y="-864.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="1801" y="-851.5" font-family="ArialMT" font-size="10.00">uid </text>
+<text text-anchor="start" x="1817.12" y="-851.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗ U</text>
+</g>
+<!-- m_Doorkeeper::Application&#45;&gt;m_Doorkeeper::AccessGrant -->
+<g id="edge4" class="edge"><title>m_Doorkeeper::Application&#45;&gt;m_Doorkeeper::AccessGrant</title>
+<path fill="none" stroke="black" d="M1826.84,-838.021C1809.91,-815.047 1790.67,-786.956 1776,-760 1749.22,-710.783 1725.9,-651.551 1710.16,-607.65"/>
+<ellipse fill="none" stroke="black" cx="1828.33" cy="-840.027" rx="2.40002" ry="2.40002"/>
+<ellipse fill="black" stroke="black" cx="1707.32" cy="-599.662" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="1712.11,-606.876 1708.12,-601.924 1708.15,-608.281 1712.11,-606.876"/>
+</g>
+<!-- m_Doorkeeper::Application&#45;&gt;m_Doorkeeper::AccessToken -->
+<g id="edge5" class="edge"><title>m_Doorkeeper::Application&#45;&gt;m_Doorkeeper::AccessToken</title>
+<path fill="none" stroke="black" d="M1866,-836.515C1866,-777.535 1866,-680.567 1866,-614.697"/>
+<ellipse fill="none" stroke="black" cx="1866" cy="-839.274" rx="2.4" ry="2.4"/>
+<ellipse fill="none" stroke="black" cx="1866" cy="-605.991" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="1868.1,-614.391 1866,-608.391 1863.9,-614.391 1868.1,-614.391"/>
+</g>
+<!-- m_Doorkeeper::Application&#45;&gt;m_Doorkeeper::Application -->
+<g id="edge6" class="edge"><title>m_Doorkeeper::Application&#45;&gt;m_Doorkeeper::Application</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1898.24,-939.487C1930.82,-968.872 1967,-952.043 1967,-889 1967,-829.02 1934.25,-810.873 1903.01,-834.558"/>
+<ellipse fill="none" stroke="black" cx="1896.43" cy="-937.751" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="1896.49" cy="-840.32" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="1901.39,-833.182 1898.29,-838.73 1904.17,-836.329 1901.39,-833.182"/>
+</g>
+<!-- m_Export -->
+<g id="node8" class="node"><title>m_Export</title>
+<path fill="none" stroke="black" d="M762,-170.5C762,-170.5 882,-170.5 882,-170.5 888,-170.5 894,-176.5 894,-182.5 894,-182.5 894,-252.5 894,-252.5 894,-258.5 888,-264.5 882,-264.5 882,-264.5 762,-264.5 762,-264.5 756,-264.5 750,-258.5 750,-252.5 750,-252.5 750,-182.5 750,-182.5 750,-176.5 756,-170.5 762,-170.5"/>
+<text text-anchor="start" x="804.104" y="-251.2" font-family="Arial BoldMT" font-size="11.00">Export</text>
+<polyline fill="none" stroke="black" points="750,-245.5 894,-245.5 "/>
+<text text-anchor="start" x="757" y="-232" font-family="ArialMT" font-size="10.00">uuid </text>
+<text text-anchor="start" x="778.685" y="-232" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="757" y="-219" font-family="ArialMT" font-size="10.00">zip_content_type </text>
+<text text-anchor="start" x="835.389" y="-219" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="757" y="-206" font-family="ArialMT" font-size="10.00">zip_file_name </text>
+<text text-anchor="start" x="821.482" y="-206" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="757" y="-193" font-family="ArialMT" font-size="10.00">zip_file_size </text>
+<text text-anchor="start" x="814.251" y="-193" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+<text text-anchor="start" x="757" y="-180" font-family="ArialMT" font-size="10.00">zip_updated_at </text>
+<text text-anchor="start" x="828.172" y="-180" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+</g>
+<!-- m_FcmToken -->
+<g id="node9" class="node"><title>m_FcmToken</title>
+<path fill="none" stroke="black" d="M935,-196.5C935,-196.5 1055,-196.5 1055,-196.5 1061,-196.5 1067,-202.5 1067,-208.5 1067,-208.5 1067,-226.5 1067,-226.5 1067,-232.5 1061,-238.5 1055,-238.5 1055,-238.5 935,-238.5 935,-238.5 929,-238.5 923,-232.5 923,-226.5 923,-226.5 923,-208.5 923,-208.5 923,-202.5 929,-196.5 935,-196.5"/>
+<text text-anchor="start" x="967.632" y="-225.2" font-family="Arial BoldMT" font-size="11.00">FcmToken</text>
+<polyline fill="none" stroke="black" points="923,-219.5 1067,-219.5 "/>
+<text text-anchor="start" x="930" y="-206" font-family="ArialMT" font-size="10.00">token </text>
+<text text-anchor="start" x="957.241" y="-206" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string U</text>
+</g>
+<!-- m_Goal -->
+<g id="node10" class="node"><title>m_Goal</title>
+<path fill="none" stroke="black" d="M530,-183.5C530,-183.5 650,-183.5 650,-183.5 656,-183.5 662,-189.5 662,-195.5 662,-195.5 662,-239.5 662,-239.5 662,-245.5 656,-251.5 650,-251.5 650,-251.5 530,-251.5 530,-251.5 524,-251.5 518,-245.5 518,-239.5 518,-239.5 518,-195.5 518,-195.5 518,-189.5 524,-183.5 530,-183.5"/>
+<text text-anchor="start" x="576.382" y="-238.2" font-family="Arial BoldMT" font-size="11.00">Goal</text>
+<polyline fill="none" stroke="black" points="518,-232.5 662,-232.5 "/>
+<text text-anchor="start" x="525" y="-219" font-family="ArialMT" font-size="10.00">achieved_on </text>
+<text text-anchor="start" x="584.492" y="-219" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">date</text>
+<text text-anchor="start" x="525" y="-206" font-family="ArialMT" font-size="10.00">amount </text>
+<text text-anchor="start" x="561.133" y="-206" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer ∗</text>
+<text text-anchor="start" x="525" y="-193" font-family="ArialMT" font-size="10.00">name </text>
+<text text-anchor="start" x="552.793" y="-193" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string (32) ∗</text>
+</g>
+<!-- m_Goal&#45;&gt;m_ActsAsVotable::Vote -->
+<g id="edge2" class="edge"><title>m_Goal&#45;&gt;m_ActsAsVotable::Vote</title>
+<path fill="none" stroke="black" d="M547.21,-180.319C524.396,-161.029 495.738,-136.796 469.716,-114.794"/>
+<ellipse fill="none" stroke="black" cx="549.055" cy="-181.879" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="463.204" cy="-109.288" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="470.974,-113.108 465.037,-110.837 468.262,-116.315 470.974,-113.108"/>
+</g>
+<!-- m_Guideline -->
+<g id="node11" class="node"><title>m_Guideline</title>
+<path fill="none" stroke="black" d="M1283,-516C1283,-516 1403,-516 1403,-516 1409,-516 1415,-522 1415,-528 1415,-528 1415,-559 1415,-559 1415,-565 1409,-571 1403,-571 1403,-571 1283,-571 1283,-571 1277,-571 1271,-565 1271,-559 1271,-559 1271,-528 1271,-528 1271,-522 1277,-516 1283,-516"/>
+<text text-anchor="start" x="1317.76" y="-557.7" font-family="Arial BoldMT" font-size="11.00">Guideline</text>
+<polyline fill="none" stroke="black" points="1271,-552 1415,-552 "/>
+<text text-anchor="start" x="1278" y="-539" font-family="ArialMT" font-size="10.00">kudos </text>
+<text text-anchor="start" x="1307.46" y="-539" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer ∗</text>
+<text text-anchor="start" x="1278" y="-526" font-family="ArialMT" font-size="10.00">name </text>
+<text text-anchor="start" x="1305.79" y="-526" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+</g>
+<!-- m_KudosMeter -->
+<g id="node12" class="node"><title>m_KudosMeter</title>
+<path fill="none" stroke="black" d="M530,-522.5C530,-522.5 650,-522.5 650,-522.5 656,-522.5 662,-528.5 662,-534.5 662,-534.5 662,-552.5 662,-552.5 662,-558.5 656,-564.5 650,-564.5 650,-564.5 530,-564.5 530,-564.5 524,-564.5 518,-558.5 518,-552.5 518,-552.5 518,-534.5 518,-534.5 518,-528.5 524,-522.5 530,-522.5"/>
+<text text-anchor="start" x="558.346" y="-551.2" font-family="Arial BoldMT" font-size="11.00">KudosMeter</text>
+<polyline fill="none" stroke="black" points="518,-545.5 662,-545.5 "/>
+<text text-anchor="start" x="525" y="-532" font-family="ArialMT" font-size="10.00">name </text>
+<text text-anchor="start" x="552.793" y="-532" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+</g>
+<!-- m_KudosMeter&#45;&gt;m_Goal -->
+<g id="edge19" class="edge"><title>m_KudosMeter&#45;&gt;m_Goal</title>
+<path fill="none" stroke="black" d="M590,-517.213C590,-462.228 590,-331.217 590,-262.416"/>
+<ellipse fill="none" stroke="black" cx="590" cy="-519.832" rx="2.4" ry="2.4"/>
+<ellipse fill="none" stroke="black" cx="590" cy="-253.927" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="592.1,-262.327 590,-256.327 587.9,-262.327 592.1,-262.327"/>
+</g>
+<!-- m_KudosMeter&#45;&gt;m_Post -->
+<g id="edge21" class="edge"><title>m_KudosMeter&#45;&gt;m_Post</title>
+<path fill="none" stroke="black" d="M582.133,-517.842C568.308,-476.437 537.172,-391.176 496,-327 490.003,-317.653 483.206,-308.317 476.061,-299.264"/>
+<ellipse fill="none" stroke="black" cx="582.899" cy="-520.152" rx="2.40001" ry="2.40001"/>
+<ellipse fill="black" stroke="black" cx="470.627" cy="-292.545" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="477.542,-297.756 472.136,-294.411 474.277,-300.397 477.542,-297.756"/>
+</g>
+<!-- m_Post&#45;&gt;m_ActiveStorage::Attachment -->
+<g id="edge8" class="edge"><title>m_Post&#45;&gt;m_ActiveStorage::Attachment</title>
+<path fill="none" stroke="black" d="M309.176,-141.336C285.209,-121.281 260.691,-100.765 241.572,-84.7661"/>
+<ellipse fill="none" stroke="black" cx="311.102" cy="-142.948" rx="2.40002" ry="2.40002"/>
+<ellipse fill="black" stroke="black" cx="239.662" cy="-83.1683" rx="2.40002" ry="2.40002"/>
+</g>
+<!-- m_Post&#45;&gt;m_ActiveStorage::Blob -->
+<g id="edge22" class="edge"><title>m_Post&#45;&gt;m_ActiveStorage::Blob</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M304.399,-217.5C252.603,-217.5 200.807,-217.5 149.011,-217.5"/>
+<ellipse fill="none" stroke="black" cx="307.011" cy="-217.5" rx="2.4" ry="2.4"/>
+<ellipse fill="none" stroke="black" cx="146.57" cy="-217.5" rx="2.4" ry="2.4"/>
+</g>
+<!-- m_Post&#45;&gt;m_ActsAsVotable::Vote -->
+<g id="edge3" class="edge"><title>m_Post&#45;&gt;m_ActsAsVotable::Vote</title>
+<path fill="none" stroke="black" d="M399,-139.356C399,-132.516 399,-125.642 399,-118.93"/>
+<ellipse fill="none" stroke="black" cx="399" cy="-141.853" rx="2.4" ry="2.4"/>
+<ellipse fill="none" stroke="black" cx="399" cy="-110.222" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="401.1,-118.622 399,-112.622 396.9,-118.622 401.1,-118.622"/>
+</g>
+<!-- m_PostReceiver -->
+<g id="node14" class="node"><title>m_PostReceiver</title>
+<path fill="none" stroke="black" d="M579,-36C579,-36 699,-36 699,-36 705,-36 711,-42 711,-48 711,-48 711,-60 711,-60 711,-66 705,-72 699,-72 699,-72 579,-72 579,-72 573,-72 567,-66 567,-60 567,-60 567,-48 567,-48 567,-42 573,-36 579,-36"/>
+<text text-anchor="start" x="604.293" y="-50.2" font-family="Arial BoldMT" font-size="11.00">PostReceiver</text>
+</g>
+<!-- m_Post&#45;&gt;m_PostReceiver -->
+<g id="edge25" class="edge"><title>m_Post&#45;&gt;m_PostReceiver</title>
+<path fill="none" stroke="black" d="M492.632,-151.038C496.127,-148.655 499.592,-146.302 503,-144 536.779,-121.18 575.744,-95.7729 603.285,-77.9657"/>
+<ellipse fill="none" stroke="black" cx="490.499" cy="-152.495" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="610.507" cy="-73.3026" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="604.589,-79.6235 608.49,-74.6045 602.311,-76.0951 604.589,-79.6235"/>
+</g>
+<!-- m_Vote -->
+<g id="node19" class="node"><title>m_Vote</title>
+<path fill="none" stroke="black" d="M1051,-7C1051,-7 1171,-7 1171,-7 1177,-7 1183,-13 1183,-19 1183,-19 1183,-89 1183,-89 1183,-95 1177,-101 1171,-101 1171,-101 1051,-101 1051,-101 1045,-101 1039,-95 1039,-89 1039,-89 1039,-19 1039,-19 1039,-13 1045,-7 1051,-7"/>
+<text text-anchor="start" x="1097.99" y="-87.7" font-family="Arial BoldMT" font-size="11.00">Vote</text>
+<polyline fill="none" stroke="black" points="1039,-82 1183,-82 "/>
+<text text-anchor="start" x="1046" y="-68.5" font-family="ArialMT" font-size="10.00">votable_type </text>
+<text text-anchor="start" x="1105.49" y="-68.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="1046" y="-55.5" font-family="ArialMT" font-size="10.00">vote_flag </text>
+<text text-anchor="start" x="1089.36" y="-55.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">boolean</text>
+<text text-anchor="start" x="1046" y="-42.5" font-family="ArialMT" font-size="10.00">vote_scope </text>
+<text text-anchor="start" x="1099.93" y="-42.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="1046" y="-29.5" font-family="ArialMT" font-size="10.00">vote_weight </text>
+<text text-anchor="start" x="1102.15" y="-29.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+<text text-anchor="start" x="1046" y="-16.5" font-family="ArialMT" font-size="10.00">voter_type </text>
+<text text-anchor="start" x="1095.47" y="-16.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+</g>
+<!-- m_Post&#45;&gt;m_Vote -->
+<g id="edge26" class="edge"><title>m_Post&#45;&gt;m_Vote</title>
+<path fill="none" stroke="black" d="M493.104,-148.278C496.391,-146.742 499.694,-145.309 503,-144 527.179,-134.425 867.359,-87.7889 1028.05,-66.1143"/>
+<ellipse fill="none" stroke="black" cx="490.794" cy="-149.391" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="1036.46" cy="-64.9812" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="1028.42,-68.1844 1034.08,-65.3017 1027.86,-64.022 1028.42,-68.1844"/>
+</g>
+<!-- m_Team -->
+<g id="node15" class="node"><title>m_Team</title>
+<path fill="none" stroke="black" d="M527,-796.5C527,-796.5 653,-796.5 653,-796.5 659,-796.5 665,-802.5 665,-808.5 665,-808.5 665,-969.5 665,-969.5 665,-975.5 659,-981.5 653,-981.5 653,-981.5 527,-981.5 527,-981.5 521,-981.5 515,-975.5 515,-969.5 515,-969.5 515,-808.5 515,-808.5 515,-802.5 521,-796.5 527,-796.5"/>
+<text text-anchor="start" x="574.551" y="-968.2" font-family="Arial BoldMT" font-size="11.00">Team</text>
+<polyline fill="none" stroke="black" points="515,-962.5 665,-962.5 "/>
+<text text-anchor="start" x="522" y="-949.5" font-family="ArialMT" font-size="10.00">channel_id </text>
+<text text-anchor="start" x="573.152" y="-949.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="522" y="-936.5" font-family="ArialMT" font-size="10.00">general_info </text>
+<text text-anchor="start" x="579.822" y="-936.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">text</text>
+<text text-anchor="start" x="522" y="-923.5" font-family="ArialMT" font-size="10.00">logo_content_type </text>
+<text text-anchor="start" x="606.512" y="-923.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="522" y="-910.5" font-family="ArialMT" font-size="10.00">logo_file_name </text>
+<text text-anchor="start" x="592.605" y="-910.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="522" y="-897.5" font-family="ArialMT" font-size="10.00">logo_file_size </text>
+<text text-anchor="start" x="585.374" y="-897.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer</text>
+<text text-anchor="start" x="522" y="-884.5" font-family="ArialMT" font-size="10.00">logo_updated_at </text>
+<text text-anchor="start" x="599.295" y="-884.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="522" y="-871.5" font-family="ArialMT" font-size="10.00">name </text>
+<text text-anchor="start" x="549.793" y="-871.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="522" y="-858.5" font-family="ArialMT" font-size="10.00">preferences </text>
+<text text-anchor="start" x="577.586" y="-858.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">json</text>
+<text text-anchor="start" x="522" y="-845.5" font-family="ArialMT" font-size="10.00">rss_token </text>
+<text text-anchor="start" x="568.133" y="-845.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="521.907" y="-832.5" font-family="ArialMT" font-size="10.00">slack_bot_access_token </text>
+<text text-anchor="start" x="633.64" y="-832.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="522" y="-819.5" font-family="ArialMT" font-size="10.00">slack_team_id </text>
+<text text-anchor="start" x="588.699" y="-819.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="522" y="-806.5" font-family="ArialMT" font-size="10.00">slug </text>
+<text text-anchor="start" x="543.123" y="-806.5" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+</g>
+<!-- m_Team&#45;&gt;m_ActiveStorage::Attachment -->
+<g id="edge9" class="edge"><title>m_Team&#45;&gt;m_ActiveStorage::Attachment</title>
+<path fill="none" stroke="black" d="M206,-542.5C161.452,-464.769 190.586,-182.19 202,-86.7438"/>
+<ellipse fill="black" stroke="black" cx="202.308" cy="-84.1852" rx="2.40001" ry="2.40001"/>
+</g>
+<!-- m_Team&#45;&gt;m_ActiveStorage::Blob -->
+<g id="edge32" class="edge"><title>m_Team&#45;&gt;m_ActiveStorage::Blob</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M510.191,-875.983C437.996,-861.012 333.677,-828.494 271,-760 203.465,-686.197 255.744,-631.296 206,-544.5"/>
+<ellipse fill="none" stroke="black" cx="512.547" cy="-876.464" rx="2.40001" ry="2.40001"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M206,-542.5C155.234,-453.92 113.469,-342.333 90.7025,-275.909"/>
+<ellipse fill="none" stroke="black" cx="89.8719" cy="-273.477" rx="2.40001" ry="2.40001"/>
+</g>
+<!-- m_Team&#45;&gt;m_Goal -->
+<g id="edge29" class="edge"><title>m_Team&#45;&gt;m_Goal</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M1227,-542.5C1275.23,-382.163 1072.11,-392.45 918,-327 841.703,-294.597 813.448,-317.778 735,-291 708.663,-282.01 681.04,-269.149 657.053,-256.748"/>
+<ellipse fill="none" stroke="black" cx="649.483" cy="-252.776" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="657.897,-254.82 651.608,-253.891 655.945,-258.539 657.897,-254.82"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M670.112,-878.619C825.011,-855.331 1156.56,-778.687 1227,-544.5"/>
+<ellipse fill="none" stroke="black" cx="667.503" cy="-879.007" rx="2.40001" ry="2.40001"/>
+</g>
+<!-- m_Team&#45;&gt;m_Guideline -->
+<g id="edge27" class="edge"><title>m_Team&#45;&gt;m_Guideline</title>
+<path fill="none" stroke="black" d="M670.185,-881.69C825.634,-867.998 1160.5,-830.936 1249,-760 1304.85,-715.239 1328.29,-630.697 1337.52,-581.867"/>
+<ellipse fill="none" stroke="black" cx="667.575" cy="-881.918" rx="2.4" ry="2.4"/>
+<ellipse fill="none" stroke="black" cx="1339" cy="-573.505" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="1339.6,-582.143 1338.58,-575.868 1335.47,-581.408 1339.6,-582.143"/>
+</g>
+<!-- m_Team&#45;&gt;m_KudosMeter -->
+<g id="edge20" class="edge"><title>m_Team&#45;&gt;m_KudosMeter</title>
+<path fill="none" stroke="black" d="M590,-791.262C590,-718.66 590,-623.803 590,-575.578"/>
+<ellipse fill="none" stroke="black" cx="590" cy="-794" rx="2.4" ry="2.4"/>
+<ellipse fill="none" stroke="black" cx="590" cy="-567.039" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="592.1,-575.439 590,-569.439 587.9,-575.439 592.1,-575.439"/>
+</g>
+<!-- m_Team&#45;&gt;m_Post -->
+<g id="edge23" class="edge"><title>m_Team&#45;&gt;m_Post</title>
+<path fill="none" stroke="black" d="M518.081,-791.934C512.309,-781.5 507.125,-770.756 503,-760 433.456,-578.655 494.736,-514.479 444,-327 441.664,-318.37 438.809,-309.513 435.68,-300.76"/>
+<ellipse fill="none" stroke="black" cx="519.411" cy="-794.295" rx="2.40002" ry="2.40002"/>
+<ellipse fill="black" stroke="black" cx="432.731" cy="-292.804" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="437.62,-299.95 433.565,-295.054 433.681,-301.41 437.62,-299.95"/>
+</g>
+<!-- m_TeamInvite -->
+<g id="node16" class="node"><title>m_TeamInvite</title>
+<path fill="none" stroke="black" d="M1456,-503C1456,-503 1576,-503 1576,-503 1582,-503 1588,-509 1588,-515 1588,-515 1588,-572 1588,-572 1588,-578 1582,-584 1576,-584 1576,-584 1456,-584 1456,-584 1450,-584 1444,-578 1444,-572 1444,-572 1444,-515 1444,-515 1444,-509 1450,-503 1456,-503"/>
+<text text-anchor="start" x="1487.41" y="-570.7" font-family="Arial BoldMT" font-size="11.00">TeamInvite</text>
+<polyline fill="none" stroke="black" points="1444,-565 1588,-565 "/>
+<text text-anchor="start" x="1451" y="-552" font-family="ArialMT" font-size="10.00">accepted_at </text>
+<text text-anchor="start" x="1508.27" y="-552" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="1451" y="-539" font-family="ArialMT" font-size="10.00">declined_at </text>
+<text text-anchor="start" x="1504.93" y="-539" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="1451" y="-526" font-family="ArialMT" font-size="10.00">email </text>
+<text text-anchor="start" x="1477.67" y="-526" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="1451" y="-513" font-family="ArialMT" font-size="10.00">sent_at </text>
+<text text-anchor="start" x="1486.58" y="-513" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+</g>
+<!-- m_Team&#45;&gt;m_TeamInvite -->
+<g id="edge30" class="edge"><title>m_Team&#45;&gt;m_TeamInvite</title>
+<path fill="none" stroke="black" d="M670.091,-885.662C856.449,-878.699 1312.16,-852.421 1429,-760 1479.89,-719.741 1501.18,-645.007 1509.97,-595.008"/>
+<ellipse fill="none" stroke="black" cx="667.596" cy="-885.754" rx="2.4" ry="2.4"/>
+<ellipse fill="black" stroke="black" cx="1511.37" cy="-586.482" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="1512.08,-595.111 1510.98,-588.85 1507.94,-594.431 1512.08,-595.111"/>
+</g>
+<!-- m_TeamMember -->
+<g id="node17" class="node"><title>m_TeamMember</title>
+<path fill="none" stroke="black" d="M1167,-177C1167,-177 1287,-177 1287,-177 1293,-177 1299,-183 1299,-189 1299,-189 1299,-246 1299,-246 1299,-252 1293,-258 1287,-258 1287,-258 1167,-258 1167,-258 1161,-258 1155,-252 1155,-246 1155,-246 1155,-189 1155,-189 1155,-183 1161,-177 1167,-177"/>
+<text text-anchor="start" x="1191.38" y="-244.7" font-family="Arial BoldMT" font-size="11.00">TeamMember</text>
+<polyline fill="none" stroke="black" points="1155,-239 1299,-239 "/>
+<text text-anchor="start" x="1162" y="-226" font-family="ArialMT" font-size="10.00">role </text>
+<text text-anchor="start" x="1181.45" y="-226" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">enum</text>
+<text text-anchor="start" x="1162" y="-213" font-family="ArialMT" font-size="10.00">slack_id </text>
+<text text-anchor="start" x="1200.91" y="-213" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="1162" y="-200" font-family="ArialMT" font-size="10.00">slack_name </text>
+<text text-anchor="start" x="1218.14" y="-200" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="1162" y="-187" font-family="ArialMT" font-size="10.00">slack_username </text>
+<text text-anchor="start" x="1237.59" y="-187" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+</g>
+<!-- m_Team&#45;&gt;m_TeamMember -->
+<g id="edge28" class="edge"><title>m_Team&#45;&gt;m_TeamMember</title>
+<path fill="none" stroke="black" d="M1227,-542.5C1255.07,-449.188 1245.15,-333.804 1235.8,-268.946"/>
+<ellipse fill="none" stroke="black" cx="1234.55" cy="-260.584" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="1237.87,-268.58 1234.9,-262.958 1233.72,-269.203 1237.87,-268.58"/>
+</g>
+<!-- m_Team&#45;&gt;m_Vote -->
+<g id="edge31" class="edge"><title>m_Team&#45;&gt;m_Vote</title>
+<path fill="none" stroke="black" d="M1227,-542.5C1254.84,-449.954 1203.8,-408.33 1256,-327 1272.18,-301.784 1298.54,-317.241 1313,-291 1344.54,-233.782 1348.69,-198.724 1313,-144 1286.55,-103.448 1237.02,-81.2453 1193.62,-69.1576"/>
+<ellipse fill="none" stroke="black" cx="1185.35" cy="-66.9803" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="1194,-67.0877 1187.67,-67.5912 1192.93,-71.1493 1194,-67.0877"/>
+</g>
+<!-- m_User -->
+<g id="node18" class="node"><title>m_User</title>
+<path fill="none" stroke="black" d="M752,-327.5C752,-327.5 892,-327.5 892,-327.5 898,-327.5 904,-333.5 904,-339.5 904,-339.5 904,-747.5 904,-747.5 904,-753.5 898,-759.5 892,-759.5 892,-759.5 752,-759.5 752,-759.5 746,-759.5 740,-753.5 740,-747.5 740,-747.5 740,-339.5 740,-339.5 740,-333.5 746,-327.5 752,-327.5"/>
+<text text-anchor="start" x="808.388" y="-746.2" font-family="Arial BoldMT" font-size="11.00">User</text>
+<polyline fill="none" stroke="black" points="740,-740.5 904,-740.5 "/>
+<text text-anchor="start" x="747" y="-727" font-family="ArialMT" font-size="10.00">admin </text>
+<text text-anchor="start" x="777.015" y="-727" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">boolean</text>
+<text text-anchor="start" x="747" y="-714" font-family="ArialMT" font-size="10.00">api_token </text>
+<text text-anchor="start" x="793.147" y="-714" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-701" font-family="ArialMT" font-size="10.00">avatar_url </text>
+<text text-anchor="start" x="794.246" y="-701" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-688" font-family="ArialMT" font-size="10.00">company_user </text>
+<text text-anchor="start" x="815.369" y="-688" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">boolean</text>
+<text text-anchor="start" x="747" y="-675" font-family="ArialMT" font-size="10.00">confirmation_sent_at </text>
+<text text-anchor="start" x="842.61" y="-675" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="747" y="-662" font-family="ArialMT" font-size="10.00">confirmation_token </text>
+<text text-anchor="start" x="834.271" y="-662" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-649" font-family="ArialMT" font-size="10.00">confirmed_at </text>
+<text text-anchor="start" x="807.586" y="-649" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="747" y="-636" font-family="ArialMT" font-size="10.00">current_sign_in_at </text>
+<text text-anchor="start" x="832.054" y="-636" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="747" y="-623" font-family="ArialMT" font-size="10.00">current_sign_in_ip </text>
+<text text-anchor="start" x="831.497" y="-623" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">inet</text>
+<text text-anchor="start" x="747" y="-610" font-family="ArialMT" font-size="10.00">deactivated_at </text>
+<text text-anchor="start" x="814.827" y="-610" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="747" y="-597" font-family="ArialMT" font-size="10.00">email </text>
+<text text-anchor="start" x="773.675" y="-597" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗ U</text>
+<text text-anchor="start" x="747" y="-584" font-family="ArialMT" font-size="10.00">encrypted_password </text>
+<text text-anchor="start" x="842.054" y="-584" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="747" y="-571" font-family="ArialMT" font-size="10.00">failed_attempts </text>
+<text text-anchor="start" x="817.596" y="-571" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer ∗</text>
+<text text-anchor="start" x="747" y="-558" font-family="ArialMT" font-size="10.00">last_sign_in_at </text>
+<text text-anchor="start" x="816.492" y="-558" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="747" y="-545" font-family="ArialMT" font-size="10.00">last_sign_in_ip </text>
+<text text-anchor="start" x="815.936" y="-545" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">inet</text>
+<text text-anchor="start" x="747" y="-532" font-family="ArialMT" font-size="10.00">locked_at </text>
+<text text-anchor="start" x="792.586" y="-532" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="747" y="-519" font-family="ArialMT" font-size="10.00">name </text>
+<text text-anchor="start" x="774.793" y="-519" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string ∗</text>
+<text text-anchor="start" x="747" y="-506" font-family="ArialMT" font-size="10.00">preferences </text>
+<text text-anchor="start" x="802.586" y="-506" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">json</text>
+<text text-anchor="start" x="747" y="-493" font-family="ArialMT" font-size="10.00">provider </text>
+<text text-anchor="start" x="785.906" y="-493" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-480" font-family="ArialMT" font-size="10.00">remember_created_at </text>
+<text text-anchor="start" x="848.162" y="-480" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="746.956" y="-467" font-family="ArialMT" font-size="10.00">reset_password_sent_at </text>
+<text text-anchor="start" x="858.689" y="-467" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">datetime</text>
+<text text-anchor="start" x="747" y="-454" font-family="ArialMT" font-size="10.00">reset_password_token </text>
+<text text-anchor="start" x="850.394" y="-454" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-441" font-family="ArialMT" font-size="10.00">restricted </text>
+<text text-anchor="start" x="790.901" y="-441" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">boolean</text>
+<text text-anchor="start" x="747" y="-428" font-family="ArialMT" font-size="10.00">sign_in_count </text>
+<text text-anchor="start" x="811.492" y="-428" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">integer ∗</text>
+<text text-anchor="start" x="747" y="-415" font-family="ArialMT" font-size="10.00">slack_id </text>
+<text text-anchor="start" x="785.906" y="-415" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-402" font-family="ArialMT" font-size="10.00">slack_name </text>
+<text text-anchor="start" x="803.138" y="-402" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-389" font-family="ArialMT" font-size="10.00">slack_username </text>
+<text text-anchor="start" x="822.591" y="-389" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-376" font-family="ArialMT" font-size="10.00">uid </text>
+<text text-anchor="start" x="763.123" y="-376" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-363" font-family="ArialMT" font-size="10.00">unconfirmed_email </text>
+<text text-anchor="start" x="834.266" y="-363" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-350" font-family="ArialMT" font-size="10.00">unlock_token </text>
+<text text-anchor="start" x="808.709" y="-350" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">string</text>
+<text text-anchor="start" x="747" y="-337" font-family="ArialMT" font-size="10.00">virtual_user </text>
+<text text-anchor="start" x="801.468" y="-337" font-family="Arial ItalicMT" font-size="10.00" fill="#999999">boolean ∗</text>
+</g>
+<!-- m_User&#45;&gt;m_Export -->
+<g id="edge17" class="edge"><title>m_User&#45;&gt;m_Export</title>
+<path fill="none" stroke="black" d="M822,-322.408C822,-305.523 822,-289.609 822,-275.547"/>
+<ellipse fill="none" stroke="black" cx="822" cy="-324.889" rx="2.4" ry="2.4"/>
+<ellipse fill="none" stroke="black" cx="822" cy="-267.083" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="824.1,-275.483 822,-269.483 819.9,-275.483 824.1,-275.483"/>
+</g>
+<!-- m_User&#45;&gt;m_FcmToken -->
+<g id="edge18" class="edge"><title>m_User&#45;&gt;m_FcmToken</title>
+<path fill="none" stroke="black" d="M906.599,-384.061C934.258,-332.26 962.176,-279.974 979.034,-248.401"/>
+<ellipse fill="none" stroke="black" cx="905.324" cy="-386.448" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="983.181" cy="-240.635" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="981.077,-249.034 982.05,-242.753 977.372,-247.056 981.077,-249.034"/>
+</g>
+<!-- m_User&#45;&gt;m_Post -->
+<g id="edge12" class="edge"><title>m_User&#45;&gt;m_Post</title>
+<path fill="none" stroke="black" d="M736.964,-384.808C719.319,-362.748 698.981,-342.395 676,-327 610.752,-283.289 575.121,-322.087 503,-291 501.516,-290.36 500.031,-289.697 498.547,-289.014"/>
+<ellipse fill="black" stroke="black" cx="738.512" cy="-386.769" rx="2.40002" ry="2.40002"/>
+<ellipse fill="black" stroke="black" cx="490.932" cy="-285.272" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="499.397,-287.092 493.086,-286.33 497.545,-290.861 499.397,-287.092"/>
+</g>
+<!-- m_User&#45;&gt;m_PostReceiver -->
+<g id="edge13" class="edge"><title>m_User&#45;&gt;m_PostReceiver</title>
+<path fill="none" stroke="black" d="M743.4,-322.75C722.028,-264.456 698.547,-201.687 676,-144 667.878,-123.22 658.18,-99.9444 650.751,-82.4088"/>
+<ellipse fill="none" stroke="black" cx="744.24" cy="-325.043" rx="2.40001" ry="2.40001"/>
+<ellipse fill="none" stroke="black" cx="647.392" cy="-74.5143" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="652.613,-81.4216 648.332,-76.7227 648.748,-83.0659 652.613,-81.4216"/>
+</g>
+<!-- m_User&#45;&gt;m_Team -->
+<g id="edge15" class="edge"><title>m_User&#45;&gt;m_Team</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M736.97,-670.395C710.948,-708.924 682.682,-750.775 657.954,-787.387"/>
+<ellipse fill="none" stroke="black" cx="738.462" cy="-668.186" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="653.21" cy="-794.411" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="656.172,-786.274 654.554,-792.422 659.652,-788.625 656.172,-786.274"/>
+</g>
+<!-- m_User&#45;&gt;m_TeamMember -->
+<g id="edge14" class="edge"><title>m_User&#45;&gt;m_TeamMember</title>
+<path fill="none" stroke="black" d="M908.319,-473.445C986.907,-410.574 1100.78,-319.479 1168.99,-264.908"/>
+<ellipse fill="none" stroke="black" cx="906.32" cy="-475.044" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="1175.61" cy="-259.611" rx="2.40001" ry="2.40001"/>
+<polygon fill="black" stroke="black" points="1170.36,-266.498 1173.74,-261.11 1167.74,-263.218 1170.36,-266.498"/>
+</g>
+<!-- m_User&#45;&gt;m_Vote -->
+<g id="edge16" class="edge"><title>m_User&#45;&gt;m_Vote</title>
+<path fill="none" stroke="black" d="M908.049,-483.613C967.048,-438.234 1041.53,-370.007 1081,-291 1109.14,-234.665 1114.4,-161.721 1114.06,-111.935"/>
+<ellipse fill="none" stroke="black" cx="906.092" cy="-485.11" rx="2.40002" ry="2.40002"/>
+<ellipse fill="none" stroke="black" cx="1113.93" cy="-103.453" rx="2.4" ry="2.4"/>
+<polygon fill="black" stroke="black" points="1116.15,-111.82 1113.96,-105.853 1111.96,-111.884 1116.15,-111.82"/>
+</g>
+</g>
+</svg>
