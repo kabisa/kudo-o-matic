@@ -116,73 +116,30 @@ You can also update the configuration (`development.rb`) if you don't want to us
 
 ## Entities
 
-### Team
-A *Team* is the tenant where you and your colleagues give and collect Kudos 
-
-A *Team*:
-* Has a name
-* Has *0..1* active *KudosMeter*
-* Has *0..n* *KudosMeter*
-* Has *0..n* active *Goals*
-* Has *0..n*  *Goals*
-* Has *0..n* *Users*
-* Has *0..n* *Posts*
-* Has *0..n* *TeamMembers*
-* Has *0..n* *TeamInvites*
+A diagram of the models is available [here](docs/erd.svg).
 
 ### KudosMeter
 A *KudosMeter* is the base of the Kudos-o-Matic system. It groups *Goals* together and connects them to *Posts*.  
 
-A *KudosMeter*:
-* Has a name
-* Is the current *KudosMeter* or not
-* Has *0..n* *Goals*
-* Has *0..n* *Posts*
-
+### Team
+A *Team* is the tenant where you and your colleagues give and collect Kudos 
 
 ### Goal
 A *Goal* depends on a *KudosMeter*. 
 To set and see a *Goal* on the Kudo Meter you need to associate the *Goal* with the current *KudosMeter*.
 A *Goal* is a common reward for the organization (for example: paintball) that will be organized if the defined Kudo threshold is exceeded.
 
-A *Goal*:
-* Has a name
-* Has an amount of Kudos
-* Has a date of achievement
-* Belongs to *1* *KudosMeter*
-
 ### Post
 A *Post* depends on a *KudosMeter*. 
 A *User* can reward another *User* for a good deed by creating a Kudo *Post*.
-
-A *Post*:
-* Has an amount of Kudos
-* Optionally has an image attachment (JPG, PNG or GIF)
-* Has a message
-* Has *1* sender (*User*)
-* Has *1..n* receiver (*User*)
-* Has *0..** *Votes*
 
 ### Vote
 A *Vote* depends on a *Post* (votable) and a *User* (voter). 
 A *User* can like and unlike *Posts*. 
 
-A *Vote*:
-* Belongs to *1* votable (*Post*)
-* Belongs to *1* voter (*Voter*)
-* Optionally has vote metadata
-
 ### User
 A *User* can create a Kudo *Post* to reward another *User* for a good deed.
 *Users* work together to achieve common Kudo *Goals*.
-
-A *User*:
-* Has a username
-* Has an email address
-* Optionally has admin rights (optional)
-* Has preferences 
-* Has *0..n* *Posts*
-* Has *0..n* *Votes*
 
 ## How to contribute?
 * [Fork the repository](https://github.com/kabisa/kudo-o-matic/fork).
