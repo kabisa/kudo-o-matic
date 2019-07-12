@@ -16,61 +16,74 @@ Users can reward each other for good deeds by giving Kudos to each other and wor
 
 
 ## Quick start guide
-##### Prerequisites
+### Prerequisites
 To start using the Kudos-o-Matic, you'll need:
-* [Ruby](https://www.ruby-lang.org/) >= 2.3.1
-* [Ruby on Rails](http://rubyonrails.org/) >= 5.2
+
+* [Ruby](https://www.ruby-lang.org/) (consult [.ruby-version](.ruby-version) or [Gemfile](Gemfile) for the proper version)
+* [Ruby on Rails](http://rubyonrails.org/)  (consult [Gemfile](Gemfile) for the proper version)
 * [Redis](https://redis.io)
 * [Bundler](http://bundler.io/)
 * [PostgreSQL](https://www.postgresql.org/)
 * [ImageMagick](https://www.imagemagick.org/)
 * [Mailhog](https://github.com/mailhog/MailHog) (development only)
 
-## Setup and Usage
+### Setup and Usage
+
+#### Ruby and Ruby version managers
+
+By using a Ruby version manager (such as [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io/)), you can easily switch between different Ruby versions and avoid conflicts that can occur when different versions use different versions of gems. You can pick your version manager of choice.
 
 #### Dependencies
+
 First, make sure you install bundler:
+
 ```
 gem install bundler
 ```
+
 Then, install dependencies:
+
 ```
 bundle install
 ```
+
 #### Redis
 
-##### Install Redis
 * For Windows you can download it [here](https://github.com/rgl/redis/downloads) 
-
 * For MacOS you can use Homebrew: `brew install redis`
 
-##### Start Redis and Sidekiq
-``` 
-redis-server
-bundle exec sidekiq -q default -q mailers
-```
-
-#### Database configuration
-Copy default database configuration (change if needed)
-```
-cp config/database.yml.example config/database.yml
-```
-
-Database
-```
-rails db:create
-rails db:migrate
-rails db:seed
-```
+#### Environment variables
 
 Copy environment variables. Following the dependency setup instructions below will help you set these variables.
+
 ``` 
 cp env.example .env
 ```
 
-Start Rails server 
+#### Database configuration
+
+Copy default database configuration (change if needed)
+
 ```
-rails s
+cp config/database.yml.example config/database.yml
+```
+
+#### Database
+
+Create the databases and initialize it with the seed data.  
+The [corresponding script](db/seeds.db) requires Redis to be up and running, so make sure you start this first.
+
+```
+redis-server
+bin/rails db:setup
+```
+
+### Usage
+
+``` 
+redis-server
+bin/sidekiq -q default -q mailers
+bin/rails s
 ```
 
 #### What's next?
@@ -103,73 +116,30 @@ You can also update the configuration (`development.rb`) if you don't want to us
 
 ## Entities
 
-### Team
-A *Team* is the tenant where you and your colleagues give and collect Kudos 
-
-A *Team*:
-* Has a name
-* Has *0..1* active *KudosMeter*
-* Has *0..n* *KudosMeter*
-* Has *0..n* active *Goals*
-* Has *0..n*  *Goals*
-* Has *0..n* *Users*
-* Has *0..n* *Posts*
-* Has *0..n* *TeamMembers*
-* Has *0..n* *TeamInvites*
+A diagram of the models is available [here](docs/erd.svg).
 
 ### KudosMeter
 A *KudosMeter* is the base of the Kudos-o-Matic system. It groups *Goals* together and connects them to *Posts*.  
 
-A *KudosMeter*:
-* Has a name
-* Is the current *KudosMeter* or not
-* Has *0..n* *Goals*
-* Has *0..n* *Posts*
-
+### Team
+A *Team* is the tenant where you and your colleagues give and collect Kudos 
 
 ### Goal
 A *Goal* depends on a *KudosMeter*. 
 To set and see a *Goal* on the Kudo Meter you need to associate the *Goal* with the current *KudosMeter*.
 A *Goal* is a common reward for the organization (for example: paintball) that will be organized if the defined Kudo threshold is exceeded.
 
-A *Goal*:
-* Has a name
-* Has an amount of Kudos
-* Has a date of achievement
-* Belongs to *1* *KudosMeter*
-
 ### Post
 A *Post* depends on a *KudosMeter*. 
 A *User* can reward another *User* for a good deed by creating a Kudo *Post*.
-
-A *Post*:
-* Has an amount of Kudos
-* Optionally has an image attachment (JPG, PNG or GIF)
-* Has a message
-* Has *1* sender (*User*)
-* Has *1..n* receiver (*User*)
-* Has *0..** *Votes*
 
 ### Vote
 A *Vote* depends on a *Post* (votable) and a *User* (voter). 
 A *User* can like and unlike *Posts*. 
 
-A *Vote*:
-* Belongs to *1* votable (*Post*)
-* Belongs to *1* voter (*Voter*)
-* Optionally has vote metadata
-
 ### User
 A *User* can create a Kudo *Post* to reward another *User* for a good deed.
 *Users* work together to achieve common Kudo *Goals*.
-
-A *User*:
-* Has a username
-* Has an email address
-* Optionally has admin rights (optional)
-* Has preferences 
-* Has *0..n* *Posts*
-* Has *0..n* *Votes*
 
 ## How to contribute?
 * [Fork the repository](https://github.com/kabisa/kudo-o-matic/fork).
