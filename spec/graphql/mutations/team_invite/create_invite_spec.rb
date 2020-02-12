@@ -49,7 +49,6 @@ RSpec.describe Mutations::TeamInvite::CreateInvite do
       end
 
       it 'returns no errors' do
-        result
         expect(result['data']['createTeamInvite']['errors']).to be_empty
       end
 
