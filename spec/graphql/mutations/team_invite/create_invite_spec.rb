@@ -16,6 +16,15 @@ RSpec.describe Mutations::TeamInvite::CreateInvite do
     res
   end
 
+  let(:result_1) do
+    res = KudoOMaticSchema.execute(
+      mutation_string,
+      context: context,
+      variables: variables
+    )
+    res
+  end
+
   let(:mutation_string) do
     %( mutation { createTeamInvite(
       teamId: "#{variables[:team_id]}"
@@ -40,7 +49,15 @@ RSpec.describe Mutations::TeamInvite::CreateInvite do
       end
 
       it 'returns no errors' do
+        result
         expect(result['data']['createTeamInvite']['errors']).to be_empty
+      end
+
+      it 'returns error if email addresses are already invited to team' do
+        result
+        expect(result_1['errors'].first['message']).to eq(
+          'Email test@example.com is already invited, Email test_2@example.com is already invited'
+        )
       end
     end
 
@@ -59,6 +76,13 @@ RSpec.describe Mutations::TeamInvite::CreateInvite do
 
       it 'returns no errors' do
         expect(result['data']['createTeamInvite']['errors']).to be_empty
+      end
+
+      it 'returns error if email addresses are already invited to team' do
+        result
+        expect(result_1['errors'].first['message']).to eq(
+          'Email test@example.com is already invited, Email test_2@example.com is already invited'
+        )
       end
     end
 
