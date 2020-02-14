@@ -25,9 +25,23 @@ module Mutations
         team_invites << team_invite
       end
 
+      error_messages = []
+      
       ::TeamInvite.transaction do
-        team_invites.each(&:save)
-        { team_invites: team_invites, errors: [] }
+        team_invites.each do |team_invite|
+          next if team_invite.save
+           
+          if team_invite.errors.any?
+            error_messages << team_invite.errors.full_messages.join(', ')
+          end
+        end
+
+        if error_messages.empty?
+          { team_invites: team_invites, errors: [] }
+        else
+          raise GraphQL::ExecutionError, error_messages.join(', ')
+        end
+
       end
     end
   end

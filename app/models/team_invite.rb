@@ -37,7 +37,8 @@ class TeamInvite < ApplicationRecord
 
     send_invite and return if invite.nil?
     send_invite and return if invite.declined?
-
+    
+    errors.add(:email, "#{invite.email} is already invited")
     throw :abort
   end
 
