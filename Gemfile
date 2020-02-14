@@ -33,7 +33,7 @@ gem "jquery-rails", "~> 4.3.1"
 gem "jquery-ui-rails", "~> 6.0.1"
 gem "loofah", "~> 2.2.1"
 gem 'mini_magick', '~> 4.9', '>= 4.9.2'
-gem "nokogiri", "~> 1.8.5"
+gem "nokogiri", "~> 1.10.4"
 gem "omniauth-google-oauth2", "~> 0.5.2"
 gem "omniauth-oauth2", "~> 1.3.1"
 gem "omniauth-slack", "~> 2.3.0"
