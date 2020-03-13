@@ -7,7 +7,7 @@ ruby '2.5.4'
 gem "activerecord-typedstore", "~> 1.1.1"
 gem "actionpack", "~> 5.2", ">= 5.2.1"
 gem "acts_as_votable", "~> 0.10.0"
-gem "administrate", "~> 0.11.0"
+gem "administrate", "~> 0.13.0"
 gem "autoprefixer-rails", "~> 9.3", ">= 9.3.1"
 gem 'aws-sdk-s3', '~> 1.23', '>= 1.23.1', require: false
 gem "chronic", "~> 0.10.2"
