@@ -25,6 +25,6 @@ class KudosDeviseMailer < Devise::Mailer
   private
 
   def add_logo_attachment
-    attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/images/kudo-o-matic-white-mail.png")
+    attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/images/email/kudo-o-matic-white-mail.png")
   end
 end
