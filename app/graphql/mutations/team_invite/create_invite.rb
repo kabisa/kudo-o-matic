@@ -6,7 +6,6 @@ module Mutations
     argument :team_id, ID, required: true, description: 'The team that the invites belong to'
 
     field :team_invites, [Types::TeamInviteType], null: true
-    field :errors, [String], null: false
 
     def resolve(emails:, team_id:)
       team = ::Team.find(team_id)
@@ -37,7 +36,7 @@ module Mutations
         end
 
         if error_messages.empty?
-          { team_invites: team_invites, errors: [] }
+          { team_invites: team_invites }
         else
           raise GraphQL::ExecutionError, error_messages.join(', ')
         end

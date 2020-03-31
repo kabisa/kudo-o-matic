@@ -21,7 +21,7 @@ RSpec.describe Mutations::KudosMeter::UpdateKudosMeter do
     %( mutation { updateKudosMeter(
       name: "#{variables[:name]}"
       kudosMeterId: "#{variables[:kudos_meter_id]}"
-    ) { kudosMeter { id name team { id } } errors } } )
+    ) { kudosMeter { id name team { id } } } } )
   end
 
   context 'authenticated' do
@@ -38,7 +38,7 @@ RSpec.describe Mutations::KudosMeter::UpdateKudosMeter do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateKudosMeter']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe Mutations::KudosMeter::UpdateKudosMeter do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateKudosMeter']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

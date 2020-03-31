@@ -18,7 +18,7 @@ RSpec.describe Mutations::Team::CreateTeam do
   let(:mutation_string) do
     %( mutation { createTeam(
       name: "#{variables[:name]}"
-    ) { team { name } errors } } )
+    ) { team { name } } } )
   end
 
   context 'authenticated' do
@@ -28,7 +28,7 @@ RSpec.describe Mutations::Team::CreateTeam do
     end
 
     it 'returns no errors' do
-      expect(result['data']['createTeam']['errors']).to be_empty
+      expect(result['errors']).to be_nil
     end
   end
 

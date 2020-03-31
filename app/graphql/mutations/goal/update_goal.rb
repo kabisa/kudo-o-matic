@@ -7,15 +7,14 @@ module Mutations
     argument :goal_id, ID, required: true, description: 'The ID of the goal to update'
 
     field :goal, Types::GoalType, null: true
-    field :errors, [String], null: false
 
     def resolve(name:, amount:, goal_id:)
       goal = ::Goal.find(goal_id)
 
       if goal.update(name: name, amount: amount)
-        { goal: goal, errors: [] }
+        { goal: goal }
       else
-        { goal: nil, errors: goal.errors.full_messages }
+        raise GraphQL::ExecutionError, goal.errors.full_messages.join('')
       end
     end
   end

@@ -6,15 +6,14 @@ module Mutations
     argument :team_id, ID, required: true, description: 'The ID of the team to update'
 
     field :team, Types::TeamType, null: true
-    field :errors, [String], null: false
 
     def resolve(name:, team_id:)
       team = ::Team.find(team_id)
 
       if team.update(name: name)
-        { team: team, errors: [] }
+        { team: team }
       else
-        { team: nil, errors: team.errors.full_messages }
+        raise GraphQL::ExecutionError, team.errors.full_messages.join('')
       end
     end
   end

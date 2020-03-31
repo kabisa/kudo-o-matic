@@ -5,15 +5,14 @@ module Mutations
     argument :goal_id, ID, required: true, description: 'The ID of the goal to delete'
 
     field :goal_id, ID, null: true
-    field :errors, [String], null: false
 
     def resolve(goal_id:)
       goal = ::Goal.find(goal_id)
 
       if goal.destroy
-        { goal_id: goal.id, errors: [] }
+        { goal_id: goal.id }
       else
-        { goal_id: nil, errors: goal.errors.full_messages }
+        raise GraphQL::ExecutionError, goal.errors.full_messages.join('')
       end
     end
   end

@@ -20,7 +20,7 @@ RSpec.describe Mutations::Team::UpdateTeam do
     %( mutation { updateTeam(
       name: "#{variables[:name]}"
       teamId: "#{variables[:team_id]}"
-    ) { team { id name } errors } } )
+    ) { team { id name } } } )
   end
 
   context 'authenticated' do
@@ -37,7 +37,7 @@ RSpec.describe Mutations::Team::UpdateTeam do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateTeam']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Mutations::Team::UpdateTeam do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateTeam']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

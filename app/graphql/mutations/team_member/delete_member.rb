@@ -7,15 +7,14 @@ module Mutations
     argument :id, ID, required: true, description: 'The team member id of the member that gets deleted'
 
     field :team_member_id, ID, null: true
-    field :errors, [String], null: false
 
     def resolve(id:)
       team_member = ::TeamMember.find(id)
 
       if team_member.destroy
-        { team_member_id: team_member.id, errors: [] }
+        { team_member_id: team_member.id }
       else
-        { team_member_id: nil, errors: team_member.errors.full_messages }
+        raise GraphQL::ExecutionError, team_member.errors.full_messages.join('')
       end
     end
   end

@@ -7,15 +7,14 @@ module Mutations
     argument :kudos_meter_id, ID, required: true, description: 'The kudos meter the goal belongs to'
 
     field :goal, Types::GoalType, null: true
-    field :errors, [String], null: false
 
     def resolve(name:, amount:, kudos_meter_id:)
       goal = ::Goal.new(name: name, amount: amount, kudos_meter_id: kudos_meter_id)
 
       if goal.save
-        { goal: goal, errors: [] }
+        { goal: goal }
       else
-        { goal: nil, errors: goal.errors.full_messages }
+        raise GraphQL::ExecutionError, goal.errors.full_messages.join('')
       end
     end
   end

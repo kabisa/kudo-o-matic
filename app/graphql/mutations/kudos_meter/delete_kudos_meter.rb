@@ -5,15 +5,14 @@ module Mutations
     argument :kudos_meter_id, ID, required: true, description: 'The ID of the kudos meter to delete'
 
     field :kudos_meter_id, ID, null: true
-    field :errors, [String], null: false
 
     def resolve(kudos_meter_id:)
       kudos_meter = ::KudosMeter.find(kudos_meter_id)
 
       if kudos_meter.destroy
-        { kudos_meter_id: kudos_meter.id, errors: [] }
+        { kudos_meter_id: kudos_meter.id }
       else
-        { kudos_meter_id: nil, errors: kudos_meter.errors.full_messages }
+        raise GraphQL::ExecutionError, kudos_meter.errors.full_messages.join('')
       end
     end
   end

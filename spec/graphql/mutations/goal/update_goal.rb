@@ -23,7 +23,7 @@ RSpec.describe Mutations::Goal::CreateGoal do
       name: "#{variables[:name]}"
       amount: #{variables[:amount]}
       goalId: "#{variables[:goal_id]}"
-    ) { goal { id name amount kudosMeter { id } } errors } } )
+    ) { goal { id name amount kudosMeter { id } } } } )
   end
 
   context 'authenticated' do
@@ -41,7 +41,7 @@ RSpec.describe Mutations::Goal::CreateGoal do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateGoal']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Mutations::Goal::CreateGoal do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateGoal']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

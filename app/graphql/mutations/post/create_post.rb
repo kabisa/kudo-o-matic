@@ -9,7 +9,6 @@ module Mutations
     argument :team_id, ID, required: false, description: 'The team the post belongs to'
 
     field :post, Types::PostType, null: true
-    field :errors, [String], null: false
 
     def resolve(**kwargs)
       team = ::Team.find(kwargs[:team_id])
@@ -46,9 +45,9 @@ module Mutations
       if post.save
         PostMailer.new_post(post)
         GoalReacher.check!(team)
-        { post: post, errors: [] }
+        { post: post }
       else
-        { post: nil, errors: post.errors.full_messages }
+        raise GraphQL::ExecutionError, post.errors.full_messages.join('')
       end
     end
   end

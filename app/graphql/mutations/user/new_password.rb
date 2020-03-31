@@ -7,7 +7,6 @@ module Mutations
     argument :password_confirmation, String, required: false
 
     field :user, Types::UserType, null: true
-    field :errors, [String], null: false
 
     def resolve(reset_password_token:, password:, password_confirmation:)
       user = ::User.reset_password_by_token(
@@ -18,9 +17,9 @@ module Mutations
 
       # reset_password_by_token returns a new user if no user is found
       if user.id.nil?
-        { user: nil, errors: user.errors.full_messages }
+        raise GraphQL::ExecutionError, user.errors.full_messages.join('')
       else
-        { user: user, errors: [] }
+        { user: user }
       end
     end
   end

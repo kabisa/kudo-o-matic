@@ -38,7 +38,7 @@ RSpec.describe Mutations::Post::CreatePost do
       amount: #{variables[:amount]}
       receiverIds: #{variables[:receiver_ids]}
       teamId: #{variables[:team_id]}
-    ) { post { id } errors } } )
+    ) { post { id } } } )
   end
 
   context 'authenticated' do
@@ -57,7 +57,7 @@ RSpec.describe Mutations::Post::CreatePost do
       end
 
       it 'returns no errors' do
-        expect(result['data']['createPost']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe Mutations::Post::CreatePost do
       end
 
       it 'returns no errors' do
-        expect(result['data']['createPost']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

@@ -29,7 +29,7 @@ RSpec.describe Mutations::TeamInvite::CreateInvite do
     %( mutation { createTeamInvite(
       teamId: "#{variables[:team_id]}"
       emails: #{variables[:emails]}
-    ) { teamInvites { email team { id } } errors } } )
+    ) { teamInvites { email team { id } } } } )
   end
 
   context 'authenticated' do
@@ -49,7 +49,7 @@ RSpec.describe Mutations::TeamInvite::CreateInvite do
       end
 
       it 'returns no errors' do
-        expect(result['data']['createTeamInvite']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
 
       it 'returns error if email addresses are already invited to team' do
@@ -74,7 +74,7 @@ RSpec.describe Mutations::TeamInvite::CreateInvite do
       end
 
       it 'returns no errors' do
-        expect(result['data']['createTeamInvite']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
 
       it 'returns error if email addresses are already invited to team' do
