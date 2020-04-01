@@ -24,11 +24,7 @@ RSpec.describe Mutations::Post::CreatePost do
   end
 
   let(:result) do
-    res = KudoOMaticSchema.execute(
-      mutation_string,
-      context: context,
-      variables: variables
-    )
+    res = execute_query
     res
   end
 
@@ -37,8 +33,17 @@ RSpec.describe Mutations::Post::CreatePost do
       message: "#{variables[:message]}"
       amount: #{variables[:amount]}
       receiverIds: #{variables[:receiver_ids]}
+      nullReceivers: #{variables[:null_receivers]}
       teamId: #{variables[:team_id]}
     ) { post { id } } } )
+  end
+
+  def execute_query
+    KudoOMaticSchema.execute(
+        mutation_string,
+        context: context,
+        variables: variables
+    )
   end
 
   context 'authenticated' do
@@ -71,6 +76,13 @@ RSpec.describe Mutations::Post::CreatePost do
           .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(2)
 
         expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last[:args]).to include('PostMailer', 'post_email', 'deliver_now')
+      end
+
+      it 'does not duplicate virtual users' do
+        execute_query
+        execute_query
+
+        expect(User.where(name: 'Harry', virtual_user: true).size).to be(1)
       end
 
       it 'returns no errors' do

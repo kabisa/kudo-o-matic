@@ -25,6 +25,17 @@ module Mutations
 
       unless null_receivers.blank?
         null_receivers.each do |receiver|
+
+          existing_user = ::User.joins(:memberships)
+                              .where(users: {name: receiver, virtual_user: true })
+                              .where(team_members: {team_id: kwargs[:team_id]})
+                              .take
+
+          if existing_user
+            receivers << existing_user
+            next
+          end
+
           user = ::User.new(name: receiver, virtual_user: true)
 
           user.save
