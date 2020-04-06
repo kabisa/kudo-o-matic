@@ -7,11 +7,6 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
 
-  devise_for :users, controllers: {
-      omniauth_callbacks: "users/omniauth_callbacks",
-      registrations: :registrations
-  }
-
   devise_scope :user do
     get "sign_in", to: "devise/sessions#new"
     get "sign_up", to: "devise/registrations#new"
