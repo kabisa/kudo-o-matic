@@ -49,7 +49,6 @@ gem "sentry-raven"
 gem "settingslogic", "~> 2.0", ">= 2.0.9"
 gem "scss_lint", "~> 0.54", require: false
 gem 'sidekiq', '~> 5.2', '>= 5.2.3'
-gem "uglifier", "~> 3.2"
 
 group :development, :staging, :test do
   # GraphQL UI similar to GraphiQL but better
