@@ -6,6 +6,7 @@ module AuthenticateUser
   class TokenExpired < RuntimeError; end
   class InvalidUser < RuntimeError; end
   class InvalidHeader < RuntimeError; end
+  class InvalidToken < RuntimeError; end
 
   extend ActiveSupport::Concern
 
@@ -19,13 +20,12 @@ module AuthenticateUser
 
   def authenticate!
     if auth_header.blank?
-      @current_user = nil
-      return true
+      raise InvalidHeader.new "Missing auth header"
     end
 
     raise InvalidHeader.new "Invalid header" unless auth_token.present?
     raise TokenExpired.new "Token expired" if auth_expired?
-    raise RuntimeError.new "Other error: #{auth_payload}" unless auth_ok?
+    raise InvalidToken.new "#{auth_payload}" unless auth_ok?
 
     @current_user = User.find_by(id: auth_payload.dig(:ok, :id))
 
@@ -39,6 +39,10 @@ module AuthenticateUser
     end
 
     def auth_token
+      auth_header.split(" ")[0].tap do |t|
+        raise InvalidHeader.new "Invalid header format" if t != 'Bearer'
+      end
+
       @_auth_token ||= auth_header.split(" ")[1].tap do |t|
         raise InvalidHeader.new "Missing token" if t.nil?
       end

@@ -15,8 +15,12 @@ class GraphqlController < ApplicationController
     }
     result = KudoOMaticSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
-  rescue TokenExpired => _e
-    render plain: "Unauthorized", status: 401
+  rescue InvalidHeader => _e
+    response = {:error => 'invalid_request', :error_description => _e}
+    render json: response, status: 400
+  rescue InvalidToken, TokenExpired => _e
+    response = {:error => 'invalid_token', :error_description => _e}
+    render json: response, status: 401
   rescue => e
     raise e unless Rails.env.development?
     handle_error_in_development e
