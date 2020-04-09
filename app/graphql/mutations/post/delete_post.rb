@@ -12,7 +12,8 @@ module Mutations
       if post.destroy
         { post_id: id }
       else
-        raise GraphQL::ExecutionError, post.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, post.errors)
+        return
       end
     end
   end

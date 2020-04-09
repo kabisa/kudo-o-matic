@@ -12,7 +12,8 @@ module Mutations
       if goal.destroy
         { goal_id: goal.id }
       else
-        raise GraphQL::ExecutionError, goal.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, goal.errors)
+        return
       end
     end
   end

@@ -17,7 +17,8 @@ module Mutations
 
       # reset_password_by_token returns a new user if no user is found
       if user.id.nil?
-        raise GraphQL::ExecutionError, user.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, user.errors)
+        return
       else
         { user: user }
       end

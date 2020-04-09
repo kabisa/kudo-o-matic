@@ -14,7 +14,8 @@ module Mutations
       if guideline.update(name: name, kudos: kudos)
         { guideline: guideline }
       else
-        raise GraphQL::ExecutionError, guideline.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, guideline.errors)
+        return
       end
     end
   end

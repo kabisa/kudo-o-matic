@@ -12,7 +12,8 @@ module Mutations
       if kudos_meter.destroy
         { kudos_meter_id: kudos_meter.id }
       else
-        raise GraphQL::ExecutionError, kudos_meter.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, kudos_meter.errors)
+        return
       end
     end
   end

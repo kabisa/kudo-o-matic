@@ -14,7 +14,8 @@ module Mutations
       if goal.update(name: name, amount: amount)
         { goal: goal }
       else
-        raise GraphQL::ExecutionError, goal.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, goal.errors)
+        return
       end
     end
   end

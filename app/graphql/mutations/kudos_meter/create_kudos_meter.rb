@@ -13,7 +13,8 @@ module Mutations
       if kudos_meter.save
         { kudos_meter: kudos_meter }
       else
-        raise GraphQL::ExecutionError, kudos_meter.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, kudos_meter.errors)
+        return
       end
     end
   end

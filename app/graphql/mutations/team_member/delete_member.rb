@@ -14,7 +14,8 @@ module Mutations
       if team_member.destroy
         { team_member_id: team_member.id }
       else
-        raise GraphQL::ExecutionError, team_member.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, team_member.errors)
+        return
       end
     end
   end

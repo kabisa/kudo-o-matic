@@ -12,7 +12,8 @@ module Mutations
       if guideline.destroy
         { guideline_id: guideline.id }
       else
-        raise GraphQL::ExecutionError, guideline.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, guideline.errors)
+        return
       end
     end
   end

@@ -13,7 +13,8 @@ module Mutations
         { team_invite_id: team_invite.id }
       else
         team_invite.decline
-        raise GraphQL::ExecutionError, team_invite.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, team_invite.errors)
+        return
       end
     end
   end

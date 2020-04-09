@@ -20,7 +20,8 @@ module AuthenticateUser
 
   def authenticate!
     if auth_header.blank?
-      raise InvalidHeader.new "Missing auth header"
+      @current_user = nil
+      return true
     end
 
     raise InvalidHeader.new "Invalid header" unless auth_token.present?

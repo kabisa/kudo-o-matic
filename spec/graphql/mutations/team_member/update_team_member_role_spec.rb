@@ -74,7 +74,7 @@ RSpec.describe Mutations::TeamMember::UpdateRole do
 
       it 'can\'t update a team member if that member is the only team admin' do
         puts result['errors']
-        expect(result['errors'].first['message']).to eq("Role 'admin' should be assigned to at least 1 other team member.")
+        expect(result['errors'].first['message']).to eq("role: 'admin' should be assigned to at least 1 other team member.")
       end
     end
 

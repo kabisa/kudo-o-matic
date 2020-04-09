@@ -13,7 +13,8 @@ module Mutations
         team.add_member(context[:current_user], 'admin')
         { team: team }
       else
-        raise GraphQL::ExecutionError, team.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, team.errors)
+        return
       end
     end
   end

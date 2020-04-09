@@ -17,7 +17,8 @@ module Mutations
       if team_member.save
         { team_member: team_member }
       else
-        raise GraphQL::ExecutionError, team_member.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, team_member.errors)
+        return
       end
     end
   end

@@ -17,7 +17,8 @@ module Mutations
       if user.save
         { authenticate_data: OpenStruct.new(token: AuthToken.new.token(user), user: user) }
       else
-        raise GraphQL::ExecutionError, user.errors.full_messages.join('')
+        Util::ErrorBuilder.build_errors(context, user.errors)
+        return
       end
     end
   end
