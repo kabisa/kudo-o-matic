@@ -40,9 +40,7 @@ module AuthenticateUser
     end
 
     def auth_token
-      auth_header.split(" ")[0].tap do |t|
-        raise InvalidHeader.new "Invalid header format" if t != 'Bearer'
-      end
+      raise InvalidHeader.new "Invalid header format" unless auth_header.split(" ").size == 2
 
       @_auth_token ||= auth_header.split(" ")[1].tap do |t|
         raise InvalidHeader.new "Missing token" if t.nil?

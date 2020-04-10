@@ -12,7 +12,7 @@ RSpec.describe GraphqlController do
       expect(response.status).to be(200)
     end
 
-    it 'returns a 400 if the authentication header doesnt include \'Bearer\'' do
+    it 'returns a 400 if the authentication header doesnt follow the pattern <something> <token>' do
       request.headers['Authorization'] = 'NotBearer'
       post :execute
       expect(response.status).to be(400)
@@ -20,16 +20,6 @@ RSpec.describe GraphqlController do
 
       expect(parsed_body['error']).to eq('invalid_request')
       expect(parsed_body['error_description']).to eq('Invalid header format')
-    end
-
-    it 'returns a 400 if the authentication header doesnt include a token' do
-      request.headers['Authorization'] = 'Bearer '
-      post :execute
-      expect(response.status).to be(400)
-      parsed_body = JSON.parse(response.body)
-
-      expect(parsed_body['error']).to eq('invalid_request')
-      expect(parsed_body['error_description']).to eq('Missing token')
     end
 
     it 'returns a 401 if the token is invalid' do
