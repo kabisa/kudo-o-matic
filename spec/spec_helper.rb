@@ -5,13 +5,13 @@ require "simplecov"
 SimpleCov.start do
   add_filter "/spec"
   add_filter "/config"
-  add_filter "/controllers/graphql_controller.rb"
+  add_filter "/requests/graphql_controller.rb"
   add_filter do |source_file|
     source_file.lines.count < 5
   end
 
   add_group "Models", "app/models"
-  add_group "Controllers", "app/controllers"
+  add_group "Controllers", "app/requests"
   add_group "Graphql", "app/graphql"
 end
 
