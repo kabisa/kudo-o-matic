@@ -36,6 +36,7 @@ module Types
     field :update_team_member_role, mutation: Mutations::TeamMember::UpdateRole
 
     ### User
+    field :connect_slack, mutation: Mutations::User::ConnectSlack
     field :forgot_password, mutation: Mutations::User::ForgotPassword
     field :new_password, mutation: Mutations::User::NewPassword
     field :reset_password, mutation: Mutations::User::ResetPassword

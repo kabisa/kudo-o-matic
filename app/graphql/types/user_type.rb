@@ -43,5 +43,11 @@ module Types
     field :virtual_user, Boolean,
           null: true,
           description: 'Is the user a virtual user?'
+    field :unlock_token, String,
+          null: true,
+          description: 'Slack connect token, misusing an existing field for now'
+    field :slack_id, String,
+          null: true,
+          description: 'Slack id'
   end
 end

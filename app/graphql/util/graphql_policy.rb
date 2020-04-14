@@ -173,6 +173,7 @@ module Util
 
         ### User
         resetPassword: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+        connectSlack: ->(_obj, _args, ctx) { ctx[:current_user].present? },
 
         ### Vote
         toggleLikePost: ->(_obj, args, ctx) do

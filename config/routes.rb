@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
 
+  get '/users/auth/slack/callback', to: 'slack#test'
   devise_for :users, controllers: {
       registrations: :registrations
   }
@@ -18,7 +19,11 @@ Rails.application.routes.draw do
     get "sign_out", to: "devise/sessions#destroy"
   end
 
+
   get "/:team/feed/:rss_token", to: "feed#index"
+
+  post "/slack", to: 'slack#index'
+  post "/slack/register", to: 'slack#register'
 
   match "*path" => redirect("/"), via: :get
 end
