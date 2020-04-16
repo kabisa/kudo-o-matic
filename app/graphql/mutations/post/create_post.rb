@@ -1,3 +1,5 @@
+include SlackService
+
 module Mutations
   class Post::CreatePost < BaseMutation
     null true
@@ -56,6 +58,7 @@ module Mutations
       if post.save
         PostMailer.new_post(post)
         GoalReacher.check!(team)
+        send_post_announcement(post)
         { post: post }
       else
         Util::ErrorBuilder.build_errors(context, post.errors)

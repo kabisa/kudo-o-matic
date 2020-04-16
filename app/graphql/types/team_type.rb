@@ -8,6 +8,9 @@ module Types
     field :name, String,
           null: false,
           description: 'The name of the team'
+    field :slack_team_id, String,
+          null: true,
+          description: 'The slack id of the team'
     field :slug, String,
           null: false,
           description: 'The slug (friendly id) of the team'
