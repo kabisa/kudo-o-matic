@@ -17,8 +17,7 @@ module Mutations
 
       # reset_password_by_token returns a new user if no user is found
       if user.id.nil?
-        Util::ErrorBuilder.build_errors(context, user.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, user.errors)
       else
         { user: user }
       end

@@ -12,8 +12,7 @@ module Mutations
       if guideline.destroy
         { guideline_id: guideline.id }
       else
-        Util::ErrorBuilder.build_errors(context, guideline.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, guideline.errors)
       end
     end
   end

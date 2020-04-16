@@ -58,8 +58,7 @@ module Mutations
         GoalReacher.check!(team)
         { post: post }
       else
-        Util::ErrorBuilder.build_errors(context, post.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, post.errors)
       end
     end
   end

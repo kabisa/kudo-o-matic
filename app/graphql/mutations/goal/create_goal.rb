@@ -14,8 +14,7 @@ module Mutations
       if goal.save
         { goal: goal }
       else
-        Util::ErrorBuilder.build_errors(context, goal.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, goal.errors)
       end
     end
   end

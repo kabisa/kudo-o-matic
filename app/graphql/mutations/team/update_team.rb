@@ -13,8 +13,7 @@ module Mutations
       if team.update(name: name)
         { team: team }
       else
-        Util::ErrorBuilder.build_errors(context, team.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, team.errors)
       end
     end
   end
