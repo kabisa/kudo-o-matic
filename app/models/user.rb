@@ -2,7 +2,7 @@
 
 class User < ApplicationRecord
   validates :name, presence: true
-  has_secure_token :unlock_token
+  has_secure_token :slack_registration_token
 
   after_create :send_welcome_email
 

@@ -102,7 +102,7 @@ module SlackService
 
     user.slack_id = user_id
     user.slack_registration_token = nil
-    user.save
+    raise InvalidCommand.new "That didn't quite work, #{user.errors.full_messages.join(', ')}" unless user.save
   end
 
   def add_to_workspace(code, team_id)
@@ -125,6 +125,6 @@ module SlackService
     team.slack_bot_access_token = parsed_result["access_token"]
     team.slack_team_id = parsed_result["team"]["id"]
 
-    team.save
+    raise InvalidCommand.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
   end
 end

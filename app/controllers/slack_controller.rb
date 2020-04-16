@@ -2,80 +2,51 @@ require "uri"
 require "net/http"
 
 class SlackController < ApplicationController
-  # protect_from_forgery with: :null_session
+  protect_from_forgery with: :null_session
 
-  def index
-    puts 'Received slack message:'
-    puts request.body
+  include SlackService
 
-    command = params[:text]
+  def give_kudos
+    post = create_post(params[:text], params[:team_id], params[:user_id])
 
-    slackUsers = command.scan(/(?=@).*?(?<=\|)/)
-
-    puts slackUsers
-    users = []
-
-    slackUsers.each do |slackUser|
-      puts slackUser
-      slackUser = slackUser.tr('@', "")
-      slackUser = slackUser.tr('|', "")
-
-      user = User.where(slack_id: slackUser).take
-      users << user
+    if post.save
+      send_post_announcement(post)
+      render json: {text: 'kudos are on the way!'}
+    else
+      render json: {text: "That didn't quite work, #{post.errors.full_messages.join(', ')}"}
     end
-
-    puts users.length
-
-    if users.length == 0
-      render json: {text: "Oops that did not work. Did you forget to mention any users with the '@' symbol? "}
-      return
-    end
-
-    message = command[/'(.*?)'/m, 1]
-    puts message
-
-    if message == nil || message == ""
-      render json: {text: 'Oops that did not work. Did you include a message surrounded by \'?'}
-      return
-    end
-
-    amount = command.split(' ').last
-
-    if amount == nil || amount == ""
-      render json: {text: 'Oops that did not work. Did you include an amount?'}
-    end
-
-    puts amount
-
-    render json: {text: 'kudos are on the way!'}
   end
 
   def register
-    puts 'Received register message:'
-    slack_register_token = params[:text]
-
-    return render json: {text: 'please provide a register token '} unless slack_register_token != ''
-
-    if User.where(:slack_id => params[:user_id]).length > 0
-      render json: {text: 'Your account is already linked to kudo-o-matic!'}
+    begin
+      connect_account(params[:text], params[:user_id])
+      render json: {text: 'Account successfully linked!'}
+    rescue InvalidCommand => e
+      render json: {text: "That didn't quite work, #{e}"}
     end
-
-    user = User.where(:unlock_token => slack_register_token).take
-
-    if user.slack_id != nil
-      render json: {text: 'Your account is already linked to kudo-o-matic!'}
-      return
-    end
-
-    user.slack_id = params[:user_id]
-    user.save
-
-    render json: {text: 'Account successfully linked!'}
   end
 
-  def test
-    puts params
+  def auth_callback
+    begin
+      add_to_workspace(params[:code], params[:state])
+      redirect_to Settings.slack_connect_success_url
+    rescue InvalidRequest => e
+      render json: {text: "That didn't quite work, #{e}"}
+    end
+  end
 
-    render json: {text: 'Oauth callback successfully received!'}
+  def reaction
+
+    case params[:type]
+    when 'url_verification'
+      render json: {challenge: params[:challenge]}
+    when 'reaction_added'
+      render json: {text: 'somebody liked something!'}
+    when 'reaction_removed'
+      render json: {text: 'somebody unliked something!'}
+    else
+      render json: {text: 'unsupported event'}
+    end
+
   end
 end

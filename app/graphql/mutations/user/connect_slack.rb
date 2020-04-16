@@ -6,11 +6,11 @@ module Mutations
     def resolve
       user = context[:current_user]
 
-      user.regenerate_unlock_token
+      user.regenerate_slack_registration_token
       if user.save
         { user: user }
       else
-        Util::ErrorBuilder.build_errors(context, team_member.errors)
+        Util::ErrorBuilder.build_errors(context, user.errors)
         return
       end
     end

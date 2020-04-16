@@ -7,22 +7,15 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
 
-  get '/users/auth/slack/callback', to: 'slack#test'
   devise_for :users, controllers: {
       registrations: :registrations
   }
 
-  devise_scope :user do
-    get "sign_in", to: "devise/sessions#new"
-    get "sign_up", to: "devise/registrations#new"
-    get "account", to: "devise/registrations#edit"
-    get "sign_out", to: "devise/sessions#destroy"
-  end
-
 
   get "/:team/feed/:rss_token", to: "feed#index"
 
-  post "/slack", to: 'slack#index'
+  get 'auth/slack/callback', to: 'slack#auth_callback'
+  post "/slack/kudo", to: 'slack#give_kudos'
   post "/slack/register", to: 'slack#register'
 
   match "*path" => redirect("/"), via: :get
