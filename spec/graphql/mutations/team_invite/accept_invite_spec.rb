@@ -21,7 +21,7 @@ RSpec.describe Mutations::TeamInvite::AcceptInvite do
   let(:mutation_string) do
     %( mutation { acceptTeamInvite(
       teamInviteId: "#{variables[:team_invite_id]}"
-    ) { teamInvite { email team { id } } errors } } )
+    ) { teamInvite { email team { id } } } } )
   end
 
   context 'authenticated' do
@@ -39,7 +39,7 @@ RSpec.describe Mutations::TeamInvite::AcceptInvite do
       end
 
       it 'returns no errors' do
-        expect(result['data']['acceptTeamInvite']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe Mutations::TeamInvite::AcceptInvite do
       end
 
       it 'returns no errors' do
-        expect(result['data']['acceptTeamInvite']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

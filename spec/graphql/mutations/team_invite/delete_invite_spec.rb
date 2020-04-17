@@ -20,7 +20,7 @@ RSpec.describe Mutations::TeamInvite::DeleteInvite do
   let(:mutation_string) do
     %( mutation { deleteTeamInvite(
       teamInviteId: "#{variables[:team_invite_id]}"
-    ) { teamInviteId errors } } )
+    ) { teamInviteId } } )
   end
 
   context 'authenticated' do
@@ -37,7 +37,7 @@ RSpec.describe Mutations::TeamInvite::DeleteInvite do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteTeamInvite']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Mutations::TeamInvite::DeleteInvite do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteTeamInvite']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

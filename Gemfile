@@ -7,7 +7,6 @@ ruby '2.5.4'
 gem "activerecord-typedstore", "~> 1.1.1"
 gem "actionpack", "~> 5.2", ">= 5.2.1"
 gem "acts_as_votable", "~> 0.10.0"
-gem "administrate", "~> 0.11.0"
 gem "autoprefixer-rails", "~> 9.3", ">= 9.3.1"
 gem 'aws-sdk-s3', '~> 1.23', '>= 1.23.1', require: false
 gem "chronic", "~> 0.10.2"
@@ -29,14 +28,9 @@ gem 'graphql_playground-rails', '~> 2.0', '>= 2.0.1'
 gem "haml-rails", "~> 1.0"
 gem "jbuilder", "~> 2.0"
 gem "json_web_token", "~> 0.3.5"
-gem "jquery-rails", "~> 4.3.1"
-gem "jquery-ui-rails", "~> 6.0.1"
 gem "loofah", "~> 2.2.1"
 gem 'mini_magick', '~> 4.9', '>= 4.9.2'
 gem "nokogiri", "~> 1.8.5"
-gem "omniauth-google-oauth2", "~> 0.5.2"
-gem "omniauth-oauth2", "~> 1.3.1"
-gem "omniauth-slack", "~> 2.3.0"
 gem "paperclip", "~> 6.1"
 gem "pg", "~> 0.18"
 gem "premailer-rails", "~> 1.9.7"
@@ -55,8 +49,6 @@ gem "sentry-raven"
 gem "settingslogic", "~> 2.0", ">= 2.0.9"
 gem "scss_lint", "~> 0.54", require: false
 gem 'sidekiq', '~> 5.2', '>= 5.2.3'
-gem "slack-ruby-client", "~> 0.11.0"
-gem "uglifier", "~> 3.2"
 
 group :development, :staging, :test do
   # GraphQL UI similar to GraphiQL but better

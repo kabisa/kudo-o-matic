@@ -10,8 +10,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # :database_authenticatable, :registerable,
   # :recoverable, :rememberable, :trackable, :validatable
-  devise :async, :omniauthable, :registerable, :confirmable, :database_authenticatable,
-         :validatable, :lockable, :recoverable, omniauth_providers: [:slack]
+  devise :async,
+         :registerable,
+         :confirmable,
+         :database_authenticatable,
+         :validatable,
+         :recoverable
 
   has_many :sent_posts,
            class_name: "Post",

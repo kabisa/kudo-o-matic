@@ -21,7 +21,7 @@ RSpec.describe Mutations::Goal::DeleteGoal do
   let(:mutation_string) do
     %( mutation { deleteGoal(
       goalId: "#{variables[:goal_id]}"
-    ) { goalId errors } } )
+    ) { goalId } } )
   end
 
   context 'authenticated' do
@@ -38,7 +38,7 @@ RSpec.describe Mutations::Goal::DeleteGoal do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteGoal']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.describe Mutations::Goal::DeleteGoal do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteGoal']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

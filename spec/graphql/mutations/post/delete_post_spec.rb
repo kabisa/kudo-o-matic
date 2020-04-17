@@ -28,7 +28,7 @@ RSpec.describe Mutations::Post::DeletePost do
   let(:mutation_string) do
     %( mutation { deletePost(
       id: "#{variables[:id]}"
-    ) { postId errors } } )
+    ) { postId } } )
   end
 
   context 'authenticated' do
@@ -51,7 +51,7 @@ RSpec.describe Mutations::Post::DeletePost do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deletePost']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe Mutations::Post::DeletePost do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deletePost']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

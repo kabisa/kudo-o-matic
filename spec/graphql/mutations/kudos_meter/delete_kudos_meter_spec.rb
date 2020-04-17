@@ -20,7 +20,7 @@ RSpec.describe Mutations::KudosMeter::DeleteKudosMeter do
   let(:mutation_string) do
     %( mutation { deleteKudosMeter(
       kudosMeterId: "#{variables[:kudos_meter_id]}"
-    ) { kudosMeterId errors } } )
+    ) { kudosMeterId } } )
   end
 
   context 'authenticated' do
@@ -37,7 +37,7 @@ RSpec.describe Mutations::KudosMeter::DeleteKudosMeter do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteKudosMeter']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Mutations::KudosMeter::DeleteKudosMeter do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteKudosMeter']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

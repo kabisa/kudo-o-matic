@@ -30,7 +30,7 @@ RSpec.describe Mutations::User::SignIn do
         password: "#{variables[:password]}"
         passwordConfirmation: "#{variables[:passwordConfirmation]}"
       }
-    ) { authenticateData { user { id } token } errors } })
+    ) { authenticateData { user { id } token } } })
   end
 
   describe 'sign up a user succesfully' do
@@ -49,7 +49,7 @@ RSpec.describe Mutations::User::SignIn do
     end
 
     it 'returns no errors' do
-      expect(result['data']['signUpUser']['errors']).to be_empty
+      expect(result['errors']).to be_nil
     end
   end
 
@@ -64,8 +64,8 @@ RSpec.describe Mutations::User::SignIn do
     end
 
     it 'returns an error if some input is not correct' do
-      expect(result['data']['signUpUser']['authenticateData']).to be_nil
-      expect(result['data']['signUpUser']['errors']).to_not be_empty
+      expect(result['data']['signUpUser']).to be_nil
+      expect(result['errors']).to_not be_empty
     end
   end
 end

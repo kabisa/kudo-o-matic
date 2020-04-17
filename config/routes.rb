@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   post "/graphql", to: "graphql#execute"
 
   devise_for :users, controllers: {
-      omniauth_callbacks: "users/omniauth_callbacks",
       registrations: :registrations
   }
 
@@ -19,9 +18,7 @@ Rails.application.routes.draw do
     get "sign_out", to: "devise/sessions#destroy"
   end
 
-  scope ":team" do
-    get "feed/:rss_token", to: "feed#index"
-  end
+  get "/:team/feed/:rss_token", to: "feed#index"
 
   match "*path" => redirect("/"), via: :get
 end

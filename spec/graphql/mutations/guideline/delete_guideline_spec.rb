@@ -20,7 +20,7 @@ RSpec.describe Mutations::Guideline::DeleteGuideline do
   let(:mutation_string) do
     %( mutation { deleteGuideline(
       guidelineId: "#{variables[:guideline_id]}"
-    ) { guidelineId errors } } )
+    ) { guidelineId } } )
   end
 
   context 'authenticated' do
@@ -37,7 +37,7 @@ RSpec.describe Mutations::Guideline::DeleteGuideline do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteGuideline']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Mutations::Guideline::DeleteGuideline do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteGuideline']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
 
     end

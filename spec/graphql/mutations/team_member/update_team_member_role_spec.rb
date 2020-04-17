@@ -27,7 +27,7 @@ RSpec.describe Mutations::TeamMember::UpdateRole do
       role: #{variables[:role]}
       userId: "#{variables[:user_id]}"
       teamId: "#{variables[:team_id]}"
-    ) { teamMember { id role user { id } team { id } } errors } } )
+    ) { teamMember { id role user { id } team { id } } } } )
   end
 
   context 'authenticated' do
@@ -45,7 +45,7 @@ RSpec.describe Mutations::TeamMember::UpdateRole do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateTeamMemberRole']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe Mutations::TeamMember::UpdateRole do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateTeamMemberRole']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -73,7 +73,8 @@ RSpec.describe Mutations::TeamMember::UpdateRole do
       let(:variables) { { role: 'member', user_id: user.id, team_id: team.id } }
 
       it 'can\'t update a team member if that member is the only team admin' do
-        expect(result['data']['updateTeamMemberRole']['errors'].first).to eq("Role 'admin' should be assigned to at least 1 other team member.")
+        puts result['errors']
+        expect(result['errors'].first['message']).to eq("role: 'admin' should be assigned to at least 1 other team member.")
       end
     end
 
