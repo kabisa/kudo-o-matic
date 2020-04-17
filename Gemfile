@@ -11,7 +11,7 @@ gem "autoprefixer-rails", "~> 9.3", ">= 9.3.1"
 gem 'aws-sdk-s3', '~> 1.23', '>= 1.23.1', require: false
 gem "chronic", "~> 0.10.2"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
-gem "devise", "~> 4.3"
+gem "devise", "~> 4.7.1"
 gem 'devise-async', '~> 1.0'
 gem "doorkeeper", "~> 4.3"
 gem "delayed_paperclip", "~> 3.0.1"
