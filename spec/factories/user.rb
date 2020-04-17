@@ -15,4 +15,8 @@ FactoryBot.define do
   trait :deactivated do
     deactivated_at { 1.day.ago }
   end
+
+  trait :withSlackId do
+    slack_id { 'fakeSlackId' }
+  end
 end

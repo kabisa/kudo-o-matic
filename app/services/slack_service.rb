@@ -85,18 +85,16 @@ module SlackService
     RestClient.post Settings.slack_post_message_endpoint, payload
   end
 
-  def send_message(message, channel_id)
-    # TODO Send a message to a specific channel
-  end
-
   def connect_account(command_text, user_id)
     slack_register_token = command_text
 
-    raise InvalidCommand.new 'please provide a register token ' unless slack_register_token != ''
+    raise InvalidCommand.new 'please provide a register token' unless slack_register_token != ''
 
     raise InvalidCommand.new 'This slack account is already linked to kudo-o-matic' unless User.where(:slack_id => user_id).count == 0
 
     user = User.where(:slack_registration_token => slack_register_token).take
+
+    raise InvalidCommand.new 'Invalid registration token' unless user != nil
 
     raise InvalidCommand.new 'This kudo-o-matic account is already linked to Slack.' unless user.slack_id == nil
 
