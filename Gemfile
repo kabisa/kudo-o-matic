@@ -44,7 +44,7 @@ gem "rails_autolink", "~> 1.1.6"
 gem "railties", "~> 5.2", ">= 5.2.1"
 gem 'rmagick', '~> 2.16'
 gem "rubocop", "~> 0.60.0", require: false
-gem "rubyzip", "~> 1.2.2", require: "zip"
+gem "rubyzip", "~> 1.3.0", require: "zip"
 gem "sentry-raven"
 gem "settingslogic", "~> 2.0", ">= 2.0.9"
 gem "scss_lint", "~> 0.54", require: false
