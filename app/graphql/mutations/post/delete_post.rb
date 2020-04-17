@@ -12,8 +12,7 @@ module Mutations
       if post.destroy
         { post_id: id }
       else
-        Util::ErrorBuilder.build_errors(context, post.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, post.errors)
       end
     end
   end

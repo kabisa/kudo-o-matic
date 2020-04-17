@@ -40,7 +40,6 @@ module Mutations
         else
           raise GraphQL::ExecutionError, error_messages.join(', ')
         end
-
       end
     end
   end

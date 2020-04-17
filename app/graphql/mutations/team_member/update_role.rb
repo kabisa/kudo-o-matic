@@ -17,8 +17,7 @@ module Mutations
       if team_member.save
         { team_member: team_member }
       else
-        Util::ErrorBuilder.build_errors(context, team_member.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, team_member.errors)
       end
     end
   end

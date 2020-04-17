@@ -12,8 +12,7 @@ module Mutations
       if kudos_meter.destroy
         { kudos_meter_id: kudos_meter.id }
       else
-        Util::ErrorBuilder.build_errors(context, kudos_meter.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, kudos_meter.errors)
       end
     end
   end

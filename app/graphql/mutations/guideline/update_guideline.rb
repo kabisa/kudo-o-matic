@@ -14,8 +14,7 @@ module Mutations
       if guideline.update(name: name, kudos: kudos)
         { guideline: guideline }
       else
-        Util::ErrorBuilder.build_errors(context, guideline.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, guideline.errors)
       end
     end
   end

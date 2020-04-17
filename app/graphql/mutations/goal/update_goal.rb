@@ -14,8 +14,7 @@ module Mutations
       if goal.update(name: name, amount: amount)
         { goal: goal }
       else
-        Util::ErrorBuilder.build_errors(context, goal.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, goal.errors)
       end
     end
   end

@@ -13,8 +13,7 @@ module Mutations
         { team_invite_id: team_invite.id }
       else
         team_invite.decline
-        Util::ErrorBuilder.build_errors(context, team_invite.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, team_invite.errors)
       end
     end
   end

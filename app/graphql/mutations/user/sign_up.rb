@@ -17,8 +17,7 @@ module Mutations
       if user.save
         { authenticate_data: OpenStruct.new(token: AuthToken.new.token(user), user: user) }
       else
-        Util::ErrorBuilder.build_errors(context, user.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, user.errors)
       end
     end
   end

@@ -13,8 +13,7 @@ module Mutations
       if kudos_meter.update(name: name)
         { kudos_meter: kudos_meter }
       else
-        Util::ErrorBuilder.build_errors(context, kudos_meter.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, kudos_meter.errors)
       end
     end
   end

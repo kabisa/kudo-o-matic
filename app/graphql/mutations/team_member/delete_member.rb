@@ -14,8 +14,7 @@ module Mutations
       if team_member.destroy
         { team_member_id: team_member.id }
       else
-        Util::ErrorBuilder.build_errors(context, team_member.errors)
-        return
+        return Util::ErrorBuilder.build_errors(context, team_member.errors)
       end
     end
   end
