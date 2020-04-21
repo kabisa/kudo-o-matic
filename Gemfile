@@ -49,7 +49,7 @@ gem "sentry-raven"
 gem "settingslogic", "~> 2.0", ">= 2.0.9"
 gem "scss_lint", "~> 0.54", require: false
 gem 'sidekiq', '~> 5.2', '>= 5.2.3'
-gem 'omniauth-slack'
+gem "rest-client", "~> 2.1"
 
 group :development, :staging, :test do
   # GraphQL UI similar to GraphiQL but better
@@ -91,4 +91,3 @@ group :production do
   gem 'rails_12factor', '~> 0.0.3'
 end
 
-gem "rest-client", "~> 2.1"

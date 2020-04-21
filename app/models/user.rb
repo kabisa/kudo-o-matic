@@ -16,8 +16,7 @@ class User < ApplicationRecord
          :confirmable,
          :database_authenticatable,
          :validatable,
-         :omniauthable,
-         :recoverable, omniauth_providers: %i[slack]
+         :recoverable
 
 
   has_many :sent_posts,

@@ -268,6 +268,4 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  config.omniauth :slack, '964340573189.952854390691', '4166a9c2263739d1049056d2a5a8d612', scope: 'identity.basic,identity.email'
-  config.omniauth :slack, '964340573189.952854390691', '4166a9c2263739d1049056d2a5a8d612', scope: 'team:read,users:read,identity.basic,identity.email,bot'
 end
