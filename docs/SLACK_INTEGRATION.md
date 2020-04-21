@@ -1,22 +1,34 @@
 
 # Slack integration  
+## Table of contents 
+- [Features](#features)
+- [General information](#general-information)
+	- [Add Slack app to workspace](#add-to-workspace)
+	- [Connecting Kudo-o-matic accounts to Slack](#register-accounts)
+- [Developing](#development)
+	- [Creating a Slack app](#create-app)
+	- [Configuring the app](#configure-app)
+	    - [Redirect url's](#redirect-url)
+	    - [App Settings](#app-settings)
+    	    - [Incoming webhooks](#incoming-webhooks)
+    	    - [Slash commands](#slash-commands)
+    	    - [OAuth and Permissions](#oauth)
+    	    - [User ID Translation](#id-translation)
+    	- [Setting env variables](#env-variables)
+
+<a  name="features"></a>
+## Features
 Kudo-o-matic has the following slack features:  
 - Create post via Slack  
 - Send message to a specific slack channel to announce new post  
-  
-* [General information](#general-information)
-	* [Add Slack app to workspace](#add-to-workspace)
-	* [Connecting Kudo-o-matic accounts to Slack](#register-accounts)
-* [Developing](#development)
-	* [Creating a Slack app](#create-app)
-	* [Configuring the app](#configure-app)
+
 
 <a  name="general-information"></a>
 ## General information
 <a  name="add-to-workspace"></a>
 ### Add Slack app to workspace
-Team admins can add the Slack app via the 'add to slack' button on the integration section found on the team page.  
-This uses the [Slack OAuth v2 flow](https://api.slack.com/authentication/oauth-v2). The team id is passed to the backend via the state parameter. The flow is as followed:
+Team admins can add the Slack app via the 'add to slack' button on the integration section found on the team management page.  
+This is done via the [Slack OAuth v2 flow](https://api.slack.com/authentication/oauth-v2). The team id is passed to the backend via the state parameter. The flow is as followed:
 
 1. Team admin clicks the 'add to slack' button
 2. Make a request to the slack auth endpoint
@@ -48,7 +60,7 @@ Now that you have your very own Slack app you'll need to configure it with the c
 <a  name="configure-app"></a>
 ### Configuring the Slack app
 The slack app will need certain permissions and features enabled otherwise it won't work. Some settings may be dependant on your local work environment like OAuth redirect url's. 
-
+<a  name="redirect-url"></a>
 #### redirect URL's
 In order to get redirects to your local machine we recommend using [ngrok](https://ngrok.com/download). Follow the steps for downloading and creating an account. After you've done that use the following command to start the service:
 
@@ -61,10 +73,14 @@ It should provide you an output similar to the following:
 
 Note the `http://000a4d61.ngrok.io` this will be the base url.
 
-#### Incoming webhooks
+<a  name="app-settings"></a>
+#### App Settings
+<a  name="incoming-webhooks"></a>
+##### Incoming webhooks
 Turn this feature on.
 
-#### Slash commands
+<a  name="slash-commands"></a>
+##### Slash commands
 Create the following commands.
 For each command enable:
 > Escape channels, users, and links sent to your app
@@ -76,7 +92,8 @@ For each command enable:
 	- command: `/kudo`
 	- url: `<your-base-url>/slack/kudo`
 
-#### OAuth & Permissions
+<a  name="oauth"></a>
+##### OAuth & Permissions
 Add the following redirect url:
 
     <your-base-url>/auth/slack/callback
@@ -89,9 +106,11 @@ The following bot token scopes need to be added:
 The following User Token Scopes need to be added:
 - reactions:read
 
-#### User ID Translation
+<a  name="id-translation"></a>
+##### User ID Translation
 Turn this feature on.
 
+<a  name="env-variables"></a>
 #### Setting env variables
 set the following two environment variables:
 
