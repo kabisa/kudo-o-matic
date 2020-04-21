@@ -1,6 +1,8 @@
 module SlackService
-  class InvalidRequest < RuntimeError; end
-  class InvalidCommand < RuntimeError; end
+  class InvalidRequest < RuntimeError;
+  end
+  class InvalidCommand < RuntimeError;
+  end
 
   public
 
@@ -71,7 +73,7 @@ module SlackService
       receiverString += receiver.slack_id == nil ? "#{receiver.name}" : "<@#{receiver.slack_id}>"
 
       if post.receivers.count > 1 && index != post.receivers.count - 1
-        receiverString += (index == (post.receivers.count - 2))  ? ' and ' : ', '
+        receiverString += (index == (post.receivers.count - 2)) ? ' and ' : ', '
       end
     end
 
@@ -130,5 +132,21 @@ module SlackService
     team.slack_team_id = parsed_result["team"]["id"]
 
     raise InvalidRequest.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
+
+    send_welcome_message(team)
   end
+
+  private
+
+  def send_welcome_message(team)
+    payload = {
+        token: team.slack_bot_access_token,
+        text: "Is it a bird? is it a plane? It's kudo-o-matic!",
+        channel: team.channel_id
+    }
+
+    RestClient.post Settings.slack_post_message_endpoint, payload
+
+  end
+
 end
