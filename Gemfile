@@ -11,7 +11,7 @@ gem "autoprefixer-rails", "~> 9.3", ">= 9.3.1"
 gem 'aws-sdk-s3', '~> 1.23', '>= 1.23.1', require: false
 gem "chronic", "~> 0.10.2"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
-gem "devise", "~> 4.3"
+gem "devise", "~> 4.7.1"
 gem 'devise-async', '~> 1.0'
 gem "doorkeeper", "~> 4.3"
 gem "delayed_paperclip", "~> 3.0.1"
@@ -28,15 +28,15 @@ gem 'graphql_playground-rails', '~> 2.0', '>= 2.0.1'
 gem "haml-rails", "~> 1.0"
 gem "jbuilder", "~> 2.0"
 gem "json_web_token", "~> 0.3.5"
-gem "loofah", "~> 2.2.1"
+gem "loofah", "~> 2.3.1"
 gem 'mini_magick', '~> 4.9', '>= 4.9.2'
-gem "nokogiri", "~> 1.8.5"
+gem "nokogiri", "~> 1.10.8"
 gem "paperclip", "~> 6.1"
 gem "pg", "~> 0.18"
 gem "premailer-rails", "~> 1.9.7"
-gem "puma", "~> 3.0"
+gem "puma", "~> 3.12"
 gem "rabl", "~> 0.13.1"
-gem "rack-cors", "~> 1.0"
+gem "rack-cors", "~> 1.0.5"
 gem "rails", "~> 5.2", ">= 5.2.1"
 gem "rails-controller-testing", "~> 1.0.2"
 gem "rails-html-sanitizer", "~> 1.0.4"
@@ -44,7 +44,7 @@ gem "rails_autolink", "~> 1.1.6"
 gem "railties", "~> 5.2", ">= 5.2.1"
 gem 'rmagick', '~> 2.16'
 gem "rubocop", "~> 0.60.0", require: false
-gem "rubyzip", "~> 1.2.2", require: "zip"
+gem "rubyzip", "~> 1.3.0", require: "zip"
 gem "sentry-raven"
 gem "settingslogic", "~> 2.0", ">= 2.0.9"
 gem "scss_lint", "~> 0.54", require: false
