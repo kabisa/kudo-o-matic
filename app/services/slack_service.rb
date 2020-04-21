@@ -5,43 +5,42 @@ module SlackService
   public
 
   def create_post(command_text, team_id, user_id)
-    slackUsers = command_text.scan(/(?=@).*?(?<=\|)/)
+    slackUsers = command_text.scan(/(?=<).*?(?<=>)/)
 
     receivers = []
 
     slackUsers.each do |slackUser|
-      slackUser = slackUser.tr('@', "")
-      slackUser = slackUser.tr('|', "")
-
-      user = User.where(slack_id: slackUser).take
+      id = slackUser[slackUser.index('@') + 1..slackUser.index('|') - 1]
+      user = User.where(slack_id: id).take
 
       if user == nil
-        raise InvalidCommand.new "Oops that did not work. #{user.name} has not connected their account to Slack."
+        name = slackUser[slackUser.index('|') + 1..slackUser.index('>') - 1]
+        raise InvalidCommand.new "#{name} has not connected their account to Slack."
       end
 
       receivers << user
     end
 
     if receivers.length == 0
-      raise InvalidCommand.new "Oops that did not work. Did you forget to mention any users with the '@' symbol? "
+      raise InvalidCommand.new "Did you forget to mention any users with the '@' symbol?"
     end
 
     message = command_text[/'(.*?)'/m, 1]
 
     if message == nil || message == ""
-      raise InvalidCommand.new 'Oops that did not work. Did you include a message surrounded by \'?'
+      raise InvalidCommand.new 'Did you include a message surrounded by \'?'
     end
 
     amount = command_text.split(' ').last
 
     if amount == nil || amount == ""
-      raise InvalidCommand.new 'Oops that did not work. Did you include an amount?'
+      raise InvalidCommand.new 'Did you include an amount?'
     end
 
     begin
       Integer(amount)
     rescue ArgumentError
-      raise InvalidCommand.new 'Oops that did not work. Did you include an amount?'
+      raise InvalidCommand.new 'Did you include an amount?'
     end
 
     team = Team.where(:slack_team_id => team_id).take
@@ -76,9 +75,11 @@ module SlackService
       end
     end
 
+    senderString = post.sender.slack_id == nil ? "#{post.sender.name}" : "<@#{post.sender.slack_id}>"
+
     payload = {
         token: post.team.slack_bot_access_token,
-        text: "<@#{post.sender.slack_id}> just gave #{post.amount} kudos to #{receiverString} for #{post.message}",
+        text: "#{senderString} just gave #{post.amount} kudos to #{receiverString} for #{post.message}",
         channel: post.team.channel_id
     }
 
@@ -104,11 +105,14 @@ module SlackService
   end
 
   def add_to_workspace(code, team_id)
-    team = Team.find(team_id)
-
     if code == nil
       raise InvalidRequest.new 'Auth token is missing'
     end
+
+    if team_id == nil
+      raise InvalidRequest.new 'Team id is missing'
+    end
+    team = Team.find(team_id)
 
     payload = {
         code: code,
@@ -119,10 +123,12 @@ module SlackService
     response = RestClient.post Settings.slack_acccess_token_endpoint, payload
     parsed_result = ActiveSupport::JSON.decode(response.body)
 
+    puts parsed_result
+
     team.channel_id = parsed_result['incoming_webhook']['channel_id']
     team.slack_bot_access_token = parsed_result["access_token"]
     team.slack_team_id = parsed_result["team"]["id"]
 
-    raise InvalidCommand.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
+    raise InvalidRequest.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
   end
 end

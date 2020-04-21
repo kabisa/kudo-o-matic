@@ -7,7 +7,11 @@ class SlackController < ApplicationController
   include SlackService
 
   def give_kudos
-    post = create_post(params[:text], params[:team_id], params[:user_id])
+    begin
+      post = create_post(params[:text], params[:team_id], params[:user_id])
+    rescue InvalidCommand => e
+      return render json: {text: "That didn't quite work, #{e}"}
+    end
 
     if post.save
       send_post_announcement(post)

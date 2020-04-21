@@ -16,6 +16,9 @@ staging:
 
 test:
   <<: *defaults
+  slack_acccess_token_endpoint: 'fakeUrl'
+  slack_post_message_endpoint: 'fakeUrl'
+  slack_connect_success_url: 'fakeUrl'
 
 production:
   <<: *defaults

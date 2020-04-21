@@ -51,6 +51,7 @@ RSpec.describe Mutations::Post::CreatePost do
 
     describe 'user is admin' do
       before do
+        allow(RestClient).to receive(:post)
         user.update(admin: true)
       end
 
@@ -68,6 +69,7 @@ RSpec.describe Mutations::Post::CreatePost do
 
     describe 'user is team member' do
       before do
+        allow(RestClient).to receive(:post)
         team.add_member(user)
       end
 
