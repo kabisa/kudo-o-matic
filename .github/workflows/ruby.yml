@@ -22,6 +22,7 @@ jobs:
       run: |
         gem install bundler
         bundle install --jobs=3 --retry=3 --without production
+        ls
         bundle exec rails db:create
         bundle exec rails db:migrate
     - name: Run tests
