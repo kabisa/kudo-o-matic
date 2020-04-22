@@ -11,6 +11,11 @@ jobs:
       db:
         image: postgres:11
         ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -21,6 +26,7 @@ jobs:
       env:
         RAILS_ENV: test
       run: |
+        sudo apt-get -yqq install libpq-dev
         gem install bundler
         bundle install --jobs=3 --retry=3 --without production
         cp env.example .env
