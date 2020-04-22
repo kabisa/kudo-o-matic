@@ -10,6 +10,7 @@ jobs:
     services:
       db:
         image: postgres:11
+        ports: ['5432:5432']
 
     steps:
     - uses: actions/checkout@v2
@@ -23,7 +24,7 @@ jobs:
         gem install bundler
         bundle install --jobs=3 --retry=3 --without production
         cp env.example .env
-        cp config/database.yml.example config/database.yml
+        cp config/database.yml.ci config/database.yml
         bundle exec rails db:create
         bundle exec rails db:migrate
     - name: Run tests
