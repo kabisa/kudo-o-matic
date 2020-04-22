@@ -21,7 +21,8 @@ jobs:
         RAILS_ENV: test
       run: |
         gem install bundler
-        - bundle install --jobs=3 --retry=3 --without production
+        bundle install --jobs=3 --retry=3 --without production
+        bundle exec rails db:create
         bundle exec rails db:migrate
     - name: Run tests
       env:
