@@ -16,7 +16,7 @@ install:
 before_install:
   - cp env.example .env
   - psql -c 'create database kudo_o_matic_test;' -U postgres
-  - cp config/database.yml.travis config/database.yml
+  - cp config/database.yml.ci config/database.yml
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
