@@ -7,16 +7,16 @@ module SlackService
   public
 
   def create_post(command_text, team_id, user_id)
-    slackUsers = command_text.scan(/(?=<).*?(?<=>)/)
+    slack_users = command_text.scan(/(?=<).*?(?<=>)/)
 
     receivers = []
 
-    slackUsers.each do |slackUser|
-      id = slackUser[slackUser.index('@') + 1..slackUser.index('|') - 1]
+    slack_users.each do |slack_user|
+      id = slack_user[slack_user.index('@') + 1..slack_user.index('|') - 1]
       user = User.where(slack_id: id).take
 
       if user == nil
-        name = slackUser[slackUser.index('|') + 1..slackUser.index('>') - 1]
+        name = slack_user[slack_user.index('|') + 1..slack_user.index('>') - 1]
         raise InvalidCommand.new "#{name} has not connected their account to Slack."
       end
 
@@ -68,24 +68,30 @@ module SlackService
   end
 
   def send_post_announcement(post)
-    receiverString = ""
+    receiver_string = ""
     post.receivers.each_with_index do |receiver, index|
-      receiverString += receiver.slack_id == nil ? "#{receiver.name}" : "<@#{receiver.slack_id}>"
+      receiver_string += receiver.slack_id == nil ? "#{receiver.name}" : "<@#{receiver.slack_id}>"
 
       if post.receivers.count > 1 && index != post.receivers.count - 1
-        receiverString += (index == (post.receivers.count - 2)) ? ' and ' : ', '
+        receiver_string += (index == (post.receivers.count - 2)) ? ' and ' : ', '
       end
     end
 
-    senderString = post.sender.slack_id == nil ? "#{post.sender.name}" : "<@#{post.sender.slack_id}>"
+    sender_string = post.sender.slack_id == nil ? "#{post.sender.name}" : "<@#{post.sender.slack_id}>"
 
     payload = {
         token: post.team.slack_bot_access_token,
-        text: "#{senderString} just gave #{post.amount} kudos to #{receiverString} for #{post.message}",
-        channel: post.team.channel_id
+        text: "#{sender_string} just gave #{post.amount} kudos to #{receiver_string} for #{post.message}",
+        channel: post.team.channel_id,
+        attachments: [
+            {
+                fallback: post.id
+            }
+        ]
     }
 
-    RestClient.post Settings.slack_post_message_endpoint, payload
+    response = RestClient.post Settings.slack_post_message_endpoint, payload
+    puts response.body
   end
 
   def connect_account(command_text, user_id)
@@ -146,7 +152,6 @@ module SlackService
     }
 
     RestClient.post Settings.slack_post_message_endpoint, payload
-
   end
 
 end

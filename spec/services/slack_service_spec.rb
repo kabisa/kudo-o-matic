@@ -241,4 +241,5 @@ RSpec.describe 'SlackService' do
       end
     end
   end
+
 end
