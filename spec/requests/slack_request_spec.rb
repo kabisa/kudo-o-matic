@@ -156,5 +156,37 @@ RSpec.describe "Slack" do
       expect(parsed_body['text']).to eq("That didn't quite work, Error description")
     end
   end
+
+  describe 'guidelines' do
+    it 'returns when there is an error' do
+      allow_any_instance_of(SlackService).to receive(:list_guidelines).and_raise(SlackService::InvalidCommand, 'Error description')
+      payload = {
+          team_id: 'UU4321'
+      }
+
+      post '/slack/guidelines', :params => payload
+
+      expect(response.status).to be(200)
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body['text']).to eq("That didn't quite work, Error description")
+    end
+
+    it 'return the guidelines as a block' do
+      return_value = {
+          type: "section",
+      }
+      allow_any_instance_of(SlackService).to receive(:list_guidelines).and_return(return_value)
+      payload = {
+          team_id: 'UU4321'
+      }
+
+      post '/slack/guidelines', :params => payload
+
+      expect(response.status).to be(200)
+      parsed_body = JSON.parse(response.body)
+      expect(parsed_body['blocks']).to_not be_nil
+
+    end
+  end
 end
 

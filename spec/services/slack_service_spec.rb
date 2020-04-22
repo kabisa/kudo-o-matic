@@ -242,4 +242,30 @@ RSpec.describe 'SlackService' do
     end
   end
 
+  describe 'list guidelines' do
+    let(:guideline) {create(:guideline)}
+
+    it 'raises en error when there is no team with the provided slack id' do
+      expect {
+        dc.list_guidelines('unusedId')
+      }.to raise_exception(SlackService::InvalidCommand, 'No team with that Slack ID')
+    end
+
+    it 'returns a message when there are no guidelines' do
+      response = dc.list_guidelines(team_with_slack.slack_team_id)
+
+      expect(response.length).to be(1)
+      expect(response[0][:text][:text]).to eq('No guidelines')
+    end
+
+    it 'returns the guidelines as a section' do
+      guideline.team = team_with_slack
+      guideline.save
+
+      response = dc.list_guidelines(team_with_slack.slack_team_id)
+
+      expect(response.length).to be(1)
+      expect(response[0][:text][:text]).to eq("• #{guideline.name} *#{guideline.kudos}* \n")
+    end
+  end
 end

@@ -83,15 +83,9 @@ module SlackService
         token: post.team.slack_bot_access_token,
         text: "#{sender_string} just gave #{post.amount} kudos to #{receiver_string} for #{post.message}",
         channel: post.team.channel_id,
-        attachments: [
-            {
-                fallback: post.id
-            }
-        ]
     }
 
-    response = RestClient.post Settings.slack_post_message_endpoint, payload
-    puts response.body
+    RestClient.post Settings.slack_post_message_endpoint, payload
   end
 
   def connect_account(command_text, user_id)
@@ -140,6 +134,38 @@ module SlackService
     raise InvalidRequest.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
 
     send_welcome_message(team)
+  end
+
+  def list_guidelines(slack_team_id)
+    team = Team.find_by_slack_team_id(slack_team_id)
+
+    raise InvalidCommand.new 'No team with that Slack ID' unless team != nil
+
+    guidelines = Guideline.where(:team => team).order(:kudos)
+
+    if guidelines.count == 0
+      return [{
+                  type: "section",
+                  text: {
+                      type: "mrkdwn",
+                      text: "No guidelines"
+                  }
+              }]
+    end
+
+    text = ""
+
+    guidelines.each do |guideline|
+      text += "• #{guideline.name} *#{guideline.kudos}* \n"
+    end
+
+    [{
+         type: "section",
+         text: {
+             type: "mrkdwn",
+             text: text
+         }
+     }]
   end
 
   private

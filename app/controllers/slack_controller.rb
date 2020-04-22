@@ -39,6 +39,15 @@ class SlackController < ApplicationController
     end
   end
 
+  def guidelines
+    begin
+      payload = list_guidelines(params[:team_id])
+      render json: {blocks: payload}
+    rescue InvalidCommand => e
+      render json: {text: "That didn't quite work, #{e}"}
+    end
+  end
+
   def reaction
 
     case params[:type]
