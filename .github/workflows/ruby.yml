@@ -11,7 +11,8 @@ jobs:
       db:
         image: postgres:11.6-alpine
         env:
-          POSTGRES_PASSWORD: password
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432        
         options: >-
@@ -28,6 +29,8 @@ jobs:
     - name: Install dependencies and setup db
       env:
         RAILS_ENV: test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
       run: |
         sudo apt-get -yqq install libpq-dev
         gem install bundler
