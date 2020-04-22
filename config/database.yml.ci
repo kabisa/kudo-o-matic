@@ -1,3 +1,5 @@
 test:
   adapter: postgresql
   database: kudo_o_matic_test
+  host: localhost
+  encoding: unicode
