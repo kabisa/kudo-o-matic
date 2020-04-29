@@ -49,6 +49,9 @@ In order to create posts and make announcement there needs to be a connection be
 
 <a  name="development"></a>
 ## Development
+### The Kabisa Slack apps
+The Slack apps are managed by managed services using their kabisasupport Slack user. If you need to change scopes, permissions or other settings you need to refer to them.
+
 <a  name="create-app"></a>
 ### Creating a slack app
 Before starting development on Slack features we recommend you read through the [basics first](https://api.slack.com/start/overview). This will give you a basic idea about how Slack apps work and what they are capable of.
