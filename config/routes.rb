@@ -14,7 +14,8 @@ Rails.application.routes.draw do
 
   get "/:team/feed/:rss_token", to: "feed#index"
 
-  get 'auth/slack/callback', to: 'slack#auth_callback'
+  get 'auth/slack/:team_id', to: 'slack#auth'
+  get 'auth/callback/slack', to: 'slack#auth_callback'
   post "/slack/kudo", to: 'slack#give_kudos'
   post "/slack/guidelines", to: 'slack#guidelines'
   post "/slack/register", to: 'slack#register'

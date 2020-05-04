@@ -51,7 +51,7 @@ RSpec.describe Mutations::Post::CreatePost do
 
     describe 'user is admin' do
       before do
-        allow(RestClient).to receive(:post)
+        allow_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage)
         user.update(admin: true)
       end
 
@@ -69,7 +69,7 @@ RSpec.describe Mutations::Post::CreatePost do
 
     describe 'user is team member' do
       before do
-        allow(RestClient).to receive(:post)
+        allow_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage)
         team.add_member(user)
       end
 

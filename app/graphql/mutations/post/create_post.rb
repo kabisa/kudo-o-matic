@@ -58,7 +58,7 @@ module Mutations
       if post.save
         PostMailer.new_post(post)
         GoalReacher.check!(team)
-        send_post_announcement(post)
+        SlackService.send_post_announcement(post)
         { post: post }
       else
         return Util::ErrorBuilder.build_errors(context, post.errors)

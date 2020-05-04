@@ -6,22 +6,20 @@ module SlackService
 
   public
 
-  def create_post(command_text, team_id, user_id)
-    slack_users = command_text.scan(/(?=<).*?(?<=>)/)
+  def self.create_post(command_text, slack_team_id, slack_user_id)
+    team = Team.where(:slack_team_id => slack_team_id).take
 
-    receivers = []
-
-    slack_users.each do |slack_user|
-      id = slack_user[slack_user.index('@') + 1..slack_user.index('|') - 1]
-      user = User.where(slack_id: id).take
-
-      if user == nil
-        name = slack_user[slack_user.index('|') + 1..slack_user.index('>') - 1]
-        raise InvalidCommand.new "#{name} has not connected their account to Slack."
-      end
-
-      receivers << user
+    if team == nil
+      raise InvalidCommand.new 'This workspace does not have an associated Kudo-o-matic team, contact an admin'
     end
+
+    sender = User.where(:slack_id => slack_user_id).take
+
+    if sender == nil
+      raise InvalidCommand.new 'Your Slack account is not linked to Kudo-o-matic, use the /register command'
+    end
+
+    receivers = get_receivers_from_command(command_text)
 
     if receivers.length == 0
       raise InvalidCommand.new "Did you forget to mention any users with the '@' symbol?"
@@ -33,29 +31,7 @@ module SlackService
       raise InvalidCommand.new 'Did you include a message surrounded by \'?'
     end
 
-    amount = command_text.split(' ').last
-
-    if amount == nil || amount == ""
-      raise InvalidCommand.new 'Did you include an amount?'
-    end
-
-    begin
-      Integer(amount)
-    rescue ArgumentError
-      raise InvalidCommand.new 'Did you include an amount?'
-    end
-
-    team = Team.where(:slack_team_id => team_id).take
-
-    if team == nil
-      raise InvalidCommand.new 'This workspace does not have an associated Kudo-o-matic team, contact an admin'
-    end
-
-    sender = User.where(:slack_id => user_id).take
-
-    if sender == nil
-      raise InvalidCommand.new 'Your Slack account is not linked to Kudo-o-matic, use the /register command'
-    end
+    amount = get_amount_from_command(command_text)
 
     Post.new(
         message: message,
@@ -67,28 +43,17 @@ module SlackService
     )
   end
 
-  def send_post_announcement(post)
-    receiver_string = ""
-    post.receivers.each_with_index do |receiver, index|
-      receiver_string += receiver.slack_id == nil ? "#{receiver.name}" : "<@#{receiver.slack_id}>"
-
-      if post.receivers.count > 1 && index != post.receivers.count - 1
-        receiver_string += (index == (post.receivers.count - 2)) ? ' and ' : ', '
-      end
-    end
+  def self.send_post_announcement(post)
+    client = Slack::Web::Client.new(token: post.team.slack_bot_access_token)
 
     sender_string = post.sender.slack_id == nil ? "#{post.sender.name}" : "<@#{post.sender.slack_id}>"
 
-    payload = {
-        token: post.team.slack_bot_access_token,
-        text: "#{sender_string} just gave #{post.amount} kudos to #{receiver_string} for #{post.message}",
-        channel: post.team.channel_id,
-    }
+    message = "#{sender_string} just gave #{post.amount} kudos to #{get_post_receivers(post)} for #{post.message}"
 
-    RestClient.post Settings.slack_post_message_endpoint, payload
+    client.chat_postMessage(channel: post.team.channel_id, text: message)
   end
 
-  def connect_account(command_text, user_id)
+  def self.connect_account(command_text, user_id)
     slack_register_token = command_text
 
     raise InvalidCommand.new 'please provide a register token' unless slack_register_token != ''
@@ -106,7 +71,8 @@ module SlackService
     raise InvalidCommand.new "That didn't quite work, #{user.errors.full_messages.join(', ')}" unless user.save
   end
 
-  def add_to_workspace(code, team_id)
+  def self.add_to_workspace(code, team_id)
+    client = Slack::Web::Client.new
     if code == nil
       raise InvalidRequest.new 'Auth token is missing'
     end
@@ -116,27 +82,27 @@ module SlackService
     end
     team = Team.find(team_id)
 
-    payload = {
+    rc = client.oauth_v2_access(
         code: code,
         client_id: ENV['SLACK_CLIENT_ID'],
         client_secret: ENV['SLACK_CLIENT_SECRET']
-    }
+    )
 
-    response = RestClient.post Settings.slack_acccess_token_endpoint, payload
-    parsed_result = ActiveSupport::JSON.decode(response.body)
+    puts rc
+    puts rc['incoming_webhook']['channel_id']
 
-    puts parsed_result
+    team.channel_id = rc['incoming_webhook']['channel_id']
+    team.slack_bot_access_token = rc["access_token"]
+    team.slack_team_id = rc["team"]["id"]
 
-    team.channel_id = parsed_result['incoming_webhook']['channel_id']
-    team.slack_bot_access_token = parsed_result["access_token"]
-    team.slack_team_id = parsed_result["team"]["id"]
+    puts team.channel_id
 
     raise InvalidRequest.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
 
     send_welcome_message(team)
   end
 
-  def list_guidelines(slack_team_id)
+  def self.list_guidelines(slack_team_id)
     team = Team.find_by_slack_team_id(slack_team_id)
 
     raise InvalidCommand.new 'No team with that Slack ID' unless team != nil
@@ -144,21 +110,93 @@ module SlackService
     guidelines = Guideline.where(:team => team).order(:kudos)
 
     if guidelines.count == 0
-      return [{
-                  type: "section",
-                  text: {
-                      type: "mrkdwn",
-                      text: "No guidelines"
-                  }
-              }]
+      return create_markdown_block("No guidelines")
+    else
+      return create_markdown_block(guidelines_to_list(guidelines))
+    end
+  end
+
+  def self.get_oauth_url(team_id)
+    URI::HTTP.build(
+        :host => Settings.slack_auth_endpoint,
+        :path => '/oauth/v2/authorize',
+        :query => {
+            :state => team_id,
+            :client_id => ENV['SLACK_CLIENT_ID'],
+            :scope => Settings.slack_scopes,
+            :user_scope => Settings.slack_user_scopes
+        }.to_query
+    )
+  end
+
+  private
+
+  def self.send_welcome_message(team)
+    client = Slack::Web::Client.new(token: team.slack_bot_access_token)
+
+    client.chat_postMessage(channel: team.channel_id, text: "Is it a bird? is it a plane? It's Kudo-O-Matic!")
+  end
+
+  def self.get_post_receivers(post)
+    receiver_string = ""
+    post.receivers.each_with_index do |receiver, index|
+      receiver_string += receiver.slack_id == nil ? "#{receiver.name}" : "<@#{receiver.slack_id}>"
+
+      if post.receivers.count > 1 && index != post.receivers.count - 1
+        receiver_string += (index == (post.receivers.count - 2)) ? ' and ' : ', '
+      end
     end
 
+    receiver_string
+  end
+
+  def self.get_receivers_from_command(text)
+    slack_users = text.scan(/(?=<).*?(?<=>)/)
+
+    receivers = []
+
+    slack_users.each do |slack_user|
+      id = slack_user[slack_user.index('@') + 1..slack_user.index('|') - 1]
+      user = User.where(slack_id: id).take
+
+      if user == nil
+        name = slack_user[slack_user.index('|') + 1..slack_user.index('>') - 1]
+        raise InvalidCommand.new "#{name} has not connected their account to Slack."
+      end
+
+      receivers << user
+    end
+
+    receivers
+  end
+
+  def self.get_amount_from_command(text)
+    amount = text.split(' ').last
+
+    if amount == nil || amount == ""
+      raise InvalidCommand.new 'Did you include an amount?'
+    end
+
+    begin
+      Integer(amount)
+    rescue ArgumentError
+      raise InvalidCommand.new 'Did you include an amount?'
+    end
+
+    amount
+  end
+
+  def self.guidelines_to_list(guidelines)
     text = ""
 
     guidelines.each do |guideline|
       text += "• #{guideline.name} *#{guideline.kudos}* \n"
     end
 
+    text
+  end
+
+  def self.create_markdown_block(text)
     [{
          type: "section",
          text: {
@@ -166,18 +204,6 @@ module SlackService
              text: text
          }
      }]
+
   end
-
-  private
-
-  def send_welcome_message(team)
-    payload = {
-        token: team.slack_bot_access_token,
-        text: "Is it a bird? is it a plane? It's kudo-o-matic!",
-        channel: team.channel_id
-    }
-
-    RestClient.post Settings.slack_post_message_endpoint, payload
-  end
-
 end
