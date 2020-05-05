@@ -1,8 +1,7 @@
 module SlackService
-  class InvalidRequest < RuntimeError;
-  end
-  class InvalidCommand < RuntimeError;
-  end
+  class InvalidRequest < RuntimeError; end
+
+  class InvalidCommand < RuntimeError; end
 
   public
 
@@ -33,14 +32,11 @@ module SlackService
 
     amount = get_amount_from_command(command_text)
 
-    Post.new(
-        message: message,
-        amount: amount,
-        sender: sender,
-        receivers: receivers,
-        team: team,
-        kudos_meter: team.active_kudos_meter
-    )
+    begin
+      PostCreator.create_post(message, amount, sender, receivers, team)
+    rescue PostCreator::PostCreateError => e
+      raise InvalidCommand.new e
+    end
   end
 
   def self.send_post_announcement(post)
@@ -88,14 +84,9 @@ module SlackService
         client_secret: ENV['SLACK_CLIENT_SECRET']
     )
 
-    puts rc
-    puts rc['incoming_webhook']['channel_id']
-
     team.channel_id = rc['incoming_webhook']['channel_id']
     team.slack_bot_access_token = rc["access_token"]
     team.slack_team_id = rc["team"]["id"]
-
-    puts team.channel_id
 
     raise InvalidRequest.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
 

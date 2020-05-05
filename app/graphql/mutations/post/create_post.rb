@@ -29,7 +29,7 @@ module Mutations
         null_receivers.each do |receiver|
 
           existing_user = ::User.joins(:memberships)
-                              .where(users: {name: receiver, virtual_user: true })
+                              .where(users: {name: receiver, virtual_user: true})
                               .where(team_members: {team_id: kwargs[:team_id]})
                               .take
 
@@ -46,22 +46,17 @@ module Mutations
         end
       end
 
-      post = ::Post.new(
-        message: kwargs[:message],
-        amount: kwargs[:amount],
-        sender: context[:current_user],
-        receivers: receivers,
-        team: team,
-        kudos_meter: team.active_kudos_meter
-      )
-
-      if post.save
-        PostMailer.new_post(post)
-        GoalReacher.check!(team)
-        SlackService.send_post_announcement(post)
-        { post: post }
-      else
-        return Util::ErrorBuilder.build_errors(context, post.errors)
+      begin
+        post = PostCreator.create_post(
+            kwargs[:message],
+            kwargs[:amount],
+            context[:current_user],
+            receivers,
+            team
+        )
+        {post: post}
+      rescue PostCreator::PostCreateError => e
+        raise GraphQL::ExecutionError, e
       end
     end
   end

@@ -6,16 +6,10 @@ class SlackController < ApplicationController
 
   def give_kudos
     begin
-      post = SlackService.create_post(params[:text], params[:team_id], params[:user_id])
+      SlackService.create_post(params[:text], params[:team_id], params[:user_id])
+      render json: {text: 'kudos are on the way!'}
     rescue SlackService::InvalidCommand => e
       return render json: {text: "That didn't quite work, #{e}"}
-    end
-
-    if post.save
-      SlackService.send_post_announcement(post)
-      render json: {text: 'kudos are on the way!'}
-    else
-      render json: {text: "That didn't quite work, #{post.errors.full_messages.join(', ')}"}
     end
   end
 

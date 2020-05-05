@@ -51,15 +51,11 @@ RSpec.describe Mutations::Post::CreatePost do
 
     describe 'user is admin' do
       before do
-        allow_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage)
         user.update(admin: true)
       end
 
       it 'can create a post and sends out emails to the receivers' do
         expect { result }.to change { Post.count }.by(1)
-          .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(2)
-
-        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last[:args]).to include('PostMailer', 'post_email', 'deliver_now')
       end
 
       it 'returns no errors' do
@@ -69,15 +65,11 @@ RSpec.describe Mutations::Post::CreatePost do
 
     describe 'user is team member' do
       before do
-        allow_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage)
         team.add_member(user)
       end
 
       it 'can create a post and sends out emails to the receivers' do
         expect { result }.to change { Post.count }.by(1)
-          .and change { ActiveJob::Base.queue_adapter.enqueued_jobs.size }.by(2)
-
-        expect(ActiveJob::Base.queue_adapter.enqueued_jobs.last[:args]).to include('PostMailer', 'post_email', 'deliver_now')
       end
 
       it 'does not duplicate virtual users' do

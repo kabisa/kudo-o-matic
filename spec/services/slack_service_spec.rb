@@ -13,6 +13,9 @@ RSpec.describe 'SlackService' do
   before :each do
     team.add_member(user)
     team.add_member(user_with_slack_id)
+
+    team_with_slack.add_member(user)
+    team_with_slack.add_member(user_with_slack_id)
   end
 
   describe 'add to workspace' do
@@ -122,6 +125,7 @@ RSpec.describe 'SlackService' do
       end
 
       it 'gets all the receivers' do
+        allow(SlackService).to receive(:send_post_announcement)
         command = create_add_post_command([user_with_slack_id], 'message', 10)
 
         post = SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
@@ -139,6 +143,7 @@ RSpec.describe 'SlackService' do
       end
 
       it 'sets the message correctly' do
+        allow(SlackService).to receive(:send_post_announcement)
         command = create_add_post_command([user_with_slack_id], 'message', 10)
 
         post = SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
@@ -164,6 +169,7 @@ RSpec.describe 'SlackService' do
       end
 
       it 'sets the amount correctly' do
+        allow(SlackService).to receive(:send_post_announcement)
         command = create_add_post_command([user_with_slack_id], 'message', 10)
 
         post = SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
@@ -181,6 +187,7 @@ RSpec.describe 'SlackService' do
       end
 
       it 'sets the team correctly' do
+        allow(SlackService).to receive(:send_post_announcement)
         command = create_add_post_command([user_with_slack_id], 'message', 10)
 
         post = SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
@@ -198,6 +205,7 @@ RSpec.describe 'SlackService' do
       end
 
       it 'sets the sender correctly' do
+        allow(SlackService).to receive(:send_post_announcement)
         command = create_add_post_command([user_with_slack_id], 'message', 10)
 
         post = SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)

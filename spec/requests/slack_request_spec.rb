@@ -77,7 +77,7 @@ RSpec.describe "Slack" do
     end
   end
 
-  describe 'auth_callback' do
+  describe 'auth callback' do
     it 'Redirects to the correct url if the request is successful' do
       allow(SlackService).to receive(:add_to_workspace).and_return(true)
       payload = {
@@ -106,11 +106,9 @@ RSpec.describe "Slack" do
     end
   end
 
-  describe 'give_kudos' do
-    it 'Creates a post and sends an announcement' do
-      allow_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage)
-      post = create(:post, sender: user, receivers: [users.first], team: team, kudos_meter: kudos_meter)
-      allow(SlackService).to receive(:create_post).and_return(post)
+  describe 'give kudos' do
+    it 'calls the slacks service to create a post' do
+      allow(SlackService).to receive(:create_post)
       payload = {
           text: 'commandText',
           user_id: 'UU1234',
@@ -124,10 +122,8 @@ RSpec.describe "Slack" do
       expect(parsed_body['text']).to eq('kudos are on the way!')
     end
 
-    it "returns an error if the post isn't valid" do
-      post = create(:post, sender: user, receivers: [users.first], team: team, kudos_meter: kudos_meter)
-      allow(SlackService).to receive(:create_post).and_return(post)
-      post.receivers = []
+    it "returns an error if there was one" do
+      allow(SlackService).to receive(:create_post).and_raise(SlackService::InvalidCommand.new('Some error'))
       payload = {
           text: 'commandText',
           user_id: 'UU1234',
@@ -138,23 +134,9 @@ RSpec.describe "Slack" do
 
       expect(response.status).to be(200)
       parsed_body = JSON.parse(response.body)
-      expect(parsed_body['text']).to eq("That didn't quite work, Receivers can't be blank")
+      expect(parsed_body['text']).to eq("That didn't quite work, Some error")
     end
 
-    it "returns an error if the post isn't valid" do
-      allow(SlackService).to receive(:create_post).and_raise(SlackService::InvalidCommand, 'Error description')
-      payload = {
-          text: 'commandText',
-          user_id: 'UU1234',
-          team_id: 'UU4321'
-      }
-
-      post '/slack/kudo', :params => payload
-
-      expect(response.status).to be(200)
-      parsed_body = JSON.parse(response.body)
-      expect(parsed_body['text']).to eq("That didn't quite work, Error description")
-    end
   end
 
   describe 'guidelines' do
