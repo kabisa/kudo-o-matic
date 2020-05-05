@@ -81,11 +81,10 @@ RSpec.describe "Slack" do
     it 'Redirects to the correct url if the request is successful' do
       allow(SlackService).to receive(:add_to_workspace).and_return(true)
       payload = {
-          token: 'fakeToken',
-          state: '1'
+          token: 'fakeToken'
       }
 
-      get '/auth/callback/slack', :params => payload
+      get '/auth/callback/slack/1', :params => payload
 
       expect(response.status).to be(302)
       expect(response).to redirect_to(Settings.slack_connect_success_url)
@@ -94,11 +93,10 @@ RSpec.describe "Slack" do
     it 'returns an error if the request fails' do
       allow(SlackService).to receive(:add_to_workspace).and_raise(SlackService::InvalidRequest, 'The error description')
       payload = {
-          token: 'fakeToken',
-          state: '1'
+          token: 'fakeToken'
       }
 
-      get '/auth/callback/slack', :params => payload
+      get '/auth/callback/slack/1', :params => payload
 
       expect(response.status).to be(200)
       parsed_body = JSON.parse(response.body)

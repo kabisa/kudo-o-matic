@@ -6,31 +6,11 @@ module SlackService
   public
 
   def self.create_post(command_text, slack_team_id, slack_user_id)
-    team = Team.where(:slack_team_id => slack_team_id).take
-
-    if team == nil
-      raise InvalidCommand.new 'This workspace does not have an associated Kudo-o-matic team, contact an admin'
-    end
-
-    sender = User.where(:slack_id => slack_user_id).take
-
-    if sender == nil
-      raise InvalidCommand.new 'Your Slack account is not linked to Kudo-o-matic, use the /register command'
-    end
-
+    team = find_team(slack_team_id)
+    sender = find_sender(slack_user_id)
     receivers = get_receivers_from_command(command_text)
-
-    if receivers.length == 0
-      raise InvalidCommand.new "Did you forget to mention any users with the '@' symbol?"
-    end
-
-    message = command_text[/'(.*?)'/m, 1]
-
-    if message == nil || message == ""
-      raise InvalidCommand.new 'Did you include a message surrounded by \'?'
-    end
-
-    amount = get_amount_from_command(command_text)
+    message = parse_message(command_text)
+    amount = parse_amount(command_text)
 
     begin
       PostCreator.create_post(message, amount, sender, receivers, team)
@@ -122,6 +102,7 @@ module SlackService
   end
 
   private
+
   def self.generate_redirect_uri(team_id)
     URI::HTTP.build(:host => ENV['ROOT_URL'], :path => "/auth/callback/slack/#{team_id}")
   end
@@ -162,10 +143,14 @@ module SlackService
       receivers << user
     end
 
+    if receivers.length == 0
+      raise InvalidCommand.new "Did you forget to mention any users with the '@' symbol?"
+    end
+
     receivers
   end
 
-  def self.get_amount_from_command(text)
+  def self.parse_amount(text)
     amount = text.split(' ').last
 
     if amount == nil || amount == ""
@@ -189,6 +174,36 @@ module SlackService
     end
 
     text
+  end
+
+  def self.find_team(slack_team_id)
+    team = Team.where(:slack_team_id => slack_team_id).take
+
+    if team == nil
+      raise InvalidCommand.new 'This workspace does not have an associated Kudo-o-matic team, contact an admin'
+    end
+
+    team
+  end
+
+  def self.find_sender(slack_user_id)
+    sender = User.where(:slack_id => slack_user_id).take
+
+    if sender == nil
+      raise InvalidCommand.new 'Your Slack account is not linked to Kudo-o-matic, use the /register command'
+    end
+
+    sender
+  end
+
+  def self.parse_message(command_text)
+    message = command_text[/'(.*?)'/m, 1]
+
+    if message == nil || message == ""
+      raise InvalidCommand.new 'Did you include a message surrounded by \'?'
+    end
+
+    message
   end
 
   def self.create_markdown_block(text)
