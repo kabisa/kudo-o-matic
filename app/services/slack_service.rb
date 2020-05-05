@@ -78,15 +78,16 @@ module SlackService
     end
     team = Team.find(team_id)
 
-    rc = client.oauth_v2_access(
+    auth_result = client.oauth_v2_access(
         code: code,
         client_id: ENV['SLACK_CLIENT_ID'],
-        client_secret: ENV['SLACK_CLIENT_SECRET']
+        client_secret: ENV['SLACK_CLIENT_SECRET'],
+        redirect_uri: generate_redirect_uri(team.id)
     )
 
-    team.channel_id = rc['incoming_webhook']['channel_id']
-    team.slack_bot_access_token = rc["access_token"]
-    team.slack_team_id = rc["team"]["id"]
+    team.channel_id = auth_result['incoming_webhook']['channel_id']
+    team.slack_bot_access_token = auth_result["access_token"]
+    team.slack_team_id = auth_result["team"]["id"]
 
     raise InvalidRequest.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
 
@@ -112,7 +113,7 @@ module SlackService
         :host => Settings.slack_auth_endpoint,
         :path => '/oauth/v2/authorize',
         :query => {
-            :state => team_id,
+            :redirect_uri => generate_redirect_uri(team_id),
             :client_id => ENV['SLACK_CLIENT_ID'],
             :scope => Settings.slack_scopes,
             :user_scope => Settings.slack_user_scopes
@@ -121,6 +122,9 @@ module SlackService
   end
 
   private
+  def self.generate_redirect_uri(team_id)
+    URI::HTTP.build(:host => ENV['ROOT_URL'], :path => "/auth/callback/slack/#{team_id}")
+  end
 
   def self.send_welcome_message(team)
     client = Slack::Web::Client.new(token: team.slack_bot_access_token)

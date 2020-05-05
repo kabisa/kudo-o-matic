@@ -24,7 +24,7 @@ class SlackController < ApplicationController
 
   def auth_callback
     begin
-      SlackService.add_to_workspace(params[:code], params[:state])
+      SlackService.add_to_workspace(params[:code], params[:team_id])
       redirect_to Settings.slack_connect_success_url
     rescue SlackService::InvalidRequest => e
       render json: {text: "That didn't quite work, #{e}"}
