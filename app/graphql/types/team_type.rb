@@ -26,6 +26,7 @@ module Types
 
     def posts(order_by:)
       result = object.posts
+      result = result.where(kudos_meter_id: active_kudos_meter.id)
       result = result.order(order_by) unless order_by.blank?
       result
     end

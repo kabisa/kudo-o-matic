@@ -85,6 +85,14 @@ module Util
 
           current_user.admin? || current_user.admin_of?(team)
         end,
+        setActiveKudosMeter: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
 
         ### Post
         createPost: ->(_obj, args, ctx) do
