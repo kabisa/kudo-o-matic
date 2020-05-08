@@ -313,7 +313,7 @@ CREATE TABLE public.kudos_meters (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     team_id integer,
-    is_active boolean
+    is_active boolean DEFAULT false
 );
 
 
