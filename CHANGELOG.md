@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Unreleased
 ### Added
 - Slack integration 
+- Mutation to set the active kudometer
+
+### Fixed
+- Only posts for the active kudometer are retrieved
 
 ## [4.1.1]
 ### Added
