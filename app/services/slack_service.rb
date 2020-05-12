@@ -15,7 +15,7 @@ module SlackService
     begin
       PostCreator.create_post(message, amount, sender, receivers, team)
     rescue PostCreator::PostCreateError => e
-      raise InvalidCommand.new e
+      raise InvalidCommand.new(e)
     end
   end
 
@@ -32,29 +32,29 @@ module SlackService
   def self.connect_account(command_text, user_id)
     slack_register_token = command_text
 
-    raise InvalidCommand.new 'please provide a register token' unless slack_register_token != ''
+    raise InvalidCommand.new('please provide a register token') if slack_register_token.empty?
 
-    raise InvalidCommand.new 'This slack account is already linked to kudo-o-matic' unless User.where(:slack_id => user_id).count == 0
+    raise InvalidCommand.new('This slack account is already linked to kudo-o-matic') unless User.where(:slack_id => user_id).count == 0
 
     user = User.where(:slack_registration_token => slack_register_token).take
 
-    raise InvalidCommand.new 'Invalid registration token' unless user != nil
+    raise InvalidCommand.new('Invalid registration token') if user.nil?
 
-    raise InvalidCommand.new 'This kudo-o-matic account is already linked to Slack.' unless user.slack_id == nil
+    raise InvalidCommand.new('This kudo-o-matic account is already linked to Slack') unless user.slack_id.nil?
 
     user.slack_id = user_id
     user.slack_registration_token = nil
-    raise InvalidCommand.new "That didn't quite work, #{user.errors.full_messages.join(', ')}" unless user.save
+    raise InvalidCommand.new("That didn't quite work, #{user.errors.full_messages.join(', ')}") unless user.save
   end
 
   def self.add_to_workspace(code, team_id)
     client = Slack::Web::Client.new
     if code == nil
-      raise InvalidRequest.new 'Auth token is missing'
+      raise InvalidRequest.new('Auth token is missing')
     end
 
     if team_id == nil
-      raise InvalidRequest.new 'Team id is missing'
+      raise InvalidRequest.new('Team id is missing')
     end
     team = Team.find(team_id)
 
@@ -69,7 +69,7 @@ module SlackService
     team.slack_bot_access_token = auth_result["access_token"]
     team.slack_team_id = auth_result["team"]["id"]
 
-    raise InvalidRequest.new "That didn't quite work, #{team.errors.full_messages.join(', ')}" unless team.save
+    raise InvalidRequest.new("That didn't quite work, #{team.errors.full_messages.join(', ')}") unless team.save
 
     send_welcome_message(team)
   end
@@ -77,11 +77,11 @@ module SlackService
   def self.list_guidelines(slack_team_id)
     team = Team.find_by_slack_team_id(slack_team_id)
 
-    raise InvalidCommand.new 'No team with that Slack ID' unless team != nil
+    raise InvalidCommand.new('No team with that Slack ID') if team.nil?
 
     guidelines = Guideline.where(:team => team).order(:kudos)
 
-    if guidelines.count == 0
+    if guidelines.none?
       return create_markdown_block("No guidelines")
     else
       return create_markdown_block(guidelines_to_list(guidelines))
@@ -90,13 +90,13 @@ module SlackService
 
   def self.get_oauth_url(team_id)
     URI::HTTP.build(
-        :host => Settings.slack_auth_endpoint,
-        :path => '/oauth/v2/authorize',
-        :query => {
-            :redirect_uri => generate_redirect_uri(team_id),
-            :client_id => ENV['SLACK_CLIENT_ID'],
-            :scope => Settings.slack_scopes,
-            :user_scope => Settings.slack_user_scopes
+        host: Settings.slack_auth_endpoint,
+        path: '/oauth/v2/authorize',
+        query: {
+            redirect_uri: generate_redirect_uri(team_id),
+            client_id: ENV['SLACK_CLIENT_ID'],
+            scope: Settings.slack_scopes,
+            user_scope: Settings.slack_user_scopes
         }.to_query
     )
   end
@@ -104,7 +104,7 @@ module SlackService
   private
 
   def self.generate_redirect_uri(team_id)
-    URI::HTTP.build(:host => ENV['ROOT_URL'], :path => "/auth/callback/slack/#{team_id}")
+    URI::HTTP.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/#{team_id}")
   end
 
   def self.send_welcome_message(team)
@@ -137,14 +137,14 @@ module SlackService
 
       if user == nil
         name = slack_user[slack_user.index('|') + 1..slack_user.index('>') - 1]
-        raise InvalidCommand.new "#{name} has not connected their account to Slack."
+        raise InvalidCommand.new("#{name} has not connected their account to Slack.")
       end
 
       receivers << user
     end
 
     if receivers.length == 0
-      raise InvalidCommand.new "Did you forget to mention any users with the '@' symbol?"
+      raise InvalidCommand.new("Did you forget to mention any users with the '@' symbol?")
     end
 
     receivers
@@ -153,14 +153,14 @@ module SlackService
   def self.parse_amount(text)
     amount = text.split(' ').last
 
-    if amount == nil || amount == ""
-      raise InvalidCommand.new 'Did you include an amount?'
+    if amount.empty?
+      raise InvalidCommand.new('Did you include an amount?')
     end
 
     begin
       Integer(amount)
     rescue ArgumentError
-      raise InvalidCommand.new 'Did you include an amount?'
+      raise InvalidCommand.new('Did you include an amount?')
     end
 
     amount
@@ -180,7 +180,7 @@ module SlackService
     team = Team.where(:slack_team_id => slack_team_id).take
 
     if team == nil
-      raise InvalidCommand.new 'This workspace does not have an associated Kudo-o-matic team, contact an admin'
+      raise InvalidCommand.new('This workspace does not have an associated Kudo-o-matic team, contact an admin')
     end
 
     team
@@ -190,7 +190,7 @@ module SlackService
     sender = User.where(:slack_id => slack_user_id).take
 
     if sender == nil
-      raise InvalidCommand.new 'Your Slack account is not linked to Kudo-o-matic, use the /register command'
+      raise InvalidCommand.new('Your Slack account is not linked to Kudo-o-matic, use the /register command')
     end
 
     sender
@@ -199,8 +199,8 @@ module SlackService
   def self.parse_message(command_text)
     message = command_text[/'(.*?)'/m, 1]
 
-    if message == nil || message == ""
-      raise InvalidCommand.new 'Did you include a message surrounded by \'?'
+    if message.empty?
+      raise InvalidCommand.new('Did you include a message surrounded by \'?')
     end
 
     message
