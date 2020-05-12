@@ -2,6 +2,7 @@
 
 class User < ApplicationRecord
   validates :name, presence: true
+  has_secure_token :slack_registration_token
 
   after_create :send_welcome_email
 
@@ -16,6 +17,7 @@ class User < ApplicationRecord
          :database_authenticatable,
          :validatable,
          :recoverable
+
 
   has_many :sent_posts,
            class_name: "Post",

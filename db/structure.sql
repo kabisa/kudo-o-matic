@@ -5,22 +5,9 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 --
 -- Name: team_member_role; Type: TYPE; Schema: public; Owner: -
@@ -35,7 +22,7 @@ CREATE TYPE public.team_member_role AS ENUM (
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
@@ -687,7 +674,8 @@ CREATE TABLE public.users (
     slack_username character varying,
     restricted boolean DEFAULT false,
     company_user boolean DEFAULT false,
-    virtual_user boolean DEFAULT false NOT NULL
+    virtual_user boolean DEFAULT false NOT NULL,
+    slack_registration_token character varying
 );
 
 
@@ -1398,6 +1386,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181115082120'),
 ('20181115082522'),
 ('20181119090637'),
-('20181128140306');
+('20181128140306'),
+('20200415130431');
 
 

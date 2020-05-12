@@ -3,6 +3,12 @@ defaults: &defaults
   max_edit_and_delete_time: <%= 15 * 60 %> # 15 minutes
   gravatar_style: 'retro'
   gravatar_size: '200'
+  slack_acccess_token_endpoint: 'https://slack.com/api/oauth.v2.access'
+  slack_post_message_endpoint: 'https://slack.com/api/chat.postMessage'
+  slack_connect_success_url: 'http://localhost:9090/#/manage-team/integrations?auth=ok'
+  slack_auth_endpoint: 'slack.com'
+  slack_scopes: 'chat:write,commands,incoming-webhook,chat:write.public'
+  slack_user_scopes: 'reactions:read'
 
 development:
   <<: *defaults
@@ -10,9 +16,14 @@ development:
 
 staging:
   <<: *defaults
+  slack_connect_success_url: 'https://kudos.develop.kabisa.io/#/manage-team/integrations?auth=ok'
 
 test:
   <<: *defaults
+  slack_acccess_token_endpoint: 'fakeUrl'
+  slack_post_message_endpoint: 'fakeUrl'
+  slack_connect_success_url: 'fakeUrl'
 
 production:
   <<: *defaults
+  slack_connect_success_url: 'https://kudos.kabisa.io/#/manage-team/integrations?auth=ok'

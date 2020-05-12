@@ -43,5 +43,11 @@ module Types
     field :virtual_user, Boolean,
           null: true,
           description: 'Is the user a virtual user?'
+    field :slackRegistrationToken, String,
+          null: true,
+          description: 'Slack connect token'
+    field :slack_id, String,
+          null: true,
+          description: 'Slack id'
   end
 end

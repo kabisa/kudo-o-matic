@@ -114,6 +114,9 @@ To use Mailhog for local usage follow the instructions on [their GitHub reposito
 
 You can also update the configuration (`development.rb`) if you don't want to use Mailhog. Set and use the `MAIL_USERNAME`, `MAIL_PASSWORD` and `MAIL_ADDRESS` environment variables for this.
 
+### Slack 
+See [here](docs/SLACK_INTEGRATION.md).
+
 ## Entities
 
 A diagram of the models is available [here](docs/erd.svg).
