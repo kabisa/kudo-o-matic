@@ -16,6 +16,7 @@ development:
 
 staging:
   <<: *defaults
+  slack_connect_success_url: 'https://kudos.develop.kabisa.io/#/manage-team/integrations?auth=ok'
 
 test:
   <<: *defaults
@@ -25,3 +26,4 @@ test:
 
 production:
   <<: *defaults
+  slack_connect_success_url: 'https://kudos.kabisa.io/#/manage-team/integrations?auth=ok'
