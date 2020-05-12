@@ -83,7 +83,7 @@ RSpec.describe 'SlackService' do
       expect {
         SlackService.connect_account(user_with_slack_id.slack_registration_token,
                                      'otherSlackId')
-      }.to raise_exception(SlackService::InvalidCommand, 'This kudo-o-matic account is already linked to Slack.')
+      }.to raise_exception(SlackService::InvalidCommand, 'This kudo-o-matic account is already linked to Slack')
     end
   end
 
