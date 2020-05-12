@@ -43,6 +43,14 @@ class User < ApplicationRecord
     p.boolean :summary_mail, default: true
   end
 
+  def slack_connect_token
+    return slack_registration_token unless slack_registration_token.nil?
+
+    self.regenerate_slack_registration_token
+    self.save
+    slack_registration_token
+  end
+
   def member_of?(team)
     memberships.find_by_team_id(team.id).present?
   end

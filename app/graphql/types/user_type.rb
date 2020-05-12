@@ -45,7 +45,8 @@ module Types
           description: 'Is the user a virtual user?'
     field :slackRegistrationToken, String,
           null: true,
-          description: 'Slack connect token'
+          description: 'Slack connect token',
+          resolve: -> (obj, _args, _ctx) {obj.slack_connect_token}
     field :slack_id, String,
           null: true,
           description: 'Slack id'
