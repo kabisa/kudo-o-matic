@@ -22,9 +22,18 @@ class SlackController < ApplicationController
     end
   end
 
-  def auth_callback
+  def team_auth_callback
     begin
-      SlackService.add_to_workspace(params[:code], params[:team_id])
+      SlackService.add_to_workspace(params[:code], params[:team_id], nil)
+      redirect_to Settings.slack_connect_success_url
+    rescue SlackService::InvalidRequest => e
+      render json: {text: "That didn't quite work, #{e}"}
+    end
+  end
+
+  def user_auth_callback
+    begin
+      SlackService.add_to_workspace(params[:code], nil, params[:user_id])
       redirect_to Settings.slack_connect_success_url
     rescue SlackService::InvalidRequest => e
       render json: {text: "That didn't quite work, #{e}"}
@@ -40,8 +49,12 @@ class SlackController < ApplicationController
     end
   end
 
-  def auth
-    redirect_to SlackService.get_oauth_url(params[:team_id]).to_s
+  def auth_team
+    redirect_to SlackService.get_team_oauth_url(params[:team_id], '').to_s
+  end
+
+  def auth_user
+    redirect_to SlackService.get_user_oauth_url('', params[:user_id]).to_s
   end
 
   def reaction

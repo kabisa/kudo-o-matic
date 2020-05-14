@@ -47,31 +47,36 @@ module SlackService
     raise InvalidCommand.new("That didn't quite work, #{user.errors.full_messages.join(', ')}") unless user.save
   end
 
-  def self.add_to_workspace(code, team_id)
+  def self.add_to_workspace(code, team_id, user_id)
+    puts "*****received callback"
     client = Slack::Web::Client.new
     if code == nil
       raise InvalidRequest.new('Auth token is missing')
     end
 
-    if team_id == nil
-      raise InvalidRequest.new('Team id is missing')
-    end
-    team = Team.find(team_id)
-
     auth_result = client.oauth_v2_access(
         code: code,
         client_id: ENV['SLACK_CLIENT_ID'],
         client_secret: ENV['SLACK_CLIENT_SECRET'],
-        redirect_uri: generate_redirect_uri(team.id)
+        redirect_uri: team_id != nil ? generate_team_redirect_uri(team_id) : generate_user_redirect_uri(user_id)
     )
 
-    team.channel_id = auth_result['incoming_webhook']['channel_id']
-    team.slack_bot_access_token = auth_result["access_token"]
-    team.slack_team_id = auth_result["team"]["id"]
+    puts auth_result
 
-    raise InvalidRequest.new("That didn't quite work, #{team.errors.full_messages.join(', ')}") unless team.save
+    if auth_result[:authed_user][:access_token] != nil
+      user = User.find(user_id)
+      user.api_token = auth_result[:authed_user][:access_token]
+      user.save
+    else
+      team = Team.find(team_id)
+      team.channel_id = auth_result['incoming_webhook']['channel_id']
+      team.slack_bot_access_token = auth_result["access_token"]
+      team.slack_team_id = auth_result["team"]["id"]
 
-    send_welcome_message(team)
+      raise InvalidRequest.new("That didn't quite work, #{team.errors.full_messages.join(', ')}") unless team.save
+
+      send_welcome_message(team)
+    end
   end
 
   def self.list_guidelines(slack_team_id)
@@ -88,14 +93,25 @@ module SlackService
     end
   end
 
-  def self.get_oauth_url(team_id)
+  def self.get_team_oauth_url(team_id, user_id)
     URI::HTTP.build(
         host: Settings.slack_auth_endpoint,
         path: '/oauth/v2/authorize',
         query: {
-            redirect_uri: generate_redirect_uri(team_id),
+            redirect_uri: generate_team_redirect_uri(team_id),
             client_id: ENV['SLACK_CLIENT_ID'],
             scope: Settings.slack_scopes,
+        }.to_query
+    )
+  end
+
+  def self.get_user_oauth_url(team_id, user_id)
+    URI::HTTP.build(
+        host: Settings.slack_auth_endpoint,
+        path: '/oauth/v2/authorize',
+        query: {
+            redirect_uri: generate_user_redirect_uri(user_id),
+            client_id: ENV['SLACK_CLIENT_ID'],
             user_scope: Settings.slack_user_scopes
         }.to_query
     )
@@ -103,8 +119,12 @@ module SlackService
 
   private
 
-  def self.generate_redirect_uri(team_id)
-    URI::HTTP.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/#{team_id}")
+  def self.generate_team_redirect_uri(team_id)
+    URI::HTTP.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/team/#{team_id}")
+  end
+
+  def self.generate_user_redirect_uri(user_id)
+    URI::HTTP.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/user/#{user_id}")
   end
 
   def self.send_welcome_message(team)

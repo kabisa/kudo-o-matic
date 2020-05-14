@@ -7,8 +7,8 @@ defaults: &defaults
   slack_post_message_endpoint: 'https://slack.com/api/chat.postMessage'
   slack_connect_success_url: 'http://localhost:9090/#/manage-team/integrations?auth=ok'
   slack_auth_endpoint: 'slack.com'
-  slack_scopes: 'chat:write,commands,incoming-webhook,chat:write.public'
-  slack_user_scopes: 'reactions:read'
+  slack_scopes: 'chat:write,commands,incoming-webhook,chat:write.public,reactions:read'
+  slack_user_scopes: 'chat:write'
 
 development:
   <<: *defaults
