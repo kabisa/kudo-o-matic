@@ -132,7 +132,7 @@ RSpec.describe "Slack" do
 
       expect(response.status).to be(200)
       parsed_body = JSON.parse(response.body)
-      expect(parsed_body['text']).to eq("That didn't quite work, Some error")
+      expect(parsed_body['text']).to eq("That didn't quite work, Some error \n The format is: /kudo @someone @someone.else [amount] for [reason]")
     end
 
   end

@@ -168,6 +168,7 @@ module SlackService
 
   def self.parse_message(command_text)
     message = command_text[/(?<=for).*$/]
+    message.strip!
 
     if message.blank?
       raise InvalidCommand.new('Did you include a message?')
