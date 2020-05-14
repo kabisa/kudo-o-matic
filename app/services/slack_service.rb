@@ -151,9 +151,9 @@ module SlackService
   end
 
   def self.parse_amount(text)
-    amount = text.split(' ').last
+    amount = text.split(">").last.split("for").first
 
-    if amount.empty?
+    if amount.blank?
       raise InvalidCommand.new('Did you include an amount?')
     end
 
@@ -164,6 +164,16 @@ module SlackService
     end
 
     amount
+  end
+
+  def self.parse_message(command_text)
+    message = command_text[/(?<=for).*$/]
+
+    if message.blank?
+      raise InvalidCommand.new('Did you include a message?')
+    end
+
+    message
   end
 
   def self.guidelines_to_list(guidelines)
@@ -194,16 +204,6 @@ module SlackService
     end
 
     sender
-  end
-
-  def self.parse_message(command_text)
-    message = command_text[/'(.*?)'/m, 1]
-
-    if message.empty?
-      raise InvalidCommand.new('Did you include a message surrounded by \'?')
-    end
-
-    message
   end
 
   def self.create_markdown_block(text)
