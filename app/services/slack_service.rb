@@ -29,26 +29,7 @@ module SlackService
     client.chat_postMessage(channel: post.team.channel_id, text: message)
   end
 
-  def self.connect_account(command_text, user_id)
-    slack_register_token = command_text
-
-    raise InvalidCommand.new('please provide a register token') if slack_register_token.empty?
-
-    raise InvalidCommand.new('This slack account is already linked to kudo-o-matic') unless User.where(:slack_id => user_id).count == 0
-
-    user = User.where(:slack_registration_token => slack_register_token).take
-
-    raise InvalidCommand.new('Invalid registration token') if user.nil?
-
-    raise InvalidCommand.new('This kudo-o-matic account is already linked to Slack') unless user.slack_id.nil?
-
-    user.slack_id = user_id
-    user.slack_registration_token = nil
-    raise InvalidCommand.new("That didn't quite work, #{user.errors.full_messages.join(', ')}") unless user.save
-  end
-
-  def self.add_to_workspace(code, team_id, user_id)
-    puts "*****received callback"
+  def self.connect_account(code, user_id)
     client = Slack::Web::Client.new
     if code == nil
       raise InvalidRequest.new('Auth token is missing')
@@ -58,25 +39,41 @@ module SlackService
         code: code,
         client_id: ENV['SLACK_CLIENT_ID'],
         client_secret: ENV['SLACK_CLIENT_SECRET'],
-        redirect_uri: team_id != nil ? generate_team_redirect_uri(team_id) : generate_user_redirect_uri(user_id)
+        redirect_uri: generate_user_redirect_uri(user_id)
     )
 
     puts auth_result
 
-    if auth_result[:authed_user][:access_token] != nil
-      user = User.find(user_id)
-      user.api_token = auth_result[:authed_user][:access_token]
-      user.save
-    else
-      team = Team.find(team_id)
-      team.channel_id = auth_result['incoming_webhook']['channel_id']
-      team.slack_bot_access_token = auth_result["access_token"]
-      team.slack_team_id = auth_result["team"]["id"]
+    user = User.find(user_id)
+    user.slack_access_token = auth_result[:authed_user][:access_token]
+    user.slack_id = auth_result[:authed_user][:id]
 
-      raise InvalidRequest.new("That didn't quite work, #{team.errors.full_messages.join(', ')}") unless team.save
+    raise InvalidCommand.new("That didn't quite work, #{user.errors.full_messages.join(', ')}") unless user.save
+  end
 
-      send_welcome_message(team)
+  def self.add_to_workspace(code, team_id)
+    client = Slack::Web::Client.new
+    if code == nil
+      raise InvalidRequest.new('Auth token is missing')
     end
+
+    auth_result = client.oauth_v2_access(
+        code: code,
+        client_id: ENV['SLACK_CLIENT_ID'],
+        client_secret: ENV['SLACK_CLIENT_SECRET'],
+        redirect_uri: generate_team_redirect_uri(team_id)
+    )
+
+    puts auth_result
+
+    team = Team.find(team_id)
+    team.channel_id = auth_result['incoming_webhook']['channel_id']
+    team.slack_bot_access_token = auth_result["access_token"]
+    team.slack_team_id = auth_result["team"]["id"]
+
+    raise InvalidRequest.new("That didn't quite work, #{team.errors.full_messages.join(', ')}") unless team.save
+
+    send_welcome_message(team)
   end
 
   def self.list_guidelines(slack_team_id)
@@ -93,31 +90,68 @@ module SlackService
     end
   end
 
-  def self.get_team_oauth_url(team_id, user_id)
-    URI::HTTP.build(
-        host: Settings.slack_auth_endpoint,
-        path: '/oauth/v2/authorize',
-        query: {
-            redirect_uri: generate_team_redirect_uri(team_id),
-            client_id: ENV['SLACK_CLIENT_ID'],
-            scope: Settings.slack_scopes,
-        }.to_query
-    )
+  def self.get_team_oauth_url(team_id)
+    base_uri = generate_base_oauth_url
+
+    query = {
+        redirect_uri: generate_team_redirect_uri(team_id),
+        client_id: ENV['SLACK_CLIENT_ID'],
+        scope: Settings.slack_scopes,
+    }
+
+    base_uri.query = query.to_query
+
+    base_uri
   end
 
-  def self.get_user_oauth_url(team_id, user_id)
-    URI::HTTP.build(
-        host: Settings.slack_auth_endpoint,
-        path: '/oauth/v2/authorize',
-        query: {
-            redirect_uri: generate_user_redirect_uri(user_id),
-            client_id: ENV['SLACK_CLIENT_ID'],
-            user_scope: Settings.slack_user_scopes
-        }.to_query
-    )
+  def self.get_user_oauth_url(user_id)
+    base_uri = generate_base_oauth_url
+
+    query = {
+        redirect_uri: generate_user_redirect_uri(user_id),
+        client_id: ENV['SLACK_CLIENT_ID'],
+        scope: Settings.slack_user_scopes,
+    }
+
+    base_uri.query = query.to_query
+
+    base_uri
+  end
+
+  def self.reaction_added(team_id, event)
+    team = Team.find_by_slack_team_id(team_id)
+    user = User.find_by_slack_id(event[:user])
+    client = Slack::Web::Client.new(token: team.slack_bot_access_token)
+
+    message = client.conversations_history(channel: event[:item][:channel], latest: event[:item][:ts], limit: 1, inclusive: true)
+
+    client = Slack::Web::Client.new(token: user.api_token)
+
+    newMessage = create_markdown_block(message[:messages][0][:text])
+    newMessage << {
+        type: 'context',
+        block_id: '1',
+        elements: [
+            type: 'mrkdwn',
+            text: '_This message is a Kudo-O-Matic post_'
+        ]
+    }
+
+    client.chat_update(channel: event[:item][:channel], ts: event[:item][:ts], blocks: newMessage)
+
   end
 
   private
+
+  def self.generate_base_oauth_url
+    URI::HTTP.build(
+        host: Settings.slack_auth_endpoint,
+        path: '/oauth/v2/authorize',
+        query: {
+            client_id: ENV['SLACK_CLIENT_ID'],
+        }.to_query
+    )
+  end
 
   def self.generate_team_redirect_uri(team_id)
     URI::HTTP.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/team/#{team_id}")

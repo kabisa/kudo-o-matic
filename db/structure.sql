@@ -675,7 +675,7 @@ CREATE TABLE public.users (
     restricted boolean DEFAULT false,
     company_user boolean DEFAULT false,
     virtual_user boolean DEFAULT false NOT NULL,
-    slack_registration_token character varying
+    slack_access_token character varying
 );
 
 
@@ -1387,6 +1387,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181115082522'),
 ('20181119090637'),
 ('20181128140306'),
-('20200415130431');
+('20200415130431'),
+('20200515050516');
 
 

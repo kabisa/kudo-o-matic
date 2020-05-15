@@ -2,7 +2,6 @@
 
 class User < ApplicationRecord
   validates :name, presence: true
-  has_secure_token :slack_registration_token
 
   after_create :send_welcome_email
 
@@ -41,14 +40,6 @@ class User < ApplicationRecord
     p.boolean :post_received_mail, default: true
     p.boolean :goal_reached_mail, default: true
     p.boolean :summary_mail, default: true
-  end
-
-  def slack_connect_token
-    return slack_registration_token unless slack_registration_token.nil?
-
-    self.regenerate_slack_registration_token
-    self.save
-    slack_registration_token
   end
 
   def member_of?(team)
