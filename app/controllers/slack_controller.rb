@@ -59,6 +59,8 @@ class SlackController < ApplicationController
         render status: :ok, json: {ok: true }
         SlackService.reaction_added(params[:team_id], params[:event])
       when 'reaction_removed'
+        render status: :ok, json: {ok: true }
+        SlackService.reaction_removed(params[:team_id], params[:event])
       else
         return render json: {text: 'unsupported event'}
       end
