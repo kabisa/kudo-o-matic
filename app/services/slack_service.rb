@@ -33,9 +33,9 @@ class SlackService
 
   def self.connect_account(code, user_id)
     client = Slack::Web::Client.new
-    if code == nil
-      raise InvalidRequest.new('Auth token is missing')
-    end
+
+    raise InvalidCommand.new('Missing auth token') if code.nil?
+    raise InvalidCommand.new('Missing user id') if user_id.nil?
 
     auth_result = client.oauth_v2_access(
         code: code,
@@ -45,17 +45,23 @@ class SlackService
     )
 
     user = User.find(user_id)
-    user.slack_access_token = auth_result[:authed_user][:access_token]
-    user.slack_id = auth_result[:authed_user][:id]
+
+    raise InvalidCommand.new('This Kudo-O-Matic account is already linked to Slack') unless user.slack_id.nil?
+
+    raise InvalidCommand.new('This Slack account is already linked to Kudo-O-Matic') if User.exists?(slack_id: auth_result['authed_user']['id'])
+
+    user.slack_access_token = auth_result['authed_user']['access_token']
+    user.slack_id = auth_result['authed_user']['id']
 
     raise InvalidCommand.new("That didn't quite work, #{user.errors.full_messages.join(', ')}") unless user.save
   end
 
   def self.add_to_workspace(code, team_id)
     client = Slack::Web::Client.new
-    if code == nil
-      raise InvalidRequest.new('Auth token is missing')
-    end
+
+    raise InvalidRequest.new('Auth token is missing') if code.nil?
+
+    raise InvalidRequest.new('Team id is missing') if team_id.nil?
 
     auth_result = client.oauth_v2_access(
         code: code,
@@ -124,6 +130,10 @@ class SlackService
     user = User.find_by_slack_id(event[:user])
     message = get_message_from_event(team_id, event)
 
+    if user.nil?
+      send_ephemeral_message(team, event[:item][:channel], event[:user], "You're Slack account is not connected to Kudo-O-Matic")
+    end
+
     if message_is_kudo_o_matic_post?(message)
       like_post(user, message)
     else
@@ -145,6 +155,11 @@ class SlackService
 
   private
 
+  def self.send_ephemeral_message(team, channel, user, message)
+    client = Slack::Web::Client.new(token: team.slack_bot_access_token)
+
+    client.chat_postEphemeral(channel: channel, user: user, text: message)
+  end
 
   def self.join_all_channels(team)
     client = Slack::Web::Client.new(token: team.slack_bot_access_token)
@@ -184,6 +199,10 @@ class SlackService
 
   def self.create_post_from_message(team, user, slack_message)
     receiver = User.find_by_slack_id(slack_message[:user])
+
+    if receiver.nil?
+      send_ephemeral_message(team, event[:item][:channel], event[:user], "The user you're giving kudos to has not connected their account to Slack.")
+    end
 
     raise InvalidRequest.new("That user has not connected their account to Slack.") if receiver == nil
 
