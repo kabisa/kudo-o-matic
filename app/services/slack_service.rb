@@ -106,7 +106,7 @@ class SlackService
 
     base_uri.query = query.to_query
 
-    base_uri
+    base_uri.to_s
   end
 
   def self.get_user_oauth_url(user_id)
@@ -120,7 +120,7 @@ class SlackService
 
     base_uri.query = query.to_query
 
-    base_uri
+    base_uri.to_s
   end
 
   def self.reaction_added(team_id, event)

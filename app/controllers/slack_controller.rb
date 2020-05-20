@@ -41,11 +41,11 @@ class SlackController < ApplicationController
   end
 
   def auth_team
-    redirect_to SlackService.get_team_oauth_url(params[:team_id]).to_s
+    redirect_to SlackService.get_team_oauth_url(params[:team_id])
   end
 
   def auth_user
-    redirect_to SlackService.get_user_oauth_url(params[:user_id]).to_s
+    redirect_to SlackService.get_user_oauth_url(params[:user_id])
   end
 
   def event
