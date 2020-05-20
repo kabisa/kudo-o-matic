@@ -48,25 +48,15 @@ class SlackController < ApplicationController
     redirect_to SlackService.get_user_oauth_url(params[:user_id]).to_s
   end
 
-  def reaction
-
+  def event
     case params[:type]
     when 'url_verification'
       return render json: {challenge: params[:challenge]}
     when 'event_callback'
-      case params[:event][:type]
-      when 'reaction_added'
-        render status: :ok, json: {ok: true }
-        SlackService.reaction_added(params[:team_id], params[:event])
-      when 'reaction_removed'
-        render status: :ok, json: {ok: true }
-        SlackService.reaction_removed(params[:team_id], params[:event])
-      else
-        return render json: {text: 'unsupported event'}
-      end
+      SlackWorker.perform_async(params[:team_id], params[:event].to_unsafe_h)
+      return render json: {ok: true}
     else
-      render json: {text: 'unsupported event'}
+      return render json: {ok: true}
     end
-
   end
 end

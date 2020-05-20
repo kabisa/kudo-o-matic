@@ -334,7 +334,7 @@ RSpec.describe 'SlackService' do
 
       SlackService.should_not_receive(:message_is_kudo_o_matic_post?)
 
-      SlackService.reaction_added(team.id, event)
+      SlackService.reaction_added(team.id, event.as_json)
     end
 
     it 'continues if it is a supported emoji' do
@@ -347,7 +347,7 @@ RSpec.describe 'SlackService' do
       allow(SlackService).to receive(:get_message_from_event)
 
       expect(SlackService).to receive(:message_is_kudo_o_matic_post?)
-      SlackService.reaction_added(team.id, event)
+      SlackService.reaction_added(team.id, event.as_json)
     end
 
     it 'likes the post if the message is a kudo-o-matic post' do
@@ -364,11 +364,11 @@ RSpec.describe 'SlackService' do
       }
 
       allow(SlackService).to receive(:supported_emoji?).and_return(true)
-      allow(SlackService).to receive(:get_message_from_event).and_return(message_mock)
+      allow(SlackService).to receive(:get_message_from_event).and_return(message_mock.as_json)
       allow(SlackService).to receive(:message_is_kudo_o_matic_post?).and_return(true)
 
       expect {
-        SlackService.reaction_added(team.id, event)
+        SlackService.reaction_added(team.id, event.as_json)
       }.to change { post.votes.count }.by(1)
 
     end
@@ -387,14 +387,14 @@ RSpec.describe 'SlackService' do
       }
 
       allow(SlackService).to receive(:supported_emoji?).and_return(true)
-      allow(SlackService).to receive(:get_message_from_event).and_return(message_mock)
+      allow(SlackService).to receive(:get_message_from_event).and_return(message_mock.as_json)
       allow(SlackService).to receive(:message_is_kudo_o_matic_post?).and_return(false)
       allow(SlackService).to receive(:send_post_announcement)
       allow(SlackService).to receive(:update_message_to_post).and_return(true)
 
       expect(SlackService).to receive(:update_message_to_post)
       expect {
-        SlackService.reaction_added(team_with_slack.slack_team_id, event)
+        SlackService.reaction_added(team_with_slack.slack_team_id, event.as_json)
       }.to change { Post.count }.by(1)
     end
   end
@@ -407,7 +407,7 @@ RSpec.describe 'SlackService' do
 
       SlackService.should_not_receive(:message_is_kudo_o_matic_post?)
 
-      SlackService.reaction_removed(team.id, event)
+      SlackService.reaction_removed(team.id, event.as_json)
     end
 
     it 'continues if it is a supported emoji' do
@@ -420,7 +420,7 @@ RSpec.describe 'SlackService' do
       allow(SlackService).to receive(:get_message_from_event)
 
       expect(SlackService).to receive(:message_is_kudo_o_matic_post?)
-      SlackService.reaction_removed(team.id, event)
+      SlackService.reaction_removed(team.id, event.as_json)
     end
 
     it 'unlikes the post if it is liked by the user' do
@@ -437,11 +437,11 @@ RSpec.describe 'SlackService' do
           ]
       }
 
-      allow(SlackService).to receive(:get_message_from_event).and_return(message)
+      allow(SlackService).to receive(:get_message_from_event).and_return(message.as_json)
       post.liked_by(user_with_slack_id)
 
       expect {
-        SlackService.reaction_removed(team_with_slack.slack_team_id, event)
+        SlackService.reaction_removed(team_with_slack.slack_team_id, event.as_json)
       }.to change { post.votes.count }.by(-1)
     end
 
@@ -459,10 +459,10 @@ RSpec.describe 'SlackService' do
           ]
       }
 
-      allow(SlackService).to receive(:get_message_from_event).and_return(message)
+      allow(SlackService).to receive(:get_message_from_event).and_return(message.as_json)
 
       expect {
-        SlackService.reaction_removed(team_with_slack.slack_team_id, event)
+        SlackService.reaction_removed(team_with_slack.slack_team_id, event.as_json)
       }.to_not change { post.votes.count }
     end
   end

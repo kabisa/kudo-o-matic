@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'auth/callback/slack/user/:user_id', to: 'slack#user_auth_callback'
   post "/slack/kudo", to: 'slack#give_kudos'
   post "/slack/guidelines", to: 'slack#guidelines'
-  post "/slack/reaction", to: "slack#reaction"
+  post "/slack/event", to: "slack#event"
 
   match "*path" => redirect("/"), via: :get
 end

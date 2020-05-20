@@ -1,3 +1,6 @@
+require 'sidekiq/testing'
+Sidekiq::Testing.fake!
+
 RSpec.describe "Slack" do
   let(:user) { create(:user) }
   let!(:users) { create_list(:user, 1) }
@@ -142,6 +145,51 @@ RSpec.describe "Slack" do
       get '/auth/slack/user/1'
 
       expect(response.status).to be(302)
+    end
+  end
+
+  describe 'event' do
+    describe 'url verification' do
+      it 'responds with the challenge parameter' do
+        payload = {
+            type: 'url_verification',
+            challenge: 'challenge_token'
+        }
+
+        post '/slack/event', :params => payload
+
+        expect(response.status).to be(200)
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['challenge']).to eq('challenge_token')
+      end
+    end
+
+    describe 'event callback' do
+      it 'starts a new sidekiq job' do
+        payload = {
+            type: 'event_callback',
+            event: {
+                type: 'reaction_added'
+            }
+        }
+
+        expect {
+          post '/slack/event', :params => payload
+        }.to change(SlackWorker.jobs, :size).by(1)
+      end
+
+      it 'returns 200 OK' do
+        payload = {
+            type: 'event_callback',
+            event: {
+                type: 'reaction_added'
+            }
+        }
+
+        post '/slack/event', :params => payload
+
+        expect(response.status).to be(200)
+      end
     end
   end
 end

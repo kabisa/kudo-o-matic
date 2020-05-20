@@ -127,25 +127,26 @@ class SlackService
     return unless supported_emoji?(event)
 
     team = Team.find_by_slack_team_id(team_id)
-    user = User.find_by_slack_id(event[:user])
+    user = User.find_by_slack_id(event['user'])
     message = get_message_from_event(team_id, event)
 
     if user.nil?
-      send_ephemeral_message(team, event[:item][:channel], event[:user], "You're Slack account is not connected to Kudo-O-Matic")
+      send_ephemeral_message(team, event['item']['channel'], event['user'], "You're Slack account is not connected to Kudo-O-Matic")
+      return
     end
 
     if message_is_kudo_o_matic_post?(message)
       like_post(user, message)
     else
       post = create_post_from_message(team, user, message)
-      update_message_to_post(event[:item][:channel], message, post)
+      update_message_to_post(event['item']['channel'], message, post)
     end
   end
 
   def self.reaction_removed(team_id, event)
     return unless supported_emoji?(event)
 
-    user = User.find_by_slack_id(event[:user])
+    user = User.find_by_slack_id(event['user'])
     message = get_message_from_event(team_id, event)
 
     if message_is_kudo_o_matic_post?(message)
@@ -174,17 +175,17 @@ class SlackService
   def self.supported_emoji?(event)
     emojis = Settings.slack_accepted_emojis.split(',')
 
-    emojis.include?(event[:reaction])
+    emojis.include?(event['reaction'])
   end
 
   def self.like_post(user, message)
-    post = Post.find(message[:blocks].last[:block_id])
+    post = Post.find(message['blocks'].last['block_id'])
 
     post.liked_by(user) unless user.voted_up_on? post
   end
 
   def self.unlike_post(user, message)
-    post = Post.find(message[:blocks].last[:block_id])
+    post = Post.find(message['blocks'].last['block_id'])
 
     post.unliked_by(user) if user.voted_up_on? post
   end
@@ -192,21 +193,21 @@ class SlackService
   def self.get_message_from_event(team_id, event)
     team = Team.find_by_slack_team_id(team_id)
     client = Slack::Web::Client.new(token: team.slack_bot_access_token)
-    message_response = client.conversations_history(channel: event[:item][:channel], latest: event[:item][:ts], limit: 1, inclusive: true)
+    message_response = client.conversations_history(channel: event['item']['channel'], latest: event['item']['ts'], limit: 1, inclusive: true)
 
-    message_response[:messages][0]
+    message_response['messages'][0]
   end
 
   def self.create_post_from_message(team, user, slack_message)
-    receiver = User.find_by_slack_id(slack_message[:user])
+    receiver = User.find_by_slack_id(slack_message['user'])
 
     if receiver.nil?
-      send_ephemeral_message(team, event[:item][:channel], event[:user], "The user you're giving kudos to has not connected their account to Slack.")
+      send_ephemeral_message(team, event['item']['channel'], event['user'], "The user you're giving kudos to has not connected their account to Slack.")
     end
 
     raise InvalidRequest.new("That user has not connected their account to Slack.") if receiver == nil
 
-    message = "saying: '#{slack_message[:text]}'"
+    message = "saying: '#{slack_message['text']}'"
 
     begin
       PostCreator.create_post(message, 1, user, [receiver], team)
@@ -353,9 +354,9 @@ class SlackService
   end
 
   def self.message_is_kudo_o_matic_post?(message)
-    last_block = message[:blocks].last
+    last_block = message['blocks'].last
 
-    Post.exists?(id: last_block[:block_id])
+    Post.exists?(id: last_block['block_id'])
   end
 
   def self.create_post_subscript(post_id)
