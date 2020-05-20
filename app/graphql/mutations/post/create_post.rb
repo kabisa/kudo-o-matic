@@ -1,5 +1,3 @@
-include SlackService
-
 module Mutations
   class Post::CreatePost < BaseMutation
     null true
