@@ -13,19 +13,19 @@ class SlackController < ApplicationController
     end
   end
 
-  def register
+  def team_auth_callback
     begin
-      SlackService.connect_account(params[:text], params[:user_id])
-      render json: {text: 'Account successfully linked!'}
-    rescue SlackService::InvalidCommand => e
+      SlackService.add_to_workspace(params[:code], params[:team_id])
+      redirect_to Settings.slack_team_connect_success_url
+    rescue SlackService::InvalidRequest => e
       render json: {text: "That didn't quite work, #{e}"}
     end
   end
 
-  def auth_callback
+  def user_auth_callback
     begin
-      SlackService.add_to_workspace(params[:code], params[:team_id])
-      redirect_to Settings.slack_connect_success_url
+      SlackService.connect_account(params[:code], params[:user_id])
+      redirect_to Settings.slack_user_connect_success_url
     rescue SlackService::InvalidRequest => e
       render json: {text: "That didn't quite work, #{e}"}
     end
@@ -40,22 +40,23 @@ class SlackController < ApplicationController
     end
   end
 
-  def auth
-    redirect_to SlackService.get_oauth_url(params[:team_id]).to_s
+  def auth_team
+    redirect_to SlackService.get_team_oauth_url(params[:team_id])
   end
 
-  def reaction
+  def auth_user
+    redirect_to SlackService.get_user_oauth_url(params[:user_id])
+  end
 
+  def event
     case params[:type]
     when 'url_verification'
-      render json: {challenge: params[:challenge]}
-    when 'reaction_added'
-      render json: {text: 'somebody liked something!'}
-    when 'reaction_removed'
-      render json: {text: 'somebody unliked something!'}
+      return render json: {challenge: params[:challenge]}
+    when 'event_callback'
+      SlackWorker.perform_async(params[:team_id], params[:event].to_unsafe_h)
+      return render json: {ok: true}
     else
-      render json: {text: 'unsupported event'}
+      return render json: {ok: true}
     end
-
   end
 end

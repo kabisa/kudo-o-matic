@@ -13,6 +13,7 @@
     	    - [Incoming webhooks](#incoming-webhooks)
     	    - [Slash commands](#slash-commands)
     	    - [OAuth and Permissions](#oauth)
+    	    - [Event subscription](#event-subscription)
     	    - [User ID Translation](#id-translation)
     	- [Setting env variables](#env-variables)
 
@@ -42,10 +43,9 @@ The workspace is now configured to use Kudo-o-matic features.
 ### Connecting Kudo-o-matic accounts to Slack
 In order to create posts and make announcement there needs to be a connection between Slack accounts and Kudo-o-matic accounts. This is done by generating a unique register token for each Kudo-o-matic user and executing a register command in Slack with the register token as parameter. The flow is as followed:
 
-1. User copies the register command from the Kudo-o-matic profile page
-2. User executes the command in a workspace that has the Kudo-o-matic Slack app installed
-3. The backend fetches the user via the register token
-4. The slack user id that was send with the request is stored for the corresponding user
+1. User visit their Kudo-O-Matic profile page and press the 'Connect to Slack' button
+2. This will trigger the OAuth flow
+3. The access token will be stored for the user
 
 <a  name="development"></a>
 ## Development
@@ -88,12 +88,13 @@ Create the following commands.
 For each command enable:
 > Escape channels, users, and links sent to your app
 
- 1. Register
-	 - command: `/register`
-	 - url: `<your-base-url>/slack/register`
-2. Kudo
+1 . Kudo
 	- command: `/kudo`
 	- url: `<your-base-url>/slack/kudo`
+
+2 . guidlines
+	- command: `/guidlines`
+	- url: `<your-base-url>/slack/guidelines`
 
 <a  name="oauth"></a>
 ##### OAuth & Permissions
@@ -101,13 +102,29 @@ Add the following redirect url:
 
     <your-base-url>/auth/slack/callback
 The following bot token scopes need to be added:
+- channels:history
+- channels:join
+- channels:read
 - chat:write
 - chat:write.public
 - commands
 - incoming-webhook
+- reactions:read
 
 The following User Token Scopes need to be added:
-- reactions:read
+- chat:write
+
+<a name="event-subscription"></a>
+##### Event subscription
+Make sure the app is running when editing these settings because Slack will [send a challenge request](https://api.slack.com/events/url_verification) to make sure your app is ready to receive events.
+
+Request URL:
+
+`<your-base-url>/slack/event`
+
+Subscribe to bot events:
+- reaction_added
+- reaction_removed
 
 <a  name="id-translation"></a>
 ##### User ID Translation

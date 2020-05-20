@@ -3,6 +3,7 @@ RSpec.describe 'SlackService' do
   let(:team_with_slack) { create(:team, :with_slack) }
   let(:user) { create(:user) }
   let(:user_with_slack_id) { create(:user, :with_slack_id) }
+  let(:post) { create(:post, sender: user, receivers: [user_with_slack_id], team: team, kudos_meter: team.active_kudos_meter) }
 
   def create_add_post_command(receivers, message, amount)
     command = ""
@@ -20,7 +21,6 @@ RSpec.describe 'SlackService' do
 
   describe 'add to workspace' do
     it 'updates the team channel id, access token and slack id' do
-      allow_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage)
       mock_response = {
           :incoming_webhook => {
               :channel_id => 'channelId'
@@ -32,6 +32,8 @@ RSpec.describe 'SlackService' do
       }
 
       allow_any_instance_of(Slack::Web::Client).to receive(:oauth_v2_access).and_return(mock_response.as_json)
+      SlackService.should_receive(:send_welcome_message)
+      SlackService.should_receive(:join_all_channels)
 
       expect {
         SlackService.add_to_workspace('token', team.id)
@@ -51,39 +53,57 @@ RSpec.describe 'SlackService' do
   end
 
   describe 'connect account' do
-    it 'updates the slack id and registration token' do
+    before do
+      mock_response = {
+          authed_user: {
+              access_token: 'accessToken',
+              id: 'someSlackId'
+          }
+      }
+
+      allow_any_instance_of(Slack::Web::Client).to receive(:oauth_v2_access).and_return(mock_response.as_json)
+    end
+
+    it 'updates the slack id and access token' do
+
       expect {
-        SlackService.connect_account(user.slack_registration_token, 'slackId')
+        SlackService.connect_account('token', user.id)
         user.reload
-      }.to change(user, :slack_id).from(nil).to('slackId')
-               .and change(user, :slack_registration_token).from(user.slack_registration_token).to(nil)
+      }.to change(user, :slack_id).from(nil).to('someSlackId')
+               .and change(user, :slack_access_token).from(nil).to('accessToken')
     end
 
     it 'raises an error if there is no token' do
       expect {
-        SlackService.connect_account('', 'slackId')
-      }.to raise_exception(SlackService::InvalidCommand, 'please provide a register token')
+        SlackService.connect_account(nil, 'slackId')
+      }.to raise_exception(SlackService::InvalidCommand, 'Missing auth token')
+    end
+
+    it 'raises an error if there is no user id' do
+      expect {
+        SlackService.connect_account('code', nil)
+      }.to raise_exception(SlackService::InvalidCommand, 'Missing user id')
     end
 
     it 'raises an error if the slack id is already connected to a user' do
-      expect {
-        SlackService.connect_account(user.slack_registration_token,
-                                     user_with_slack_id.slack_id)
-      }.to raise_exception(SlackService::InvalidCommand, 'This slack account is already linked to kudo-o-matic')
-    end
+      mock_response = {
+          authed_user: {
+              access_token: 'accessToken',
+              id: 'fakeSlackId'
+          }
+      }
 
-    it 'returns an error if there is no user for the provided registration token' do
+      allow_any_instance_of(Slack::Web::Client).to receive(:oauth_v2_access).and_return(mock_response.as_json)
+
       expect {
-        SlackService.connect_account('invalidRegisterToken',
-                                     'slackId')
-      }.to raise_exception(SlackService::InvalidCommand, 'Invalid registration token')
+        SlackService.connect_account('code', user.id)
+      }.to raise_exception(SlackService::InvalidCommand, 'This Slack account is already linked to Kudo-O-Matic')
     end
 
     it 'returns an error if the user is already connected to slack' do
       expect {
-        SlackService.connect_account(user_with_slack_id.slack_registration_token,
-                                     'otherSlackId')
-      }.to raise_exception(SlackService::InvalidCommand, 'This kudo-o-matic account is already linked to Slack.')
+        SlackService.connect_account('token', user_with_slack_id.id)
+      }.to raise_exception(SlackService::InvalidCommand, 'This Kudo-O-Matic account is already linked to Slack')
     end
   end
 
@@ -91,9 +111,26 @@ RSpec.describe 'SlackService' do
     it 'has the correct message' do
       post = create(:post, sender: user, receivers: [user_with_slack_id], team: team, kudos_meter: team.active_kudos_meter)
 
-      text = "#{user.name} just gave #{post.amount} kudos to <@#{user_with_slack_id.slack_id}> for #{post.message}"
+      message = "#{user.name} just gave #{post.amount} kudos to <@#{user_with_slack_id.slack_id}> for #{post.message}"
+      blocks = [
+          {
+              type: 'section',
+              text: {
+                  type: 'mrkdwn',
+                  text: message
+              }
+          },
+          {
+              type: 'context',
+              block_id: post.id.to_s,
+              elements: [
+                  type: 'mrkdwn',
+                  text: '_This message is a Kudo-O-Matic post_'
+              ]
+          }
+      ]
 
-      expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: nil, text: text)
+      expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: nil, blocks: blocks)
       SlackService.send_post_announcement(post)
     end
 
@@ -101,7 +138,7 @@ RSpec.describe 'SlackService' do
       team.channel_id = 'slackChannelId'
       post = create(:post, sender: user, receivers: [user_with_slack_id], team: team, kudos_meter: team.active_kudos_meter)
 
-      expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: 'slackChannelId', text: anything)
+      expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: 'slackChannelId', blocks: anything)
       SlackService.send_post_announcement(post)
     end
   end
@@ -238,6 +275,195 @@ RSpec.describe 'SlackService' do
 
       expect(response.length).to be(1)
       expect(response[0][:text][:text]).to eq("• #{guideline.name} *#{guideline.kudos}* \n")
+    end
+  end
+
+  describe 'get team oauth url' do
+    before do
+      allow(ENV).to receive(:[]).with("SLACK_CLIENT_ID").and_return("slack-client-id")
+      allow(ENV).to receive(:[]).with("SLACK_CLIENT_SECRET").and_return("slack-client-secret")
+      allow(ENV).to receive(:[]).with("ROOT_URL").and_return("backend-domain.com")
+    end
+
+    it 'calls the generate base method' do
+      mock_uri = URI::HTTP.build(host: 'fakedomain.com')
+      SlackService.should_receive(:generate_base_oauth_url).and_return(mock_uri)
+
+      SlackService.get_team_oauth_url('1')
+    end
+
+    it 'sets the query parameters' do
+      uri = SlackService.get_team_oauth_url('1')
+
+      parsed_query = CGI::parse(uri.partition('?').last)
+      expect(parsed_query['scope'][0]).to eq('chat:write,commands,incoming-webhook,chat:write.public,reactions:read,channels:history,channels:read,channels:join')
+      expect(parsed_query['client_id'][0]).to eq('slack-client-id')
+      expect(parsed_query['redirect_uri'][0]).to eq('http://backend-domain.com/auth/callback/slack/team/1')
+    end
+  end
+
+  describe 'get user oauth url' do
+    before do
+      allow(ENV).to receive(:[]).with("SLACK_CLIENT_ID").and_return("slack-client-id")
+      allow(ENV).to receive(:[]).with("SLACK_CLIENT_SECRET").and_return("slack-client-secret")
+      allow(ENV).to receive(:[]).with("ROOT_URL").and_return("backend-domain.com")
+    end
+
+    it 'calls the generate base method' do
+      mock_uri = URI::HTTP.build(host: 'fakedomain.com')
+      SlackService.should_receive(:generate_base_oauth_url).and_return(mock_uri)
+
+      SlackService.get_user_oauth_url('1')
+    end
+
+    it 'sets the query parameters' do
+      uri = SlackService.get_user_oauth_url('1')
+
+      parsed_query = CGI::parse(uri.partition('?').last)
+      expect(parsed_query['user_scope'][0]).to eq('chat:write')
+      expect(parsed_query['client_id'][0]).to eq('slack-client-id')
+      expect(parsed_query['redirect_uri'][0]).to eq('http://backend-domain.com/auth/callback/slack/user/1')
+    end
+  end
+
+  describe 'reaction added' do
+    it 'returns if it is a unsupported emoji' do
+      event = {
+          reaction: 'unsopperted-emoji'
+      }
+
+      SlackService.should_not_receive(:message_is_kudo_o_matic_post?)
+
+      SlackService.reaction_added(team.id, event.as_json)
+    end
+
+    it 'continues if it is a supported emoji' do
+      event = {
+          reaction: 'kudos-development'
+      }
+
+      allow(SlackService).to receive(:message_is_kudo_o_matic_post?).and_return(true)
+      allow(SlackService).to receive(:like_post)
+      allow(SlackService).to receive(:get_message_from_event)
+
+      expect(SlackService).to receive(:message_is_kudo_o_matic_post?)
+      SlackService.reaction_added(team.id, event.as_json)
+    end
+
+    it 'likes the post if the message is a kudo-o-matic post' do
+      event = {
+          user: user_with_slack_id.slack_id,
+      }
+
+      message_mock = {
+          blocks: [
+              {
+                  block_id: post.id.to_s
+              }
+          ]
+      }
+
+      allow(SlackService).to receive(:supported_emoji?).and_return(true)
+      allow(SlackService).to receive(:get_message_from_event).and_return(message_mock.as_json)
+      allow(SlackService).to receive(:message_is_kudo_o_matic_post?).and_return(true)
+
+      expect {
+        SlackService.reaction_added(team.id, event.as_json)
+      }.to change { post.votes.count }.by(1)
+
+    end
+
+    it 'creates a post if the message is not a kudo-o-matic post' do
+      event = {
+          user: user_with_slack_id.slack_id,
+          item: {
+              channel: 'channelId'
+          }
+      }
+
+      message_mock = {
+          user: user_with_slack_id.slack_id,
+          text: 'Some text'
+      }
+
+      allow(SlackService).to receive(:supported_emoji?).and_return(true)
+      allow(SlackService).to receive(:get_message_from_event).and_return(message_mock.as_json)
+      allow(SlackService).to receive(:message_is_kudo_o_matic_post?).and_return(false)
+      allow(SlackService).to receive(:send_post_announcement)
+      allow(SlackService).to receive(:update_message_to_post).and_return(true)
+
+      expect(SlackService).to receive(:update_message_to_post)
+      expect {
+        SlackService.reaction_added(team_with_slack.slack_team_id, event.as_json)
+      }.to change { Post.count }.by(1)
+    end
+  end
+
+  describe 'reaction_removed' do
+    it 'returns if it is a unsupported emoji' do
+      event = {
+          reaction: 'unsopperted-emoji'
+      }
+
+      SlackService.should_not_receive(:message_is_kudo_o_matic_post?)
+
+      SlackService.reaction_removed(team.id, event.as_json)
+    end
+
+    it 'continues if it is a supported emoji' do
+      event = {
+          reaction: 'kudos-development'
+      }
+
+      allow(SlackService).to receive(:message_is_kudo_o_matic_post?).and_return(true)
+      allow(SlackService).to receive(:unlike_post)
+      allow(SlackService).to receive(:get_message_from_event)
+
+      expect(SlackService).to receive(:message_is_kudo_o_matic_post?)
+      SlackService.reaction_removed(team.id, event.as_json)
+    end
+
+    it 'unlikes the post if it is liked by the user' do
+      event = {
+          reaction: 'kudos-development',
+          user: user_with_slack_id.slack_id
+      }
+
+      message = {
+          blocks: [
+              {
+                  block_id: post.id
+              }
+          ]
+      }
+
+      allow(SlackService).to receive(:get_message_from_event).and_return(message.as_json)
+      post.liked_by(user_with_slack_id)
+
+      expect {
+        SlackService.reaction_removed(team_with_slack.slack_team_id, event.as_json)
+      }.to change { post.votes.count }.by(-1)
+    end
+
+    it 'does not unlikes the post if it is not liked by the user' do
+      event = {
+          reaction: 'kudos-development',
+          user: user_with_slack_id.slack_id
+      }
+
+      message = {
+          blocks: [
+              {
+                  block_id: post.id
+              }
+          ]
+      }
+
+      allow(SlackService).to receive(:get_message_from_event).and_return(message.as_json)
+
+      expect {
+        SlackService.reaction_removed(team_with_slack.slack_team_id, event.as_json)
+      }.to_not change { post.votes.count }
     end
   end
 end
