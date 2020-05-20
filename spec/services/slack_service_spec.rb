@@ -5,9 +5,9 @@ RSpec.describe 'SlackService' do
   let(:user_with_slack_id) { create(:user, :with_slack_id) }
 
   def create_add_post_command(receivers, message, amount)
-    command = ""
-    receivers.each { |user| command += "<@#{user.slack_id}|#{user.name}>" }
-    return command += "#{amount} for #{message}"
+    command = receivers.map { |user| "<@#{user.slack_id}|#{user.name}>" }
+    command.push("#{amount} for #{message}")
+    command.join(' ')
   end
 
   before :each do
