@@ -9,7 +9,7 @@ class SlackController < ApplicationController
       SlackService.create_post(params[:text], params[:team_id], params[:user_id])
       render json: {text: 'kudos are on the way!'}
     rescue SlackService::InvalidCommand => e
-      return render json: {text: "That didn't quite work, #{e}"}
+      return render json: {text: "That didn't quite work, #{e} \n The format is: /kudo @someone @someone.else [amount] for [reason]"}
     end
   end
 

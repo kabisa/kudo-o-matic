@@ -6,9 +6,9 @@ RSpec.describe 'SlackService' do
   let(:post) { create(:post, sender: user, receivers: [user_with_slack_id], team: team, kudos_meter: team.active_kudos_meter) }
 
   def create_add_post_command(receivers, message, amount)
-    command = ""
-    receivers.each { |user| command += "<@#{user.slack_id}|#{user.name}>" }
-    return command += "'#{message}' #{amount}"
+    command = receivers.map { |user| "<@#{user.slack_id}|#{user.name}>" }
+    command.push("#{amount} for #{message}")
+    command.join(' ')
   end
 
   before :each do
@@ -176,7 +176,7 @@ RSpec.describe 'SlackService' do
 
         expect {
           SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
-        }.to raise_exception(SlackService::InvalidCommand, "Did you include a message surrounded by '?")
+        }.to raise_exception(SlackService::InvalidCommand, "Did you include a message?")
       end
 
       it 'sets the message correctly' do
