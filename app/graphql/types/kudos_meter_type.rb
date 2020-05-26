@@ -8,6 +8,9 @@ module Types
     field :name, String,
           null: false,
           description: 'The name of the KudosMeter'
+    field :is_active, Boolean,
+          null: false,
+          description: 'Whether the kudos meter is active'
     field :amount, Int,
           null: false,
           description: 'The collect amount of kudos'

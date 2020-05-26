@@ -312,7 +312,8 @@ CREATE TABLE public.kudos_meters (
     name character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    team_id integer
+    team_id integer,
+    is_active boolean DEFAULT false
 );
 
 
@@ -1388,6 +1389,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181119090637'),
 ('20181128140306'),
 ('20200415130431'),
+('20200506135043'),
 ('20200515050516');
 
 

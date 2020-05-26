@@ -15,5 +15,6 @@
 FactoryBot.define do
   factory :kudos_meter do
     name { "The KudosMeter name" }
+    is_active { false }
   end
 end

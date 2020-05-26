@@ -8,7 +8,7 @@ module Mutations
     field :kudos_meter, Types::KudosMeterType, null: true
 
     def resolve(name:, team_id:)
-      kudos_meter = ::KudosMeter.new(name: name, team_id: team_id)
+      kudos_meter = ::KudosMeter.new(name: name, team_id: team_id, is_active: false)
 
       if kudos_meter.save
         { kudos_meter: kudos_meter }
