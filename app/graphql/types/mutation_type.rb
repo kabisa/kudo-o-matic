@@ -24,6 +24,7 @@ module Types
 
     ### Team
     field :create_team, mutation: Mutations::Team::CreateTeam
+    field :remove_slack, mutation: Mutations::Team::RemoveSlack
     field :update_team, mutation: Mutations::Team::UpdateTeam
 
     ### TeamInvite
