@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user, aliases: [:sender, :receiver]  do
+  factory :user, aliases: [:sender, :receiver] do
     name { Faker::Name.first_name }
     email { "#{Faker::Name.unique.first_name}@example.com" }
     password { "password" }
@@ -18,5 +18,9 @@ FactoryBot.define do
 
   trait :with_slack_id do
     slack_id { 'fakeSlackId' }
+  end
+
+  trait :with_slack_access_token do
+    slack_access_token { 'slackAccessToken' }
   end
 end
