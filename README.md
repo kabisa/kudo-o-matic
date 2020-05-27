@@ -120,6 +120,8 @@ See [here](docs/SLACK_INTEGRATION.md).
 ### CI and deployment
 The project is build using [GitHub actions](https://github.com/kabisa/kudo-o-matic/actions) and deployment is configured using [Dokku](http://dokku.viewdocs.io/dokku/).
 
+The application runs on Linode. Ask MS for the ssh credentials if you need to change something like environment variables.
+
 Deployment to the staging environment is done on every commit/PR merge to the development branch and is done via a Jenkins commit hook.
 
 Deployment to the production environment is done on every commit/PR merge to the master branch and is also done via Jenkins.
