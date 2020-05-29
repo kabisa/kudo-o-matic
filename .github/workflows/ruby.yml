@@ -3,7 +3,6 @@ name: Rails run RSpec tests
 on: [push, pull_request]
   
 jobs:
-    
   build:
     env:
       POSTGRES_USER: postgres
@@ -51,3 +50,16 @@ jobs:
         bundle exec rspec
       
         
+
+
+  deploy:
+    if: ${{ github.ref == 'develop' }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.0.4
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "kudo-o-matic-staging"
+          heroku_email: "max.meijer@kabisa.nl"
