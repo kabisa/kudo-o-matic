@@ -1,4 +1,4 @@
-name: Rails run RSpec tests
+name: Rails test and deploy
 
 on: [push, pull_request]
   
@@ -52,7 +52,7 @@ jobs:
 
   deploy-staging:
     if: ${{ github.ref == 'refs/heads/develop' }}
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -64,7 +64,7 @@ jobs:
 
   deploy-production:
     if: ${{ github.ref == 'refs/heads/master' }}
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - run: echo 'Not yet implemented'
