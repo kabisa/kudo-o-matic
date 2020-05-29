@@ -48,12 +48,13 @@ jobs:
     - name: Run tests
       run: |
         bundle exec rspec
+    - run: echo ${{github.ref}}
       
         
 
 
   deploy:
-    if: ${{ github.ref == 'develop' }}
+    if: ${{ github.ref == 'refs/heads/develop' }}
     needs: build
     runs-on: ubuntu-latest
     steps:
