@@ -9,7 +9,7 @@ Rails.application.configure do
   end
 
   # Store files on amazon.
-  config.active_storage.service = :amazon
+  config.active_storage.service = :local
 
   # Code is not reloaded between requests.
   config.cache_classes = true
