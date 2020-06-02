@@ -1,6 +1,6 @@
 # Kudos-o-Matic™
 
-[![Rails run RSpec tests](https://github.com/kabisa/kudo-o-matic/workflows/Rails%20run%20RSpec%20tests/badge.svg)](https://github.com/kabisa/kudo-o-matic/actions?query=workflow%3A%22Rails+run+RSpec+tests%22)
+[![Rails test and deploy](https://github.com/kabisa/kudo-o-matic/workflows/Rails%20test%20and%20deploy/badge.svg)](https://github.com/kabisa/kudo-o-matic/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/69d210539137c4dc5e06/maintainability)](https://codeclimate.com/github/kabisa/kudo-o-matic/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/69d210539137c4dc5e06/test_coverage)](https://codeclimate.com/github/kabisa/kudo-o-matic/test_coverage)
 
