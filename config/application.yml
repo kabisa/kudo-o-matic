@@ -22,12 +22,14 @@ staging:
   slack_team_connect_success_url: 'https://kudos.develop.kabisa.io/#/manage-team/integrations?auth=ok'
   slack_user_connect_success_url: 'https://kudos.develop.kabisa.io/#/user?auth=ok'
   slack_accepted_emojis: 'kudos-staging'
+  slack_join_all_channels: 'false'
 
 test:
   <<: *defaults
   slack_acccess_token_endpoint: 'fakeUrl'
   slack_post_message_endpoint: 'fakeUrl'
   slack_connect_success_url: 'fakeUrl'
+  slack_join_all_channels: 'true'
 
 production:
   <<: *defaults
