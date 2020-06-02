@@ -1,10 +1,9 @@
-name: Rails run RSpec tests
+name: Rails test and deploy
 
 on: [push, pull_request]
   
 jobs:
-    
-  build:
+  test:
     env:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -49,5 +48,23 @@ jobs:
     - name: Run tests
       run: |
         bundle exec rspec
-      
-        
+
+
+  deploy-staging:
+    if: ${{ github.ref == 'refs/heads/develop' }}
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.0.4
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "kudo-o-matic-staging"
+          heroku_email: "max.meijer@kabisa.nl"
+
+  deploy-production:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'Not yet implemented'
