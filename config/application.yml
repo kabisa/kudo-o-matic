@@ -36,4 +36,4 @@ production:
   slack_team_connect_success_url: 'https://kudos.kabisa.io/#/manage-team/integrations?auth=ok'
   slack_user_connect_success_url: 'https://kudos.kabisa.io/#/user?auth=ok'
   slack_accepted_emojis: 'kudos'
-  slack_join_all_channels: 'false'
+  slack_join_all_channels: 'true'
