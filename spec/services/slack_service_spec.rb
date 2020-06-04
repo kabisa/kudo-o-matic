@@ -4,6 +4,8 @@ RSpec.describe 'SlackService' do
   let(:user) { create(:user) }
   let(:user_with_slack_id) { create(:user, :with_slack_id) }
   let(:post) { create(:post, sender: user, receivers: [user_with_slack_id], team: team, kudos_meter: team.active_kudos_meter) }
+  let(:first_goal) { create(:goal) }
+  let(:second_goal) { create(:goal) }
 
   def create_add_post_command(receivers, message, amount)
     command = receivers.map { |user| "<@#{user.slack_id}|#{user.name}>" }
@@ -140,6 +142,43 @@ RSpec.describe 'SlackService' do
 
       expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: 'slackChannelId', blocks: anything)
       SlackService.send_post_announcement(post)
+    end
+  end
+
+  describe 'send goal announcement' do
+    before do
+      first_goal.kudos_meter = team_with_slack.active_kudos_meter
+
+      second_goal.name = 'second goal'
+      second_goal.amount = 700
+
+    end
+
+    it 'has the correct message' do
+      blocks = [
+          {
+              type: 'section',
+              text: {
+                  type: 'mrkdwn',
+                  text: ":tada: We've just reached goal '#{first_goal.name}' at #{first_goal.amount} Kudos :tada:"
+              }
+          },
+          {
+              type: 'section',
+              text: {
+                  type: 'mrkdwn',
+                  text: "Our next goal is '#{second_goal.name}' at #{second_goal.amount} Kudos, so keep the Kudos coming and we'll be there in no time! :muscle:"
+              }
+          }
+      ]
+
+      expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: anything, blocks: blocks)
+      SlackService.send_goal_announcement(first_goal, second_goal)
+    end
+
+    it 'posts to the correct channel' do
+      expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: team_with_slack.channel_id, blocks: anything)
+      SlackService.send_goal_announcement(first_goal, second_goal)
     end
   end
 
