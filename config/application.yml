@@ -11,7 +11,7 @@ defaults: &defaults
   slack_auth_endpoint: 'slack.com'
   slack_scopes: 'chat:write,commands,incoming-webhook,chat:write.public,reactions:read,channels:history,channels:read,channels:join'
   slack_user_scopes: 'chat:write'
-  slack_join_all_channels: 'false'
+  slack_join_all_channels: false
 
 development:
   <<: *defaults
@@ -22,18 +22,18 @@ staging:
   slack_team_connect_success_url: 'https://kudos.develop.kabisa.io/#/manage-team/integrations?auth=ok'
   slack_user_connect_success_url: 'https://kudos.develop.kabisa.io/#/user?auth=ok'
   slack_accepted_emojis: 'kudos-staging'
-  slack_join_all_channels: 'false'
+  slack_join_all_channels: false
 
 test:
   <<: *defaults
   slack_acccess_token_endpoint: 'fakeUrl'
   slack_post_message_endpoint: 'fakeUrl'
   slack_connect_success_url: 'fakeUrl'
-  slack_join_all_channels: 'true'
+  slack_join_all_channels: true
 
 production:
   <<: *defaults
   slack_team_connect_success_url: 'https://kudos.kabisa.io/#/manage-team/integrations?auth=ok'
   slack_user_connect_success_url: 'https://kudos.kabisa.io/#/user?auth=ok'
   slack_accepted_emojis: 'kudos'
-  slack_join_all_channels: 'true'
+  slack_join_all_channels: true
