@@ -241,7 +241,7 @@ class SlackService
   end
 
   def self.generate_base_oauth_url
-    URI::HTTP.build(
+    URI::HTTPS.build(
         host: Settings.slack_auth_endpoint,
         path: '/oauth/v2/authorize',
         query: {
@@ -251,11 +251,11 @@ class SlackService
   end
 
   def self.generate_team_redirect_uri(team_id)
-    URI::HTTP.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/team/#{team_id}")
+    URI::HTTPS.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/team/#{team_id}")
   end
 
   def self.generate_user_redirect_uri(user_id)
-    URI::HTTP.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/user/#{user_id}")
+    URI::HTTPS.build(host: ENV['ROOT_URL'], path: "/auth/callback/slack/user/#{user_id}")
   end
 
   def self.send_welcome_message(team)

@@ -337,7 +337,7 @@ RSpec.describe 'SlackService' do
       parsed_query = CGI::parse(uri.partition('?').last)
       expect(parsed_query['scope'][0]).to eq('chat:write,commands,incoming-webhook,chat:write.public,reactions:read,channels:history,channels:read,channels:join')
       expect(parsed_query['client_id'][0]).to eq('slack-client-id')
-      expect(parsed_query['redirect_uri'][0]).to eq('http://backend-domain.com/auth/callback/slack/team/1')
+      expect(parsed_query['redirect_uri'][0]).to eq('https://backend-domain.com/auth/callback/slack/team/1')
     end
   end
 
@@ -361,7 +361,7 @@ RSpec.describe 'SlackService' do
       parsed_query = CGI::parse(uri.partition('?').last)
       expect(parsed_query['user_scope'][0]).to eq('chat:write')
       expect(parsed_query['client_id'][0]).to eq('slack-client-id')
-      expect(parsed_query['redirect_uri'][0]).to eq('http://backend-domain.com/auth/callback/slack/user/1')
+      expect(parsed_query['redirect_uri'][0]).to eq('https://backend-domain.com/auth/callback/slack/user/1')
     end
   end
 
