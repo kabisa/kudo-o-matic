@@ -77,7 +77,7 @@ class SlackService
 
     raise InvalidRequest.new("That didn't quite work, #{team.errors.full_messages.join(', ')}") unless team.save
 
-    join_all_channels(team)
+    join_all_channels(team) if Settings.slack_join_all_channels
     send_welcome_message(team)
   end
 
