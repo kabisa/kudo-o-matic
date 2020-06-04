@@ -21,7 +21,8 @@
 ## Features
 Kudo-O-Matic has the following Slack features:  
 - Create posts via Slack  
-- Send message to a specific slack channel to announce new posts  
+- Send a message to a specific slack channel to announce new posts  
+- Send a message to a specific slack channel to announce the achievements of goals
 - Like a Kudo-O-Matic post by adding the Kudos emoji to a post announcement message
 - Create a Kudo-O-Matic post by adding a Kudos emoji to a random Slack message
 
