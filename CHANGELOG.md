@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Mutation to set the active kudometer
 
 ### Fixed
-- Only posts for the active kudometer are retrieved
+- Only fetch posts for the active kudometer
+- Virtual users are no longer being duplicated
 
 ## [4.1.1]
 ### Added
