@@ -8,6 +8,7 @@ gem "activerecord-typedstore", "~> 1.1.1"
 gem "actionpack", "~> 5.2", ">= 5.2.1"
 gem "acts_as_votable", "~> 0.10.0"
 gem "autoprefixer-rails", "~> 9.3", ">= 9.3.1"
+gem 'aws-sdk-s3', '~> 1.67', '>= 1.67', require: false
 gem "chronic", "~> 0.10.2"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
 gem "devise", "~> 4.7.1"
