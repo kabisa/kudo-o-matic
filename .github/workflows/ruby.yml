@@ -1,7 +1,17 @@
 name: Rails test and deploy
 
-on: [push, pull_request]
-  
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+      - '!master'
+  pull_request:
+    branches:
+      - '*'
+      - '*/*'
+      - '!master'
+
 jobs:
   test:
     env:
@@ -61,10 +71,3 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "kudo-o-matic-staging"
           heroku_email: "max.meijer@kabisa.nl"
-
-  deploy-production:
-    if: ${{ github.ref == 'refs/heads/master' }}
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo 'Not yet implemented'
