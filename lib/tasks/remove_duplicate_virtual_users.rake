@@ -3,7 +3,7 @@ namespace :remove_duplicate_virtual_users do
   task :remove => :environment do
     puts 'Removing duplicate users'
 
-    Post.all.each do |post|
+    Post.all.find_each do |post|
       next if post.receivers.empty?
 
       post.receivers.each do |receiver|
@@ -18,9 +18,9 @@ namespace :remove_duplicate_virtual_users do
           new_user = user unless user.virtual_user
         end
 
-        new_user = similar_users.first if new_user.nil?
+        new_user = similar_users.first unless new_user.present?
 
-        similar_user_ids = similar_users.map { |user| user.id }
+        similar_user_ids = similar_users.map(&:id)
 
         post_receivers = PostReceiver.where('user_id IN (?)', similar_user_ids)
 
