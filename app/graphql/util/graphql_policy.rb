@@ -85,6 +85,14 @@ module Util
 
           current_user.admin? || current_user.admin_of?(team)
         end,
+        setActiveKudosMeter: ->(_obj, args, ctx) do
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        end,
 
         ### Post
         createPost: ->(_obj, args, ctx) do
@@ -110,7 +118,15 @@ module Util
         end,
 
         ### Team
-        createTeam: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+        createTeam: ->(_obj, args, ctx) { ctx[:current_user].present? },
+        removeSlack: ->(_obj, args, ctx) {
+          current_user = ctx[:current_user]
+          return false unless current_user.present?
+
+          team = Team.find(args[:teamId])
+
+          current_user.admin? || current_user.admin_of?(team)
+        },
         updateTeam: ->(_obj, args, ctx) do
           current_user = ctx[:current_user]
           return false unless current_user.present?
@@ -173,6 +189,7 @@ module Util
 
         ### User
         resetPassword: ->(_obj, _args, ctx) { ctx[:current_user].present? },
+        disconnectSlack: ->(_obj, _args, ctx) { ctx[:current_user].present? },
 
         ### Vote
         toggleLikePost: ->(_obj, args, ctx) do

@@ -9,7 +9,6 @@ module Mutations
     argument :team_id, ID, required: false, description: 'The team the post belongs to'
 
     field :post, Types::PostType, null: true
-    field :errors, [String], null: false
 
     def resolve(**kwargs)
       team = ::Team.find(kwargs[:team_id])
@@ -26,6 +25,17 @@ module Mutations
 
       unless null_receivers.blank?
         null_receivers.each do |receiver|
+
+          existing_user = ::User.joins(:memberships)
+                              .where(users: {name: receiver, virtual_user: true})
+                              .where(team_members: {team_id: kwargs[:team_id]})
+                              .take
+
+          if existing_user
+            receivers << existing_user
+            next
+          end
+
           user = ::User.new(name: receiver, virtual_user: true)
 
           user.save
@@ -34,21 +44,17 @@ module Mutations
         end
       end
 
-      post = ::Post.new(
-        message: kwargs[:message],
-        amount: kwargs[:amount],
-        sender: context[:current_user],
-        receivers: receivers,
-        team: team,
-        kudos_meter: team.active_kudos_meter
-      )
-
-      if post.save
-        PostMailer.new_post(post)
-        GoalReacher.check!(team)
-        { post: post, errors: [] }
-      else
-        { post: nil, errors: post.errors.full_messages }
+      begin
+        post = PostCreator.create_post(
+            kwargs[:message],
+            kwargs[:amount],
+            context[:current_user],
+            receivers,
+            team
+        )
+        {post: post}
+      rescue PostCreator::PostCreateError => e
+        raise GraphQL::ExecutionError, e
       end
     end
   end

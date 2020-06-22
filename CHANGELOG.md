@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+### Added
+- Slack integration 
+- Mutation to set the active kudometer
+
+### Fixed
+- Only fetch posts for the active kudometer
+- Virtual users are no longer being duplicated
+
 ## [4.1.1]
 ### Added
 - Clear error message when team invite already exists

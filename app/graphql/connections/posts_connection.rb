@@ -9,6 +9,7 @@ module Connections
     def total_count
       object.nodes.size
     end
+
   end
 end
 

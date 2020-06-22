@@ -20,7 +20,7 @@ RSpec.describe Mutations::KudosMeter::CreateKudosMeter do
     %( mutation { createKudosMeter(
       name: "#{variables[:name]}"
       teamId: "#{variables[:team_id]}"
-    ) { kudosMeter { id name team { id } } errors } } )
+    ) { kudosMeter { id name team { id } } } } )
   end
 
   context 'authenticated' do
@@ -38,7 +38,7 @@ RSpec.describe Mutations::KudosMeter::CreateKudosMeter do
       end
 
       it 'returns no errors' do
-        expect(result['data']['createKudosMeter']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Mutations::KudosMeter::CreateKudosMeter do
       end
 
       it 'returns no errors' do
-        expect(result['data']['createKudosMeter']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

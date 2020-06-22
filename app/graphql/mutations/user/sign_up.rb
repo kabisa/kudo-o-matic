@@ -5,7 +5,6 @@ module Mutations
     argument :credentials, Types::AuthProviderSignupInput, required: false
 
     field :authenticate_data, Types::AuthenticateType, null: true
-    field :errors, [String], null: false
 
     def resolve(credentials:)
       user = ::User.new(
@@ -16,9 +15,9 @@ module Mutations
       )
 
       if user.save
-        { authenticate_data: OpenStruct.new(token: AuthToken.new.token(user), user: user), errors: [] }
+        { authenticate_data: OpenStruct.new(token: AuthToken.new.token(user), user: user) }
       else
-        { authenticate_data: nil, errors: user.errors.full_messages }
+        return Util::ErrorBuilder.build_errors(context, user.errors)
       end
     end
   end

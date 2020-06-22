@@ -3,6 +3,15 @@ defaults: &defaults
   max_edit_and_delete_time: <%= 15 * 60 %> # 15 minutes
   gravatar_style: 'retro'
   gravatar_size: '200'
+  slack_acccess_token_endpoint: 'https://slack.com/api/oauth.v2.access'
+  slack_post_message_endpoint: 'https://slack.com/api/chat.postMessage'
+  slack_team_connect_success_url: 'http://localhost:9090/#/manage-team/integrations?auth=ok'
+  slack_user_connect_success_url: 'http://localhost:9090/#/user?auth=ok'
+  slack_accepted_emojis: 'kudos-development'
+  slack_auth_endpoint: 'slack.com'
+  slack_scopes: 'chat:write,commands,incoming-webhook,chat:write.public,reactions:read,channels:history,channels:read,channels:join'
+  slack_user_scopes: 'chat:write'
+  slack_join_all_channels: false
 
 development:
   <<: *defaults
@@ -10,9 +19,21 @@ development:
 
 staging:
   <<: *defaults
+  slack_team_connect_success_url: 'https://kudos.develop.kabisa.io/#/manage-team/integrations?auth=ok'
+  slack_user_connect_success_url: 'https://kudos.develop.kabisa.io/#/user?auth=ok'
+  slack_accepted_emojis: 'kudos-staging'
+  slack_join_all_channels: false
 
 test:
   <<: *defaults
+  slack_acccess_token_endpoint: 'fakeUrl'
+  slack_post_message_endpoint: 'fakeUrl'
+  slack_connect_success_url: 'fakeUrl'
+  slack_join_all_channels: true
 
 production:
   <<: *defaults
+  slack_team_connect_success_url: 'https://kudos.kabisa.io/#/manage-team/integrations?auth=ok'
+  slack_user_connect_success_url: 'https://kudos.kabisa.io/#/user?auth=ok'
+  slack_accepted_emojis: 'kudos'
+  slack_join_all_channels: true

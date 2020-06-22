@@ -3,6 +3,7 @@
 RSpec.describe Team, type: :model do
   let!(:team) { create(:team) }
   let(:kudos_meter) { team.active_kudos_meter }
+  let(:new_kudos_meter) { create(:kudos_meter, team_id: team.id) }
 
   it "should have a valid factory" do
     expect(build(:team)).to be_valid
@@ -26,13 +27,24 @@ RSpec.describe Team, type: :model do
   describe "model associations" do
     it { is_expected.to have_many(:memberships).with_foreign_key("team_id") }
     it { is_expected.to have_many(:users).through(:memberships) }
-    it { is_expected.to have_one(:active_kudos_meter) }
     it { is_expected.to have_many(:kudos_meters) }
     it { is_expected.to have_many(:goals).through(:kudos_meters) }
     it { is_expected.to have_many(:posts) }
     it { is_expected.to have_many(:guidelines) }
     it "is_expected.to have_many(:likes)" do
       skip("TODO Fix this test")
+    end
+  end
+
+  describe "active kudos meter" do
+    it "has an active kudos meter" do
+      expect(team.active_kudos_meter).to eq(kudos_meter)
+    end
+
+    it "sets the active kudos meter" do
+      expect {
+        team.active_kudos_meter = new_kudos_meter
+      }.to change { team.active_kudos_meter}.from(kudos_meter).to(new_kudos_meter)
     end
   end
 

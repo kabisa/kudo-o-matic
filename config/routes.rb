@@ -8,20 +8,19 @@ Rails.application.routes.draw do
   post "/graphql", to: "graphql#execute"
 
   devise_for :users, controllers: {
-      omniauth_callbacks: "users/omniauth_callbacks",
       registrations: :registrations
   }
 
-  devise_scope :user do
-    get "sign_in", to: "devise/sessions#new"
-    get "sign_up", to: "devise/registrations#new"
-    get "account", to: "devise/registrations#edit"
-    get "sign_out", to: "devise/sessions#destroy"
-  end
 
-  scope ":team" do
-    get "feed/:rss_token", to: "feed#index"
-  end
+  get "/:team/feed/:rss_token", to: "feed#index"
+
+  get 'auth/slack/user/:user_id', to: 'slack#auth_user'
+  get 'auth/slack/team/:team_id', to: 'slack#auth_team'
+  get 'auth/callback/slack/team/:team_id', to: 'slack#team_auth_callback'
+  get 'auth/callback/slack/user/:user_id', to: 'slack#user_auth_callback'
+  post "/slack/kudo", to: 'slack#give_kudos'
+  post "/slack/guidelines", to: 'slack#guidelines'
+  post "/slack/event", to: "slack#event"
 
   match "*path" => redirect("/"), via: :get
 end

@@ -22,7 +22,7 @@ RSpec.describe Mutations::Guideline::UpdateGuideline do
       guidelineId: "#{variables[:guideline_id]}"
       name: "#{variables[:name]}"
       kudos: #{variables[:kudos]}
-    ) { guideline { name kudos } errors } } )
+    ) { guideline { name kudos } } } )
   end
 
   context 'authenticated' do
@@ -39,7 +39,7 @@ RSpec.describe Mutations::Guideline::UpdateGuideline do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateGuideline']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Mutations::Guideline::UpdateGuideline do
       end
 
       it 'returns no errors' do
-        expect(result['data']['updateGuideline']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

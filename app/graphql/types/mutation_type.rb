@@ -16,6 +16,7 @@ module Types
     field :create_kudos_meter, mutation: Mutations::KudosMeter::CreateKudosMeter
     field :delete_kudos_meter, mutation: Mutations::KudosMeter::DeleteKudosMeter
     field :update_kudos_meter, mutation: Mutations::KudosMeter::UpdateKudosMeter
+    field :set_active_kudos_meter, mutation: Mutations::KudosMeter::SetActiveKudosMeter
 
     ### Post
     field :create_post, mutation: Mutations::Post::CreatePost
@@ -23,6 +24,7 @@ module Types
 
     ### Team
     field :create_team, mutation: Mutations::Team::CreateTeam
+    field :remove_slack, mutation: Mutations::Team::RemoveSlack
     field :update_team, mutation: Mutations::Team::UpdateTeam
 
     ### TeamInvite
@@ -36,6 +38,7 @@ module Types
     field :update_team_member_role, mutation: Mutations::TeamMember::UpdateRole
 
     ### User
+    field :disconnect_slack, mutation: Mutations::User::DisconnectSlack
     field :forgot_password, mutation: Mutations::User::ForgotPassword
     field :new_password, mutation: Mutations::User::NewPassword
     field :reset_password, mutation: Mutations::User::ResetPassword

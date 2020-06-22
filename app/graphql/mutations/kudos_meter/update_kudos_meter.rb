@@ -6,15 +6,14 @@ module Mutations
     argument :kudos_meter_id, ID, required: true, description: 'The team the kudos meter belongs to'
 
     field :kudos_meter, Types::KudosMeterType, null: true
-    field :errors, [String], null: false
 
     def resolve(name:, kudos_meter_id:)
       kudos_meter = ::KudosMeter.find(kudos_meter_id)
 
       if kudos_meter.update(name: name)
-        { kudos_meter: kudos_meter, errors: [] }
+        { kudos_meter: kudos_meter }
       else
-        { kudos_meter: nil, errors: kudos_meter.errors.full_messages }
+        return Util::ErrorBuilder.build_errors(context, kudos_meter.errors)
       end
     end
   end

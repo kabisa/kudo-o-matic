@@ -5,15 +5,14 @@ module Mutations
     argument :id, ID, required: true, description: 'The ID of the post you want to delete'
 
     field :post_id, ID, null: true
-    field :errors, [String], null: false
 
     def resolve(id:)
       post = ::Post.find(id)
 
       if post.destroy
-        { post_id: id, errors: [] }
+        { post_id: id }
       else
-        { post_id: nil, errors: post.errors.full_messages }
+        return Util::ErrorBuilder.build_errors(context, post.errors)
       end
     end
   end

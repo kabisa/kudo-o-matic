@@ -25,7 +25,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
   let(:mutation_string) do
     %( mutation { deleteTeamMember(
       id: "#{variables[:id]}"
-    ) { teamMemberId errors } } )
+    ) { teamMemberId } } )
   end
 
   context 'authenticated' do
@@ -42,7 +42,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteTeamMember']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
       end
 
       it 'returns no errors' do
-        expect(result['data']['deleteTeamMember']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
       let(:variables) { { id: TeamMember.find_by_user_id(user.id).id } }
 
       it 'can\'t delete a team member if that member is the only team admin' do
-        expect(result['data']['deleteTeamMember']['errors'].first).to eq("Role 'admin' should be assigned to at least 1 other team member.")
+        expect(result['errors'].first['message']).to eql("role: 'admin' should be assigned to at least 1 other team member.")
       end
     end
 
@@ -82,7 +82,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
         expect(result['data']['deleteTeamMember']).to be_nil
       end
 
-      it 'returns no errors' do
+      it 'returns an unauthorised error' do
         expect(result['errors'].first['message']).to eq('Not authorized to access Mutation.deleteTeamMember')
       end
     end
@@ -92,7 +92,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
         expect(result['data']['deleteTeamMember']).to be_nil
       end
 
-      it 'returns no errors' do
+      it 'returns an unauthorised error' do
         expect(result['errors'].first['message']).to eq('Not authorized to access Mutation.deleteTeamMember')
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe Mutations::TeamMember::DeleteMember do
       expect(result['data']['deleteTeamMember']).to be_nil
     end
 
-    it 'returns a not authorized error for Mutation.deleteTeamMember' do
+    it 'returns an unauthorised error' do
       expect(result['errors'].first['message']).to eq('Not authorized to access Mutation.deleteTeamMember')
     end
   end

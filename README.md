@@ -1,6 +1,6 @@
 # Kudos-o-Matic™
 
-[![Travis Build Status](https://img.shields.io/travis/kabisa/kudo-o-matic.svg?style=flat-square)](https://travis-ci.org/kabisa/kudo-o-matic.svg?branch=master) [![GitHub release](https://img.shields.io/github/release/kabisa/kudo-o-matic.svg?style=flat-square)](https://github.com/kabisa/kudo-o-matic/releases) [![GitHub license](https://img.shields.io/github/license/kabisa/kudo-o-matic.svg?style=flat-square)](https://github.com/kabisa/kudo-o-matic/blob/master/LICENSE.md)
+[![Rails test and deploy](https://github.com/kabisa/kudo-o-matic/workflows/Rails%20test%20and%20deploy/badge.svg)](https://github.com/kabisa/kudo-o-matic/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/69d210539137c4dc5e06/maintainability)](https://codeclimate.com/github/kabisa/kudo-o-matic/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/69d210539137c4dc5e06/test_coverage)](https://codeclimate.com/github/kabisa/kudo-o-matic/test_coverage)
 
@@ -114,6 +114,23 @@ To use Mailhog for local usage follow the instructions on [their GitHub reposito
 
 You can also update the configuration (`development.rb`) if you don't want to use Mailhog. Set and use the `MAIL_USERNAME`, `MAIL_PASSWORD` and `MAIL_ADDRESS` environment variables for this.
 
+### Slack 
+See [here](docs/SLACK_INTEGRATION.md).
+
+### CI and deployment
+The project is build using [GitHub actions](https://github.com/kabisa/kudo-o-matic/actions) and deployment is configured using [Dokku](http://dokku.viewdocs.io/dokku/).
+
+The application runs on Linode. Ask MS for the ssh credentials if you need to change something like environment variables.
+
+At the moment we're testing [Heroku](https://dashboard.heroku.com/apps/kudo-o-matic-staging) for the staging environment. 
+It is deployed via GitHub actions. If you need to access the app ask MS to add you to the Heroku team.
+
+> This is temporarily disabled!
+> Deployment to the staging environment is done on every commit/PR merge to the development branch and is done via a Jenkins commit hook.
+
+Deployment to the production environment is done on every commit/PR merge to the master branch and is also done via Jenkins.
+
+
 ## Entities
 
 A diagram of the models is available [here](docs/erd.svg).
@@ -156,5 +173,3 @@ and a code example or an executable test case demonstration of the expected beha
 
 ## License
 Copyright (c) 2016-2019 [Kabisa](https://www.kabisa.nl/). See [license](https://github.com/kabisa/kudo-o-matic/blob/develop/LICENSE.md) for details.
-
-![Demo](https://kudo-o-matic-development.s3.amazonaws.com/Screenshot%202017-07-14%2015.17.38.png)

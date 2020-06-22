@@ -16,7 +16,6 @@ class Team < ApplicationRecord
 
   has_many :memberships, class_name: "TeamMember", foreign_key: :team_id
   has_many :users, through: :memberships
-  has_one :active_kudos_meter, class_name: "KudosMeter"
   has_many :kudos_meters
   has_many :goals, through: :kudos_meters
   has_many :posts
@@ -28,6 +27,17 @@ class Team < ApplicationRecord
 
   typed_store :preferences, coder: PreferencesCoder do |p|
     p.string :primary_color, default: nil
+  end
+
+  def active_kudos_meter
+    kudos_meters.where(is_active: true).take
+  end
+
+  def active_kudos_meter=(kudos_meter)
+    transaction do
+      kudos_meters.update_all(is_active: false)
+      kudos_meter.update_attribute(:is_active, true)
+    end
   end
 
   def slug_candidates
@@ -57,8 +67,8 @@ class Team < ApplicationRecord
 
   def manageable_members(current_user)
     memberships.joins(:user)
-     .where("users.company_user = false")
-     .where("users.id != #{current_user.id}")
+        .where("users.company_user = false")
+        .where("users.id != #{current_user.id}")
   end
 
   def current_goals
@@ -76,15 +86,19 @@ class Team < ApplicationRecord
   private
 
   def setup_team
-    kudos_meter = KudosMeter.create(name: "My first kudos_meter", team_id: id)
-    Goal.create(name: "First goal", amount: 500, kudos_meter_id: kudos_meter.id)
-    Goal.create(name: "Second goal", amount: 1000, kudos_meter_id: kudos_meter.id)
-    Goal.create(name: "Third goal", amount: 1500, kudos_meter_id: kudos_meter.id)
+    transaction do
+      kudos_meter = KudosMeter.create(name: "My first kudos_meter", team_id: id)
+      self.active_kudos_meter = kudos_meter
+      self.save
+      Goal.create(name: "First goal", amount: 500, kudos_meter_id: kudos_meter.id)
+      Goal.create(name: "Second goal", amount: 1000, kudos_meter_id: kudos_meter.id)
+      Goal.create(name: "Third goal", amount: 1500, kudos_meter_id: kudos_meter.id)
 
-    # Create company user
-    user = User.new(name: name, company_user: true, virtual_user: true)
-    user.save(validate: false)
-    add_member(user)
+      # Create company user
+      user = User.new(name: name, company_user: true, virtual_user: true)
+      user.save(validate: false)
+      add_member(user)
+    end
   end
 
   # A hacky but necessary fix to keep showing the current Team logo on logo validation errors

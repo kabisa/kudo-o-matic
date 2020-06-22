@@ -9,7 +9,7 @@ Rails.application.configure do
   end
 
   # Store files on amazon.
-  config.active_storage.service = :amazon
+  config.active_storage.service = :local
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -27,10 +27,6 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
-
-  # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
-  # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false

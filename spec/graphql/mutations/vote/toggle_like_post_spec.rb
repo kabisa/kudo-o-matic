@@ -27,7 +27,7 @@ RSpec.describe Mutations::Vote::ToggleLikePost do
   let(:mutation_string) do
     %( mutation { toggleLikePost(
       postId: "#{variables[:post_id]}"
-    ) { post { id } errors } } )
+    ) { post { id } } } )
   end
 
   context 'authenticated' do
@@ -42,7 +42,7 @@ RSpec.describe Mutations::Vote::ToggleLikePost do
       end
 
       it 'returns no errors' do
-        expect(result['data']['toggleLikePost']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Mutations::Vote::ToggleLikePost do
       end
 
       it 'returns no errors' do
-        expect(result['data']['toggleLikePost']['errors']).to be_empty
+        expect(result['errors']).to be_nil
       end
     end
 

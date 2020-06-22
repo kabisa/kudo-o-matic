@@ -21,7 +21,7 @@ RSpec.describe Mutations::User::NewPassword do
       resetPasswordToken: "#{variables[:reset_password_token]}"
       password: "#{variables[:password]}"
       passwordConfirmation: "#{variables[:password]}"
-    ) { user { id } errors } } )
+    ) { user { id } } } )
   end
 
   describe 'new password' do
@@ -30,7 +30,7 @@ RSpec.describe Mutations::User::NewPassword do
     end
 
     it 'returns no errors' do
-      expect(result['data']['errors']).to be_nil
+      expect(result['errors']).to be_nil
     end
   end
 
@@ -39,7 +39,7 @@ RSpec.describe Mutations::User::NewPassword do
 
     it 'doesn\'t reset the password' do
       expect(result['data']['forgotPassword']).to be_nil
-      expect(result['data']['errors']).to be_nil
+      expect(result['errors'].first['message']).to eq('reset_password_token: is invalid')
     end
   end
 end
