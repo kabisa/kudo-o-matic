@@ -335,7 +335,7 @@ RSpec.describe 'SlackService' do
       uri = SlackService.get_team_oauth_url('1')
 
       parsed_query = CGI::parse(uri.partition('?').last)
-      expect(parsed_query['scope'][0]).to eq('chat:write,commands,incoming-webhook,chat:write.public,reactions:read,channels:history,channels:read,channels:join')
+      expect(parsed_query['scope'][0]).to eq('chat:write,commands,incoming-webhook,chat:write.public,reactions:read,channels:history,channels:read,channels:join,users:read')
       expect(parsed_query['client_id'][0]).to eq('slack-client-id')
       expect(parsed_query['redirect_uri'][0]).to eq('https://backend-domain.com/auth/callback/slack/team/1')
     end
