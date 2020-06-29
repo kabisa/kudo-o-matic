@@ -1,7 +1,7 @@
 class PostCreator
   class PostCreateError < RuntimeError; end
 
-  def self.create_post(message, amount, sender, receivers, team)
+  def self.create_post(message, amount, sender, receivers, team, send_slack_announcement = true)
     post = Post.new(
         message: message,
         amount: amount,
@@ -23,7 +23,11 @@ class PostCreator
     end
 
     PostMailer.new_post(post)
-    SlackService.send_post_announcement(post) unless team.slack_team_id == nil
+
+    if send_slack_announcement && !team.slack_team_id.blank?
+      SlackService.send_post_announcement(post)
+    end
+
     post
   end
 end

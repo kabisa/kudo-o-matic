@@ -224,7 +224,7 @@ class SlackService
     message = "saying: '#{slack_message['text']}'"
 
     begin
-      PostCreator.create_post(message, 1, user, [receiver], team)
+      PostCreator.create_post(message, 1, user, [receiver], team, false)
     rescue PostCreator::PostCreateError => e
       raise InvalidCommand.new(e)
     end
