@@ -412,30 +412,55 @@ RSpec.describe 'SlackService' do
 
     end
 
-    it 'creates a post if the message is not a kudo-o-matic post' do
-      event = {
-          user: user_with_slack_id.slack_id,
-          item: {
-              channel: 'channelId'
-          }
+    describe 'create post' do
+      let(:event) {
+        {
+            user: user_with_slack_id.slack_id,
+            item: {
+                channel: 'channelId'
+            }
+        }
       }
+      before do
 
-      message_mock = {
-          user: user_with_slack_id.slack_id,
-          text: 'Some text'
-      }
+        allow(SlackService).to receive(:supported_emoji?).and_return(true)
+        allow(SlackService).to receive(:message_is_kudo_o_matic_post?).and_return(false)
+        allow(SlackService).to receive(:send_post_announcement)
+        allow(SlackService).to receive(:update_message_to_post).and_return(true)
+      end
 
-      allow(SlackService).to receive(:supported_emoji?).and_return(true)
-      allow(SlackService).to receive(:get_message_from_event).and_return(message_mock.as_json)
-      allow(SlackService).to receive(:message_is_kudo_o_matic_post?).and_return(false)
-      allow(SlackService).to receive(:send_post_announcement)
-      allow(SlackService).to receive(:update_message_to_post).and_return(true)
+      it 'creates a post if the message is not a kudo-o-matic post' do
+        message_mock = {
+            user: user_with_slack_id.slack_id,
+            text: 'Some text'
+        }
+        allow(SlackService).to receive(:get_message_from_event).and_return(message_mock.as_json)
 
-      expect(SlackService).to receive(:update_message_to_post)
-      expect {
+        expect(SlackService).to receive(:update_message_to_post)
+        expect {
+          SlackService.reaction_added(team_with_slack.slack_team_id, event.as_json)
+        }.to change { Post.count }.by(1)
+      end
+
+      it 'escapes mentioned users' do
+        message_mock = {
+            user: user_with_slack_id.slack_id,
+            text: 'Thanks for helping me <@SOMEID>!'
+        }
+
+        user_info_mock = {
+            user: {
+                name: 'max'
+            }
+        }
+        allow(SlackService).to receive(:get_message_from_event).and_return(message_mock.as_json)
+        allow_any_instance_of(Slack::Web::Client).to receive(:users_info).and_return(user_info_mock.as_json)
+
         SlackService.reaction_added(team_with_slack.slack_team_id, event.as_json)
-      }.to change { Post.count }.by(1)
+        expect(Post.last.message).to eq("saying: 'Thanks for helping me max!'")
+      end
     end
+
   end
 
   describe 'reaction_removed' do
