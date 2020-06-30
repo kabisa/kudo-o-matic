@@ -39,5 +39,10 @@ RSpec.describe KudosMeter, type: :model do
       expect(SlackService).to_not receive(:send_post_announcement)
       PostCreator.create_post('Some message', 5, user, [other_user], team)
     end
+
+    it 'doesnt send the slack announcement if the option is set to false' do
+      expect(SlackService).to_not receive(:send_post_announcement)
+      PostCreator.create_post('Some message', 5, user, [other_user], team_with_slack, false)
+    end
   end
 end
