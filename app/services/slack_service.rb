@@ -213,6 +213,7 @@ class SlackService
   end
 
   def self.create_post_from_message(team, user, slack_message)
+    client = Slack::Web::Client.new(token: team.slack_bot_access_token)
     receiver = User.find_by_slack_id(slack_message['user'])
 
     if receiver.nil?
@@ -221,13 +222,25 @@ class SlackService
 
     raise InvalidRequest.new("That user has not connected their account to Slack.") if receiver == nil
 
-    message = "saying: '#{slack_message['text']}'"
+    message = create_message(client, slack_message)
 
     begin
       PostCreator.create_post(message, 1, user, [receiver], team, false)
     rescue PostCreator::PostCreateError => e
       raise InvalidCommand.new(e)
     end
+  end
+
+  def self.create_message(slack_client, slack_message)
+    message = "saying: '#{slack_message['text']}'"
+    mentioned_users = message.scan(/(?=<).*?(?<=>)/)
+
+    mentioned_users.each do |mentioned_user|
+      user_info = slack_client.users_info(user: mentioned_user.tr('<>@', ''))
+      message[mentioned_user] = user_info['user']['name']
+    end
+
+    message
   end
 
   def self.update_message_to_post(channel_id, message, post)

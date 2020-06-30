@@ -113,6 +113,7 @@ The following bot token scopes need to be added:
 - commands
 - incoming-webhook
 - reactions:read
+- users:read
 
 The following User Token Scopes need to be added:
 - chat:write

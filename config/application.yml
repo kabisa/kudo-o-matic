@@ -9,7 +9,7 @@ defaults: &defaults
   slack_user_connect_success_url: 'http://localhost:9090/#/user?auth=ok'
   slack_accepted_emojis: 'kudos-development'
   slack_auth_endpoint: 'slack.com'
-  slack_scopes: 'chat:write,commands,incoming-webhook,chat:write.public,reactions:read,channels:history,channels:read,channels:join'
+  slack_scopes: 'chat:write,commands,incoming-webhook,chat:write.public,reactions:read,channels:history,channels:read,channels:join,users:read'
   slack_user_scopes: 'chat:write'
   slack_join_all_channels: false
 
