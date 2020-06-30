@@ -225,7 +225,7 @@ class SlackService
     message = create_message(client, slack_message)
 
     begin
-      PostCreator.create_post(message, 1, user, [receiver], team)
+      PostCreator.create_post(message, 1, user, [receiver], team, false)
     rescue PostCreator::PostCreateError => e
       raise InvalidCommand.new(e)
     end
