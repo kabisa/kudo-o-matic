@@ -4,7 +4,7 @@
     = "#{@post.sender.name} for '#{@post.message}'! \u{1f389}".html_safe
     %br
     Show your appreciation by liking the
-    = "#{link_to 'post', ENV['ROOT_URL']}.".html_safe
+    = "#{link_to 'post', ENV['FRONTEND_ROOT_URL']}.".html_safe
     = "\u{1f44d}"
     %p
       - if !Goal.next(@post.team).nil?
