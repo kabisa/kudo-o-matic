@@ -26,9 +26,7 @@ module Slack::Message
   end
 
   def list_guidelines(slack_team_id)
-    team = Team.find_by_slack_team_id(slack_team_id)
-
-    raise InvalidCommand.new('No team with that Slack ID') if team.nil?
+    team = find_team(slack_team_id)
 
     guidelines = Guideline.where(:team => team).order(:kudos)
 
@@ -86,6 +84,8 @@ module Slack::Message
   end
 
   def message_is_kudo_o_matic_post?(message)
+    return false unless message['blocks']
+
     last_block = message['blocks'].last
 
     Post.exists?(id: last_block['block_id'])
@@ -101,4 +101,18 @@ module Slack::Message
         ]
     }
   end
+
+  def get_post_receivers(post)
+    receiver_string = ""
+    post.receivers.each_with_index do |receiver, index|
+      receiver_string += receiver.slack_id == nil ? "#{receiver.name}" : "<@#{receiver.slack_id}>"
+
+      if post.receivers.count > 1 && index != post.receivers.count - 1
+        receiver_string += (index == (post.receivers.count - 2)) ? ' and ' : ', '
+      end
+    end
+
+    receiver_string
+  end
+
 end

@@ -2,19 +2,24 @@ module Slack::Event
   def reaction_added(team_id, event)
     return unless supported_emoji?(event)
 
-    team = Team.find_by_slack_team_id(team_id)
-    user = User.find_by_slack_id(event['user'])
-    message = get_message_from_event(team_id, event)
+    team = find_team(team_id)
 
-    if user.nil?
-      send_ephemeral_message(team, event['item']['channel'], event['user'], "You're Slack account is not connected to Kudo-O-Matic")
+    begin
+      user = find_user(event['user'])
+    rescue Slack::SlackService::InvalidCommand => e
+      send_ephemeral_message(team,
+                             event['item']['channel'],
+                             event['user'],
+                             "Your Slack account is not connected to Kudo-O-Matic")
       return
     end
+
+    message = get_message_from_event(team_id, event)
 
     if message_is_kudo_o_matic_post?(message)
       like_post(user, message)
     else
-      post = create_post_from_message(team, user, message)
+      post = create_post_from_message(team, user, message, event)
       update_message_to_post(event['item']['channel'], message, post)
     end
   end
@@ -22,7 +27,7 @@ module Slack::Event
   def reaction_removed(team_id, event)
     return unless supported_emoji?(event)
 
-    user = User.find_by_slack_id(event['user'])
+    user = find_user(event['user'])
     message = get_message_from_event(team_id, event)
 
     if message_is_kudo_o_matic_post?(message)
@@ -31,6 +36,14 @@ module Slack::Event
   end
 
   private
+
+  def get_message_from_event(team_id, event)
+    team = find_team(team_id)
+    client = Slack::Web::Client.new(token: team.slack_bot_access_token)
+    message_response = client.conversations_history(channel: event['item']['channel'], latest: event['item']['ts'], limit: 1, inclusive: true)
+
+    message_response['messages'][0]
+  end
 
   def supported_emoji?(event)
     emojis = Settings.slack_accepted_emojis.split(',')
@@ -50,22 +63,24 @@ module Slack::Event
     post.unliked_by(user) if user.voted_up_on? post
   end
 
-  def create_post_from_message(team, user, slack_message)
+  def create_post_from_message(team, user, slack_message, event)
     client = Slack::Web::Client.new(token: team.slack_bot_access_token)
-    receiver = User.find_by_slack_id(slack_message['user'])
-
-    if receiver.nil?
-      send_ephemeral_message(team, event['item']['channel'], event['user'], "The user you're giving kudos to has not connected their account to Slack.")
+    begin
+      receiver = find_user(slack_message['user'])
+    rescue Slack::SlackService::InvalidCommand => e
+      send_ephemeral_message(team,
+                             event['item']['channel'],
+                             event['user'],
+                             "The user you're giving kudos to has not connected their account to Slack.")
+      return
     end
-
-    raise InvalidRequest.new("That user has not connected their account to Slack.") if receiver == nil
 
     message = create_message(client, slack_message)
 
     begin
       PostCreator.create_post(message, 1, user, [receiver], team, false)
     rescue PostCreator::PostCreateError => e
-      raise InvalidCommand.new(e)
+      raise Slack::SlackService::InvalidCommand.new(e)
     end
   end
 end
