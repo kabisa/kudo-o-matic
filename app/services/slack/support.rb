@@ -5,7 +5,7 @@ module Slack::Support
     team = Team.where(:slack_team_id => slack_team_id).take
 
     if team == nil
-      raise InvalidCommand.new('This workspace does not have an associated Kudo-o-matic team, contact an admin')
+      raise Slack::SlackService::InvalidCommand.new('This workspace does not have an associated Kudo-o-matic team, contact an admin')
     end
 
     team
