@@ -24,9 +24,9 @@ class SlackController < ApplicationController
 
   def user_auth_callback
     begin
-      Slack::Slack::SlackService.connect_account(params[:code], params[:user_id])
+      Slack::SlackService.connect_account(params[:code], params[:user_id])
       redirect_to Settings.slack_user_connect_success_url
-    rescue Slack::Slack::SlackService::InvalidRequest => e
+    rescue Slack::SlackService::InvalidRequest => e
       render json: {text: "That didn't quite work, #{e}"}
     end
   end
@@ -45,7 +45,7 @@ class SlackController < ApplicationController
   end
 
   def auth_user
-    redirect_to Slack::Slack::SlackService.get_user_oauth_url(params[:user_id])
+    redirect_to Slack::SlackService.get_user_oauth_url(params[:user_id])
   end
 
   def event
