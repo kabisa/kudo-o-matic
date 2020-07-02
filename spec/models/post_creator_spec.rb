@@ -31,17 +31,17 @@ RSpec.describe KudosMeter, type: :model do
     end
 
     it 'sends the slack announcement if the team is connected to Slack' do
-      expect(SlackService).to receive(:send_post_announcement)
+      expect(Slack::SlackService).to receive(:send_post_announcement)
       PostCreator.create_post('Some message', 5, user, [other_user], team_with_slack)
     end
 
     it 'doesnt send the slack announcement if the team is not connected to Slack' do
-      expect(SlackService).to_not receive(:send_post_announcement)
+      expect(Slack::SlackService).to_not receive(:send_post_announcement)
       PostCreator.create_post('Some message', 5, user, [other_user], team)
     end
 
     it 'doesnt send the slack announcement if the option is set to false' do
-      expect(SlackService).to_not receive(:send_post_announcement)
+      expect(Slack::SlackService).to_not receive(:send_post_announcement)
       PostCreator.create_post('Some message', 5, user, [other_user], team_with_slack, false)
     end
   end
