@@ -118,18 +118,11 @@ You can also update the configuration (`development.rb`) if you don't want to us
 See [here](docs/SLACK_INTEGRATION.md).
 
 ### CI and deployment
-The project is build using [GitHub actions](https://github.com/kabisa/kudo-o-matic/actions) and deployment is configured using [Dokku](http://dokku.viewdocs.io/dokku/).
+The project is build using [GitHub actions](https://github.com/kabisa/kudo-o-matic/actions) and deployed to [Heroku](https://dashboard.heroku.com/teams/kabisa/apps).
 
-The application runs on Linode. Ask MS for the ssh credentials if you need to change something like environment variables.
+Every commit to the develop branch is deployed to [staging](https://dashboard.heroku.com/apps/kudo-o-matic-staging)
 
-At the moment we're testing [Heroku](https://dashboard.heroku.com/apps/kudo-o-matic-staging) for the staging environment. 
-It is deployed via GitHub actions. If you need to access the app ask MS to add you to the Heroku team.
-
-> This is temporarily disabled!
-> Deployment to the staging environment is done on every commit/PR merge to the development branch and is done via a Jenkins commit hook.
-
-Deployment to the production environment is done on every commit/PR merge to the master branch and is also done via Jenkins.
-
+Every commit to the master branch is deployed to [production](https://dashboard.heroku.com/apps/kudo-o-matic-production) 
 
 ## Entities
 
