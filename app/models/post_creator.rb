@@ -25,7 +25,7 @@ class PostCreator
     PostMailer.new_post(post)
 
     if send_slack_announcement && !team.slack_team_id.blank?
-      Slack::SlackService.send_post_announcement(post)
+      SlackService.send_post_announcement(post)
     end
 
     post
