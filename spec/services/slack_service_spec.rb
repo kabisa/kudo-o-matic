@@ -46,11 +46,11 @@ RSpec.describe 'SlackService' do
     end
 
     it 'returns an error if there is no token' do
-      expect { Slack::SlackService.add_to_workspace(nil, team.id) }.to raise_exception(Slack::SlackService::InvalidRequest)
+      expect { Slack::SlackService.add_to_workspace(nil, team.id) }.to raise_exception(Slack::Exceptions::InvalidRequest)
     end
 
     it 'returns an error if there is no team id' do
-      expect { Slack::SlackService.add_to_workspace('token', nil) }.to raise_exception(Slack::SlackService::InvalidRequest)
+      expect { Slack::SlackService.add_to_workspace('token', nil) }.to raise_exception(Slack::Exceptions::InvalidRequest)
     end
   end
 
@@ -78,13 +78,13 @@ RSpec.describe 'SlackService' do
     it 'raises an error if there is no token' do
       expect {
         Slack::SlackService.connect_account(nil, 'slackId')
-      }.to raise_exception(Slack::SlackService::InvalidCommand, 'Missing auth token')
+      }.to raise_exception(Slack::Exceptions::InvalidCommand, 'Missing auth token')
     end
 
     it 'raises an error if there is no user id' do
       expect {
         Slack::SlackService.connect_account('code', nil)
-      }.to raise_exception(Slack::SlackService::InvalidCommand, 'Missing user id')
+      }.to raise_exception(Slack::Exceptions::InvalidCommand, 'Missing user id')
     end
 
     it 'raises an error if the slack id is already connected to a user' do
@@ -99,13 +99,13 @@ RSpec.describe 'SlackService' do
 
       expect {
         Slack::SlackService.connect_account('code', user.id)
-      }.to raise_exception(Slack::SlackService::InvalidCommand, 'This Slack account is already linked to Kudo-O-Matic')
+      }.to raise_exception(Slack::Exceptions::InvalidCommand, 'This Slack account is already linked to Kudo-O-Matic')
     end
 
     it 'returns an error if the user is already connected to slack' do
       expect {
         Slack::SlackService.connect_account('token', user_with_slack_id.id)
-      }.to raise_exception(Slack::SlackService::InvalidCommand, 'This Kudo-O-Matic account is already linked to Slack')
+      }.to raise_exception(Slack::Exceptions::InvalidCommand, 'This Kudo-O-Matic account is already linked to Slack')
     end
   end
 
@@ -189,7 +189,7 @@ RSpec.describe 'SlackService' do
 
         expect {
           Slack::SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
-        }.to raise_exception(Slack::SlackService::InvalidCommand, "#{user.name} has not connected their account to Slack.")
+        }.to raise_exception(Slack::Exceptions::InvalidCommand, "#{user.name} has not connected their account to Slack.")
       end
 
       it 'returns an error if there are no receivers' do
@@ -197,7 +197,7 @@ RSpec.describe 'SlackService' do
 
         expect {
           Slack::SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
-        }.to raise_exception(Slack::SlackService::InvalidCommand, "Did you forget to mention any users with the '@' symbol?")
+        }.to raise_exception(Slack::Exceptions::InvalidCommand, "Did you forget to mention any users with the '@' symbol?")
       end
 
       it 'gets all the receivers' do
@@ -215,7 +215,7 @@ RSpec.describe 'SlackService' do
 
         expect {
           Slack::SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
-        }.to raise_exception(Slack::SlackService::InvalidCommand, "Did you include a message?")
+        }.to raise_exception(Slack::Exceptions::InvalidCommand, "Did you include a message?")
       end
 
       it 'sets the message correctly' do
@@ -233,7 +233,7 @@ RSpec.describe 'SlackService' do
 
         expect {
           Slack::SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
-        }.to raise_exception(Slack::SlackService::InvalidCommand, "Did you include an amount?")
+        }.to raise_exception(Slack::Exceptions::InvalidCommand, "Did you include an amount?")
       end
 
       it 'returns an error if the amount is not a valid integer' do
@@ -241,7 +241,7 @@ RSpec.describe 'SlackService' do
 
         expect {
           Slack::SlackService.create_post(command, team_with_slack.slack_team_id, user_with_slack_id.slack_id)
-        }.to raise_exception(Slack::SlackService::InvalidCommand, "Did you include an amount?")
+        }.to raise_exception(Slack::Exceptions::InvalidCommand, "Did you include an amount?")
       end
 
       it 'sets the amount correctly' do
@@ -259,7 +259,7 @@ RSpec.describe 'SlackService' do
 
         expect {
           Slack::SlackService.create_post(command, 'wrongSlackId', user_with_slack_id.slack_id)
-        }.to raise_exception(Slack::SlackService::InvalidCommand, "This workspace does not have an associated Kudo-o-matic team, contact an admin")
+        }.to raise_exception(Slack::Exceptions::InvalidCommand, "This workspace does not have an associated Kudo-o-matic team, contact an admin")
       end
 
       it 'sets the team correctly' do
@@ -277,7 +277,7 @@ RSpec.describe 'SlackService' do
 
         expect {
           Slack::SlackService.create_post(command, team_with_slack.slack_team_id, 'UnusedSlackId')
-        }.to raise_exception(Slack::SlackService::InvalidCommand, "No Kudo-o-matic user found with that Slack ID")
+        }.to raise_exception(Slack::Exceptions::InvalidCommand, "No Kudo-o-matic user found with that Slack ID")
       end
 
       it 'sets the sender correctly' do
@@ -296,7 +296,7 @@ RSpec.describe 'SlackService' do
     it 'raises en error when there is no team with the provided slack id' do
       expect {
         Slack::SlackService.list_guidelines('unusedId')
-      }.to raise_exception(Slack::SlackService::InvalidCommand, 'This workspace does not have an associated Kudo-o-matic team, contact an admin')
+      }.to raise_exception(Slack::Exceptions::InvalidCommand, 'This workspace does not have an associated Kudo-o-matic team, contact an admin')
     end
 
     it 'returns a message when there are no guidelines' do

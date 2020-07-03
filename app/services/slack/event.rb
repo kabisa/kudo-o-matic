@@ -6,7 +6,7 @@ module Slack::Event
 
     begin
       user = find_user(event['user'])
-    rescue Slack::SlackService::InvalidCommand => e
+    rescue Slack::Exceptions::InvalidCommand => e
       send_ephemeral_message(team,
                              event['item']['channel'],
                              event['user'],
@@ -67,7 +67,7 @@ module Slack::Event
     client = Slack::Web::Client.new(token: team.slack_bot_access_token)
     begin
       receiver = find_user(slack_message['user'])
-    rescue Slack::SlackService::InvalidCommand => e
+    rescue Slack::Exceptions::InvalidCommand => e
       send_ephemeral_message(team,
                              event['item']['channel'],
                              event['user'],
@@ -80,7 +80,7 @@ module Slack::Event
     begin
       PostCreator.create_post(message, 1, user, [receiver], team, false)
     rescue PostCreator::PostCreateError => e
-      raise Slack::SlackService::InvalidCommand.new(e)
+      raise Slack::Exceptions::InvalidCommand.new(e)
     end
   end
 end

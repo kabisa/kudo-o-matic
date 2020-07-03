@@ -2,8 +2,8 @@ module Slack::Auth
   def connect_account(code, user_id)
     client = Slack::Web::Client.new
 
-    raise Slack::SlackService::InvalidCommand.new('Missing auth token') if code.nil?
-    raise Slack::SlackService::InvalidCommand.new('Missing user id') if user_id.nil?
+    raise Slack::Exceptions::InvalidCommand.new('Missing auth token') if code.nil?
+    raise Slack::Exceptions::InvalidCommand.new('Missing user id') if user_id.nil?
 
     auth_result = client.oauth_v2_access(
         code: code,
@@ -14,22 +14,22 @@ module Slack::Auth
 
     user = User.find(user_id)
 
-    raise Slack::SlackService::InvalidCommand.new('This Kudo-O-Matic account is already linked to Slack') unless user.slack_id.nil?
+    raise Slack::Exceptions::InvalidCommand.new('This Kudo-O-Matic account is already linked to Slack') unless user.slack_id.nil?
 
-    raise Slack::SlackService::InvalidCommand.new('This Slack account is already linked to Kudo-O-Matic') if User.exists?(slack_id: auth_result['authed_user']['id'])
+    raise Slack::Exceptions::InvalidCommand.new('This Slack account is already linked to Kudo-O-Matic') if User.exists?(slack_id: auth_result['authed_user']['id'])
 
     user.slack_access_token = auth_result['authed_user']['access_token']
     user.slack_id = auth_result['authed_user']['id']
 
-    raise Slack::SlackService::InvalidCommand.new("That didn't quite work, #{user.errors.full_messages.join(', ')}") unless user.save
+    raise Slack::Exceptions::InvalidCommand.new("That didn't quite work, #{user.errors.full_messages.join(', ')}") unless user.save
   end
 
   def add_to_workspace(code, team_id)
     client = Slack::Web::Client.new
 
-    raise Slack::SlackService::InvalidRequest.new('Auth token is missing') if code.nil?
+    raise Slack::Exceptions::InvalidRequest.new('Auth token is missing') if code.nil?
 
-    raise Slack::SlackService::InvalidRequest.new('Team id is missing') if team_id.nil?
+    raise Slack::Exceptions::InvalidRequest.new('Team id is missing') if team_id.nil?
 
     auth_result = client.oauth_v2_access(
         code: code,
@@ -43,7 +43,7 @@ module Slack::Auth
     team.slack_bot_access_token = auth_result["access_token"]
     team.slack_team_id = auth_result["team"]["id"]
 
-    raise Slack::SlackService::InvalidRequest.new("That didn't quite work, #{team.errors.full_messages.join(', ')}") unless team.save
+    raise Slack::Exceptions::InvalidRequest.new("That didn't quite work, #{team.errors.full_messages.join(', ')}") unless team.save
 
     join_all_channels(team) if Settings.slack_join_all_channels
     send_welcome_message(team)

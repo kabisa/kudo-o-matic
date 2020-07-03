@@ -8,7 +8,7 @@ class SlackController < ApplicationController
     begin
       Slack::SlackService.create_post(params[:text], params[:team_id], params[:user_id])
       render json: {text: 'kudos are on the way!'}
-    rescue Slack::SlackService::InvalidCommand => e
+    rescue Slack::Exceptions::InvalidCommand => e
       return render json: {text: "That didn't quite work, #{e} \n The format is: /kudo @someone @someone.else [amount] for [reason]"}
     end
   end
@@ -17,7 +17,7 @@ class SlackController < ApplicationController
     begin
       Slack::SlackService.add_to_workspace(params[:code], params[:team_id])
       redirect_to Settings.slack_team_connect_success_url
-    rescue Slack::SlackService::InvalidRequest => e
+    rescue Slack::Exceptions::InvalidRequest => e
       render json: {text: "That didn't quite work, #{e}"}
     end
   end
@@ -26,7 +26,7 @@ class SlackController < ApplicationController
     begin
       Slack::SlackService.connect_account(params[:code], params[:user_id])
       redirect_to Settings.slack_user_connect_success_url
-    rescue Slack::SlackService::InvalidRequest => e
+    rescue Slack::Exceptions::InvalidRequest => e
       render json: {text: "That didn't quite work, #{e}"}
     end
   end
@@ -35,7 +35,7 @@ class SlackController < ApplicationController
     begin
       payload = Slack::SlackService.list_guidelines(params[:team_id])
       render json: {blocks: payload}
-    rescue Slack::SlackService::InvalidCommand => e
+    rescue Slack::Exceptions::InvalidCommand => e
       render json: {text: "That didn't quite work, #{e}"}
     end
   end

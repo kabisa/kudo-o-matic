@@ -9,7 +9,7 @@ module Slack::Command
     begin
       PostCreator.create_post(message, amount, sender, receivers, team)
     rescue PostCreator::PostCreateError => e
-      raise Slack::SlackService::InvalidCommand.new(e)
+      raise Slack::Exceptions::InvalidCommand.new(e)
     end
   end
 
@@ -31,13 +31,13 @@ module Slack::Command
     amount = text.split(">").last.split("for").first
 
     if amount.blank?
-      raise Slack::SlackService::InvalidCommand.new('Did you include an amount?')
+      raise Slack::Exceptions::InvalidCommand.new('Did you include an amount?')
     end
 
     begin
       Integer(amount)
     rescue ArgumentError
-      raise Slack::SlackService::InvalidCommand.new('Did you include an amount?')
+      raise Slack::Exceptions::InvalidCommand.new('Did you include an amount?')
     end
 
     amount
@@ -54,14 +54,14 @@ module Slack::Command
 
       if user == nil
         name = slack_user[slack_user.index('|') + 1..slack_user.index('>') - 1]
-        raise Slack::SlackService::InvalidCommand.new("#{name} has not connected their account to Slack.")
+        raise Slack::Exceptions::InvalidCommand.new("#{name} has not connected their account to Slack.")
       end
 
       receivers << user
     end
 
     if receivers.length == 0
-      raise Slack::SlackService::InvalidCommand.new("Did you forget to mention any users with the '@' symbol?")
+      raise Slack::Exceptions::InvalidCommand.new("Did you forget to mention any users with the '@' symbol?")
     end
 
     receivers
@@ -72,7 +72,7 @@ module Slack::Command
     message.strip!
 
     if message.blank?
-      raise Slack::SlackService::InvalidCommand.new('Did you include a message?')
+      raise Slack::Exceptions::InvalidCommand.new('Did you include a message?')
     end
 
     message
