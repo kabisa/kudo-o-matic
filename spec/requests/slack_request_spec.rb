@@ -27,7 +27,7 @@ RSpec.describe "Slack" do
     end
 
     it 'returns an error if the request fails' do
-      allow(SlackService).to receive(:connect_account).and_raise(SlackService::InvalidRequest, 'The error description')
+      allow(SlackService).to receive(:connect_account).and_raise(Slack::Exceptions::InvalidRequest, 'The error description')
       payload = {
           token: 'fakeToken'
       }
@@ -54,7 +54,7 @@ RSpec.describe "Slack" do
     end
 
     it 'returns an error if the request fails' do
-      allow(SlackService).to receive(:add_to_workspace).and_raise(SlackService::InvalidRequest, 'The error description')
+      allow(SlackService).to receive(:add_to_workspace).and_raise(Slack::Exceptions::InvalidRequest, 'The error description')
       payload = {
           token: 'fakeToken'
       }
@@ -84,7 +84,7 @@ RSpec.describe "Slack" do
     end
 
     it "returns an error if there was one" do
-      allow(SlackService).to receive(:create_post).and_raise(SlackService::InvalidCommand.new('Some error'))
+      allow(SlackService).to receive(:create_post).and_raise(Slack::Exceptions::InvalidCommand.new('Some error'))
       payload = {
           text: 'commandText',
           user_id: 'UU1234',
@@ -102,7 +102,7 @@ RSpec.describe "Slack" do
 
   describe 'guidelines' do
     it 'returns when there is an error' do
-      allow(SlackService).to receive(:list_guidelines).and_raise(SlackService::InvalidCommand, 'Error description')
+      allow(SlackService).to receive(:list_guidelines).and_raise(Slack::Exceptions::InvalidCommand, 'Error description')
       payload = {
           team_id: 'UU4321'
       }
