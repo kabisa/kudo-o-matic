@@ -22,7 +22,7 @@ RSpec.describe Post, type: :model do
   let!(:vote) { create(:vote, voter_id: user.id, votable_id: post.id) }
 
   it "can have one attached image" do
-    post.image.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
+    post.images.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
     expect(post).to have_attached_file(:image)
   end
 

@@ -7,11 +7,23 @@ module Mutations
     argument :receiver_ids, [ID], required: false, description: 'The existing users'
     argument :null_receivers, [String], required: false, description: 'The non-existing users'
     argument :team_id, ID, required: false, description: 'The team the post belongs to'
+    argument :images, [ApolloUploadServer::Upload], required: false, description: 'Optional images linked to the post'
 
     field :post, Types::PostType, null: true
 
     def resolve(**kwargs)
       team = ::Team.find(kwargs[:team_id])
+      images = kwargs[:images]
+      uploaded_images = []
+      images.each do |image|
+        uploaded_images << ActionDispatch::Http::UploadedFile.new(
+            filename: image.original_filename,
+            type: image.content_type,
+            head: image.headers,
+            tempfile: image.tempfile,
+        )
+      end
+
       receivers = []
       receiver_ids = kwargs[:receiver_ids]
 
@@ -50,7 +62,8 @@ module Mutations
             kwargs[:amount],
             context[:current_user],
             receivers,
-            team
+            team,
+            uploaded_images
         )
         {post: post}
       rescue PostCreator::PostCreateError => e
