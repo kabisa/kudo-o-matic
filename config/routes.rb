@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   post "/slack/guidelines", to: 'slack#guidelines'
   post "/slack/event", to: "slack#event"
 
-  get '*path' => redirect("/"), via: :get, constraints: lambda { |req|
+  match '*path' => redirect("/"), via: :get, constraints: lambda { |req|
     req.path.exclude? 'rails/active_storage'
   }
 end
