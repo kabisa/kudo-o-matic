@@ -11,9 +11,9 @@ module Types
     field :amount, Int,
           null: false,
           description: 'The amount of kudos that are given'
-    field :image_urls, [String],
+    field :images, [Types::ImageType],
           null: false,
-          description: 'Optional image attached to this post'
+          description: 'Optional images attached to this post'
     field :sender, UserType,
           null: false,
           description: 'The sender of the post',
@@ -39,9 +39,5 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime,
           null: false,
           description: 'The time the post was last updated'
-
-    def image_urls
-        object.images.map { |image| Rails.application.routes.url_helpers.rails_blob_url(image, only_path: false) }
-    end
   end
 end
