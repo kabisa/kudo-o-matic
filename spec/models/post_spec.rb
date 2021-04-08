@@ -21,9 +21,14 @@ RSpec.describe Post, type: :model do
   let!(:post_3) { create(:post, sender: user, receivers: [users.second, users.third, users.fourth], team: team, kudos_meter: kudos_meter) }
   let!(:vote) { create(:vote, voter_id: user.id, votable_id: post.id) }
 
-  it "can have one attached image" do
+  it "can have one or more attached images" do
     post.images.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
-    expect(post).to have_attached_file(:image)
+    expect(post.images.length).to be(1)
+
+    post.images.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
+    expect(post.images.length).to be(2)
+
+    expect(post.images).to be_attached
   end
 
   describe "model destroy dependencies" do

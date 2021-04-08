@@ -13,14 +13,14 @@ module Mutations
 
     def resolve(**kwargs)
       team = ::Team.find(kwargs[:team_id])
-      images = kwargs[:images]
+      images = kwargs[:images] ||= []
       uploaded_images = []
       images.each do |image|
         uploaded_images << ActionDispatch::Http::UploadedFile.new(
-            filename: image.original_filename,
-            type: image.content_type,
-            head: image.headers,
-            tempfile: image.tempfile,
+          filename: image.original_filename,
+          type: image.content_type,
+          head: image.headers,
+          tempfile: image.tempfile
         )
       end
 
@@ -37,11 +37,10 @@ module Mutations
 
       unless null_receivers.blank?
         null_receivers.each do |receiver|
-
           existing_user = ::User.joins(:memberships)
-                              .where(users: {name: receiver, virtual_user: true})
-                              .where(team_members: {team_id: kwargs[:team_id]})
-                              .take
+                                .where(users: { name: receiver, virtual_user: true })
+                                .where(team_members: { team_id: kwargs[:team_id] })
+                                .take
 
           if existing_user
             receivers << existing_user
@@ -58,14 +57,14 @@ module Mutations
 
       begin
         post = PostCreator.create_post(
-            kwargs[:message],
-            kwargs[:amount],
-            context[:current_user],
-            receivers,
-            team,
-            uploaded_images
+          kwargs[:message],
+          kwargs[:amount],
+          context[:current_user],
+          receivers,
+          team,
+          uploaded_images
         )
-        {post: post}
+        { post: post }
       rescue PostCreator::PostCreateError => e
         raise GraphQL::ExecutionError, e
       end
