@@ -20,6 +20,11 @@ module Slack::Message
 
     message = "#{sender_string} just gave #{post.amount} kudos to #{get_post_receivers(post)} for #{post.message}"
     blocks = [create_markdown_block(message)]
+
+    post.images.each do |image|
+      blocks << create_markdown_image_block(Rails.application.routes.url_helpers.rails_blob_url(image, only_path: false));
+    end
+
     blocks << create_post_subscript(post.id)
 
     client.chat_postMessage(channel: post.team.channel_id, blocks: blocks)
@@ -80,6 +85,14 @@ module Slack::Message
             type: "mrkdwn",
             text: text
         }
+    }
+  end
+
+  def create_markdown_image_block(url)
+    {
+        type: "image",
+        alt_text: "Kudo-o-matic afbeelding",
+        image_url: url
     }
   end
 
