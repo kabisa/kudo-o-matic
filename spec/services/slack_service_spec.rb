@@ -24,13 +24,13 @@ RSpec.describe 'SlackService' do
   describe 'add to workspace' do
     it 'updates the team channel id, access token and slack id' do
       mock_response = {
-          :incoming_webhook => {
-              :channel_id => 'channelId'
-          },
-          :access_token => 'accessToken',
-          :team => {
-              :id => 'teamId'
-          }
+        :incoming_webhook => {
+          :channel_id => 'channelId'
+        },
+        :access_token => 'accessToken',
+        :team => {
+          :id => 'teamId'
+        }
       }
 
       allow_any_instance_of(Slack::Web::Client).to receive(:oauth_v2_access).and_return(mock_response.as_json)
@@ -115,21 +115,21 @@ RSpec.describe 'SlackService' do
 
       message = "#{user.name} just gave #{post.amount} kudos to <@#{user_with_slack_id.slack_id}> for #{post.message}"
       blocks = [
-          {
-              type: 'section',
-              text: {
-                  type: 'mrkdwn',
-                  text: message
-              }
-          },
-          {
-              type: 'context',
-              block_id: post.id.to_s,
-              elements: [
-                  type: 'mrkdwn',
-                  text: '_This message is a Kudo-O-Matic post_'
-              ]
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: message
           }
+        },
+        {
+          type: 'context',
+          block_id: post.id.to_s,
+          elements: [
+            type: 'mrkdwn',
+            text: '_This message is a Kudo-O-Matic post_'
+          ]
+        }
       ]
 
       expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: nil, blocks: blocks)
@@ -143,6 +143,39 @@ RSpec.describe 'SlackService' do
       expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: 'slackChannelId', blocks: anything)
       SlackService.send_post_announcement(post)
     end
+
+    it 'sends images to channel' do
+      post = create(:post, sender: user, receivers: [user_with_slack_id], team: team, kudos_meter: team.active_kudos_meter)
+      post.images.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
+      allow(Rails.application).to receive_message_chain(:routes, :url_helpers, :rails_blob_url).and_return("https://active_storage_image_path.png")
+
+      message = "#{user.name} just gave #{post.amount} kudos to <@#{user_with_slack_id.slack_id}> for #{post.message}"
+      blocks = [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: message
+          }
+        },
+        {
+            type: "image",
+            alt_text: "Kudo-o-matic afbeelding",
+            image_url: "https://active_storage_image_path.png"
+        },
+        {
+          type: 'context',
+          block_id: post.id.to_s,
+          elements: [
+            type: 'mrkdwn',
+            text: '_This message is a Kudo-O-Matic post_'
+          ]
+        }
+      ]
+
+      expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: nil, blocks: blocks)
+      SlackService.send_post_announcement(post)
+    end
   end
 
   describe 'send goal announcement' do
@@ -151,25 +184,24 @@ RSpec.describe 'SlackService' do
 
       second_goal.name = 'second goal'
       second_goal.amount = 700
-
     end
 
     it 'has the correct message' do
       blocks = [
-          {
-              type: 'section',
-              text: {
-                  type: 'mrkdwn',
-                  text: ":tada: We've just reached goal '#{first_goal.name}' at #{first_goal.amount} Kudos :tada:"
-              }
-          },
-          {
-              type: 'section',
-              text: {
-                  type: 'mrkdwn',
-                  text: "Our next goal is '#{second_goal.name}' at #{second_goal.amount} Kudos, so keep the Kudos coming and we'll be there in no time! :muscle:"
-              }
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: ":tada: We've just reached goal '#{first_goal.name}' at #{first_goal.amount} Kudos :tada:"
           }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: "Our next goal is '#{second_goal.name}' at #{second_goal.amount} Kudos, so keep the Kudos coming and we'll be there in no time! :muscle:"
+          }
+        }
       ]
 
       expect_any_instance_of(Slack::Web::Client).to receive(:chat_postMessage).with(channel: anything, blocks: blocks)
