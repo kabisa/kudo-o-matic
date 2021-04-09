@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [4.3.0]
 ### Changed
-- Add option to attach up to 3 images to a post
+- Add option to attach images to a post
 
 ## [4.2.2]
 ### Changed
