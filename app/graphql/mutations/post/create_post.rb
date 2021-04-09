@@ -51,7 +51,7 @@ module Mutations
           context[:current_user],
           receivers,
           team,
-          kwargs[:images]
+          kwargs[:images] ||= []
         )
         { post: post }
       rescue PostCreator::PostCreateError => e
