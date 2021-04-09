@@ -42,4 +42,9 @@ RSpec.describe Types::PostType do
   it "has a :updated_at field of ISO8601DateTime type" do
     expect(subject.fields['updatedAt'].type.to_type_signature).to eq('ISO8601DateTime!')
   end
+
+  it "has a :images field of ImageType type" do
+    expect(subject.fields['images'].type.to_type_signature).to eq('[Image!]!')
+  end
+
 end
