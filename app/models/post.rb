@@ -7,10 +7,12 @@ class Post < ApplicationRecord
   validates :amount, presence: true, numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000 }
   validates :team, presence: true
   validates :kudos_meter, presence: true
-  validates :images, file_content_type: {
-      allow: %w[image/jpeg image/png image/gif],
-      if: -> { images.attached? }
-  }
+  validates :images,
+            file_content_type: {
+                allow: %w[image/jpeg image/png image/gif],
+                if: -> { images.attached? }
+            },
+            file_size: {less_than_or_equal_to: 20.megabytes}
 
   validate :is_receiver_team_member?
 
