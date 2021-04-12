@@ -19,7 +19,8 @@ RSpec.describe Mutations::Post::CreatePost do
       amount: 5,
       receiver_ids: [users.fourth.id, users.fifth.id],
       null_receivers: ['Harry'],
-      team_id: team.id
+      team_id: team.id,
+      images: []
     }
   end
 
@@ -35,6 +36,7 @@ RSpec.describe Mutations::Post::CreatePost do
       receiverIds: #{variables[:receiver_ids]}
       nullReceivers: #{variables[:null_receivers]}
       teamId: #{variables[:team_id]}
+      images: []
     ) { post { id } } } )
   end
 

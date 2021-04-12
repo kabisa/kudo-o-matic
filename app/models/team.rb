@@ -21,7 +21,6 @@ class Team < ApplicationRecord
   has_many :posts
   has_many :guidelines
   has_many :team_invites
-  has_many :likes, class_name: "Vote"
 
   has_one_attached :logo
 
@@ -45,6 +44,10 @@ class Team < ApplicationRecord
   end
 
   def name_and_sequence
+    if name.nil?
+      return nil
+    end
+
     slug = name.parameterize
     sequence = Team.where("slug like ?", "#{slug}%")
 

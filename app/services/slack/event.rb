@@ -78,7 +78,7 @@ module Slack::Event
     message = create_message(client, slack_message)
 
     begin
-      PostCreator.create_post(message, 1, user, [receiver], team, false)
+      PostCreator.create_post(message, 1, user, [receiver], team, [], false)
     rescue PostCreator::PostCreateError => e
       raise Slack::Exceptions::InvalidCommand.new(e)
     end

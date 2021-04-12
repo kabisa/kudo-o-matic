@@ -40,9 +40,6 @@ RSpec.describe User, type: :model do
   describe "model validations" do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }
-    it "should validate content type of avatar" do
-      skip("Create custom content type matcher")
-    end
   end
 
   describe "model associations" do
