@@ -30,7 +30,7 @@ gem "jbuilder", "~> 2.0"
 gem "json_web_token", "~> 0.3.5"
 gem "loofah", "~> 2.3.1"
 gem 'mini_magick', '~> 4.9', '>= 4.9.2'
-gem "nokogiri", "~> 1.10.8"
+gem "nokogiri", "~> 1.11.0"
 gem "paperclip", "~> 6.1"
 gem "pg", "~> 0.18"
 gem "premailer-rails", "~> 1.9.7"
