@@ -70,4 +70,4 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "kudo-o-matic-staging"
-          heroku_email: "max.meijer@kabisa.nl"
+          heroku_email: "ods@kabisa.nl"
