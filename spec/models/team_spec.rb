@@ -16,11 +16,18 @@ RSpec.describe Team, type: :model do
 
   describe "model validations" do
     it { expect(team).to validate_presence_of(:name) }
-    it "expect(team).to validate_presence_of(:slug)" do
-      skip("TODO Fix this test")
-    end
+    it {
+      team.name = nil
+      team.slug = nil
+      expect(team).to_not be_valid
+    }
+
     it "should validate content type of logo" do
-      skip("Create custom content type matcher")
+      team.logo.attach(io: File.open("#{Rails.root}/spec/fixtures/files/dummy.txt"), filename: "dummy.txt", content_type: "text/plain")
+      expect(team).to_not be_valid
+
+      team.logo.attach(io: File.open("#{Rails.root}/spec/fixtures/images/rails.png"), filename: "rails.png", content_type: "image/png")
+      expect(team).to be_valid
     end
   end
 
@@ -31,9 +38,6 @@ RSpec.describe Team, type: :model do
     it { is_expected.to have_many(:goals).through(:kudos_meters) }
     it { is_expected.to have_many(:posts) }
     it { is_expected.to have_many(:guidelines) }
-    it "is_expected.to have_many(:likes)" do
-      skip("TODO Fix this test")
-    end
   end
 
   describe "active kudos meter" do

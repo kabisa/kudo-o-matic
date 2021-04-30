@@ -11,6 +11,9 @@ module Types
     field :amount, Int,
           null: false,
           description: 'The amount of kudos that are given'
+    field :images, [Types::ImageType],
+          null: false,
+          description: 'Optional images attached to this post'
     field :sender, UserType,
           null: false,
           description: 'The sender of the post',

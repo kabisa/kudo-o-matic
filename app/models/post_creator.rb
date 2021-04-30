@@ -1,14 +1,15 @@
 class PostCreator
   class PostCreateError < RuntimeError; end
 
-  def self.create_post(message, amount, sender, receivers, team, send_slack_announcement = true)
+  def self.create_post(message, amount, sender, receivers, team, images = [], send_slack_announcement = true)
     post = Post.new(
-        message: message,
-        amount: amount,
-        sender: sender,
-        receivers: receivers,
-        team: team,
-        kudos_meter: team.active_kudos_meter
+      message: message,
+      amount: amount,
+      sender: sender,
+      receivers: receivers,
+      team: team,
+      kudos_meter: team.active_kudos_meter,
+      images: images
     )
 
     begin

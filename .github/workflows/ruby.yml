@@ -34,7 +34,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1.32.1      
+    - uses: ruby/setup-ruby@v1.68.0
       with:
         ruby-version: 2.5.4
     - uses: actions/cache@v1
@@ -70,4 +70,4 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "kudo-o-matic-staging"
-          heroku_email: "max.meijer@kabisa.nl"
+          heroku_email: "ods@kabisa.nl"

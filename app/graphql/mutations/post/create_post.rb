@@ -7,6 +7,7 @@ module Mutations
     argument :receiver_ids, [ID], required: false, description: 'The existing users'
     argument :null_receivers, [String], required: false, description: 'The non-existing users'
     argument :team_id, ID, required: false, description: 'The team the post belongs to'
+    argument :images, [Types::UploadedFileType], required: false, description: 'Optional images linked to the post'
 
     field :post, Types::PostType, null: true
 
@@ -25,11 +26,10 @@ module Mutations
 
       unless null_receivers.blank?
         null_receivers.each do |receiver|
-
           existing_user = ::User.joins(:memberships)
-                              .where(users: {name: receiver, virtual_user: true})
-                              .where(team_members: {team_id: kwargs[:team_id]})
-                              .take
+                                .where(users: { name: receiver, virtual_user: true })
+                                .where(team_members: { team_id: kwargs[:team_id] })
+                                .take
 
           if existing_user
             receivers << existing_user
@@ -46,13 +46,14 @@ module Mutations
 
       begin
         post = PostCreator.create_post(
-            kwargs[:message],
-            kwargs[:amount],
-            context[:current_user],
-            receivers,
-            team
+          kwargs[:message],
+          kwargs[:amount],
+          context[:current_user],
+          receivers,
+          team,
+          kwargs[:images] ||= []
         )
-        {post: post}
+        { post: post }
       rescue PostCreator::PostCreateError => e
         raise GraphQL::ExecutionError, e
       end
