@@ -191,7 +191,7 @@ GEM
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
-    jmespath (1.4.0)
+    jmespath (1.6.1)
     json (2.1.0)
     json_web_token (0.3.5)
       json (~> 2.1)
