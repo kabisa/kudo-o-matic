@@ -15,6 +15,7 @@
 
 # Configuration
 config/database.yml
+.env.example
 
 # User data exports
 /exports

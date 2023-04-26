@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.5.4'
+ruby '2.7.3'
 
 gem "activerecord-typedstore", "~> 1.1.1"
 gem "actionpack", "~> 5.2", ">= 5.2.1"
@@ -30,7 +30,7 @@ gem "jbuilder", "~> 2.0"
 gem "json_web_token", "~> 0.3.5"
 gem "loofah", "~> 2.3.1"
 gem 'mini_magick', '~> 4.9', '>= 4.9.2'
-gem "nokogiri", "~> 1.10.8"
+gem "nokogiri", "~> 1.14"
 gem "paperclip", "~> 6.1"
 gem "pg", "~> 0.18"
 gem "premailer-rails", "~> 1.9.7"
@@ -42,7 +42,6 @@ gem "rails-controller-testing", "~> 1.0.2"
 gem "rails-html-sanitizer", "~> 1.0.4"
 gem "rails_autolink", "~> 1.1.6"
 gem "railties", "~> 5.2", ">= 5.2.1"
-gem 'rmagick', '~> 2.16'
 gem "rubocop", "~> 0.60.0", require: false
 gem "rubyzip", "~> 1.3.0", require: "zip"
 gem "sentry-raven"
