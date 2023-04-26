@@ -66,7 +66,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'rspec-graphql_matchers', '~> 0.7.1'
+  gem 'rspec-graphql_matchers', '~> 1.4'
   gem 'rspec-rails', '~> 3.8'
   gem 'rubocop-rspec', '~> 1.44.1'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
