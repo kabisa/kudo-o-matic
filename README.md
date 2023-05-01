@@ -37,13 +37,13 @@ By using a Ruby version manager (such as [rbenv](https://github.com/rbenv/rbenv)
 
 First, make sure you install bundler:
 
-```
+```bash
 gem install bundler
 ```
 
 Then, install dependencies:
 
-```
+```bash
 bundle install
 ```
 
@@ -64,7 +64,7 @@ cp env.example .env
 
 Copy default database configuration (change if needed)
 
-```
+```bash
 cp config/database.yml.example config/database.yml
 ```
 
@@ -73,14 +73,14 @@ cp config/database.yml.example config/database.yml
 Create the databases and initialize it with the seed data.  
 The [corresponding script](db/seeds.db) requires Redis to be up and running, so make sure you start this first.
 
-```
+```bash
 redis-server
 bin/rails db:setup
 ```
 
 ### Usage
 
-``` 
+```bash
 redis-server
 bin/sidekiq -q default -q mailers
 bin/rails s
