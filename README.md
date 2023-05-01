@@ -19,7 +19,7 @@ Users can reward each other for good deeds by giving Kudos to each other and wor
 ### Prerequisites
 To start using the Kudos-o-Matic, you'll need:
 
-* [Ruby](https://www.ruby-lang.org/) (consult [.ruby-version](.ruby-version) or [Gemfile](Gemfile) for the proper version)
+* [Ruby](https://www.ruby-lang.org/) (consult [.tool-versions](.tool-versions) or [Gemfile](Gemfile) for the proper version)
 * [Ruby on Rails](http://rubyonrails.org/)  (consult [Gemfile](Gemfile) for the proper version)
 * [Redis](https://redis.io)
 * [Bundler](http://bundler.io/)
