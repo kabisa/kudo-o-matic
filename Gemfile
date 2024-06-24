@@ -48,7 +48,7 @@ gem "rubyzip", "~> 1.3.0", require: "zip"
 gem "sentry-raven"
 gem "settingslogic", "~> 2.0", ">= 2.0.9"
 gem "scss_lint", "~> 0.54", require: false
-gem 'sidekiq', '~> 5.2', '>= 5.2.3'
+gem 'sidekiq', '~> 6.4'
 gem 'slack-ruby-client', '~> 0.14.6'
 gem 'apollo_upload_server', '2.0.5'
 gem 'image_processing'
