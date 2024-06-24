@@ -28,7 +28,7 @@ gem 'graphql_playground-rails', '~> 2.0', '>= 2.0.1'
 gem "haml-rails", "~> 1.0"
 gem "jbuilder", "~> 2.0"
 gem "json_web_token", "~> 0.3.5"
-gem "loofah", "~> 2.3.1"
+gem "loofah", "~> 2.19.1"
 gem 'mini_magick', '~> 4.9', '>= 4.9.2'
 gem "nokogiri", "~> 1.10.8"
 gem "paperclip", "~> 6.1"
