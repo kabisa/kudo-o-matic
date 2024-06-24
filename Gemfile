@@ -39,7 +39,7 @@ gem "rabl", "~> 0.13.1"
 gem "rack-cors", "~> 1.0.5"
 gem "rails", "~> 5.2", ">= 5.2.1"
 gem "rails-controller-testing", "~> 1.0.2"
-gem "rails-html-sanitizer", "~> 1.0.4"
+gem "rails-html-sanitizer", "~> 1.4.3"
 gem "rails_autolink", "~> 1.1.6"
 gem "railties", "~> 5.2", ">= 5.2.1"
 gem 'rmagick', '~> 2.16'
