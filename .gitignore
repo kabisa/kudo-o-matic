@@ -20,7 +20,6 @@ config/database.yml
 /exports
 
 *.swp
-.*
 !/.gitignore
 
 /public/system/*
