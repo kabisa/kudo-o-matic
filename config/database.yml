@@ -1,0 +1,26 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 10 } %>
+
+development:
+  <<: *default
+  database: <%= ENV.fetch("DATABASE_NAME", "kudo-o-matic_development") %>
+  url: <%= ENV.fetch("DATABASE_URL", "postgres://kudo_user:kudos@db:5432") %>
+
+test:
+  <<: *default
+  database: <%= ENV.fetch("DATABASE_NAME_TEST", "kudo-o-matic_test") %>
+  url: <%= ENV.fetch("DATABASE_URL", "postgres://postgres@localhost:5432") %>
+
+staging:
+  <<: *default
+  database: kudo-o-matic_staging
+  username: kudo-o-matic
+  password: <%= ENV['KUDO-O-MATIC_DATABASE_PASSWORD'] %>
+
+production:
+  <<: *default
+  database: kudo-o-matic_production
+  username: kudo-o-matic
+  password: <%= ENV['KUDO-O-MATIC_DATABASE_PASSWORD'] %>

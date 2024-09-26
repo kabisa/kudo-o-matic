@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.5.4'
+ruby '2.7.0'
 
 gem "activerecord-typedstore", "~> 1.1.1"
 gem "actionpack", "~> 5.2", ">= 5.2.1"
@@ -51,7 +51,7 @@ gem "scss_lint", "~> 0.54", require: false
 gem 'sidekiq', '~> 5.2', '>= 5.2.3'
 gem 'slack-ruby-client', '~> 0.14.6'
 gem 'apollo_upload_server', '2.0.5'
-gem 'image_processing'
+gem 'image_processing', '1.12.2'
 
 group :development, :staging, :test do
   # GraphQL UI similar to GraphiQL but better
