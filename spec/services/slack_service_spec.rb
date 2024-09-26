@@ -34,8 +34,8 @@ RSpec.describe 'SlackService' do
       }
 
       allow_any_instance_of(Slack::Web::Client).to receive(:oauth_v2_access).and_return(mock_response.as_json)
-      SlackService.should_receive(:send_welcome_message)
-      SlackService.should_receive(:join_all_channels)
+      expect(SlackService).to receive(:send_welcome_message)
+      expect(SlackService).to receive(:join_all_channels)
 
       expect {
         SlackService.add_to_workspace('token', team.id)
@@ -358,7 +358,7 @@ RSpec.describe 'SlackService' do
 
     it 'calls the generate base method' do
       mock_uri = URI::HTTP.build(host: 'fakedomain.com')
-      SlackService.should_receive(:generate_base_oauth_url).and_return(mock_uri)
+      expect(SlackService).to receive(:generate_base_oauth_url).and_return(mock_uri)
 
       SlackService.get_team_oauth_url('1')
     end
@@ -382,7 +382,7 @@ RSpec.describe 'SlackService' do
 
     it 'calls the generate base method' do
       mock_uri = URI::HTTP.build(host: 'fakedomain.com')
-      SlackService.should_receive(:generate_base_oauth_url).and_return(mock_uri)
+      expect(SlackService).to receive(:generate_base_oauth_url).and_return(mock_uri)
 
       SlackService.get_user_oauth_url('1')
     end
@@ -403,7 +403,7 @@ RSpec.describe 'SlackService' do
           reaction: 'unsopperted-emoji'
       }
 
-      SlackService.should_not_receive(:message_is_kudo_o_matic_post?)
+      expect(SlackService).to_not receive(:message_is_kudo_o_matic_post?)
 
       SlackService.reaction_added(team.id, event.as_json)
     end
@@ -501,7 +501,7 @@ RSpec.describe 'SlackService' do
           reaction: 'unsopperted-emoji'
       }
 
-      SlackService.should_not_receive(:message_is_kudo_o_matic_post?)
+      expect(SlackService).to_not receive(:message_is_kudo_o_matic_post?)
 
       SlackService.reaction_removed(team.id, event.as_json)
     end
