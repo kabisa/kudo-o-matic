@@ -27,6 +27,7 @@ gem 'graphql-guard', '~> 1.2', '>= 1.2.1'
 gem 'graphql_playground-rails', '~> 2.0', '>= 2.0.1'
 gem "haml-rails", "~> 1.0"
 gem "jbuilder", "~> 2.0"
+gem 'json', '~> 2.7', '>= 2.7.2'
 gem "json_web_token", "~> 0.3.5"
 gem "loofah", "~> 2.3.1"
 gem 'mini_magick', '~> 4.9', '>= 4.9.2'
