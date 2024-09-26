@@ -41,6 +41,12 @@ By using a Ruby version manager (such as [asdf](https://asdf-vm.com/), you can e
 docker compose up --build
 ```
 
+When everything runs:
+
+```sh
+open http://localhost:3000/graphql/playground
+```
+
 To seed the database:
 
 ```sh
@@ -49,10 +55,13 @@ docker exec -it kudo-o-matic_web sh
 bundle exec rake db:seed
 ```
 
-When everything runs:
+Running tests:
 
 ```sh
-open http://localhost:3000/graphql/playground
+docker exec -it kudo-o-matic_web sh
+# in the shell of the docker container:
+RAILS_ENV=test bundle exec rake db:migrate
+RAILS_ENV=test bundle exec rspec
 ```
 
 #### Dependencies

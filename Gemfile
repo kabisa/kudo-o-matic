@@ -70,7 +70,7 @@ group :test do
   gem 'rubocop-rspec', '~> 1.30'
   gem 'rspec-rails', '~> 3.8'
   gem 'rspec-graphql_matchers', '~> 0.7.1'
-  gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
+  gem 'shoulda-matchers', '~> 5.3'
   gem 'simplecov', '~> 0.16.1', require: false
   gem 'timecop', '~> 0.9.1'
 end

@@ -11,7 +11,7 @@ development:
 test:
   <<: *default
   database: <%= ENV.fetch("DATABASE_NAME_TEST", "kudo-o-matic_test") %>
-  url: <%= ENV.fetch("DATABASE_URL", "postgres://postgres@localhost:5432") %>
+  url: <%= ENV.fetch("TEST_DATABASE_URL", "postgres://postgres@localhost:5432") %>
 
 staging:
   <<: *default
