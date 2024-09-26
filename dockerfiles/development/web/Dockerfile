@@ -7,6 +7,8 @@ ENV RACK_ENV                development
 ENV ROOT_URL                0.0.0.0
 ENV DATABASE_NAME           kudo-o-matic_development
 ENV DATABASE_URL            postgres://kudo_user:kudos@db:5432
+ENV DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL true
+ENV REDIS_URL               redis://redis:6379/0
 
 # Install Node.js, npm, Yarn, Python, and build-essential
 RUN apt-get update -qq && \

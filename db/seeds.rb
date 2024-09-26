@@ -16,7 +16,7 @@ users = ['Ariejan', 'Stefan', 'Marijn', 'Egon', 'Ralph', 'Guido']
 users.each do |user|
   user = User.create(
     name: user,
-    email: "#{user}@example.com",
+    email: "#{user.downcase}@example.com",
     password: 'password',
     password_confirmation: 'password'
   )

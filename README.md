@@ -41,6 +41,14 @@ By using a Ruby version manager (such as [asdf](https://asdf-vm.com/), you can e
 docker compose up --build
 ```
 
+To seed the database:
+
+```sh
+docker exec -it kudo-o-matic_web sh
+# in the shell of the docker container:
+bundle exec rake db:seed
+```
+
 When everything runs:
 
 ```sh
@@ -72,14 +80,6 @@ Copy environment variables. Following the dependency setup instructions below wi
 
 ```
 cp env.example .env
-```
-
-#### Database configuration
-
-Copy default database configuration (change if needed)
-
-```bash
-cp config/database.yml.example config/database.yml
 ```
 
 #### Database
