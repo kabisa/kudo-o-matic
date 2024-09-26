@@ -11,6 +11,7 @@ ENV TEST_DATABASE_URL        postgres://kudo_user:kudos@db-test:5432
 ENV DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL true
 ENV REDIS_URL               redis://redis:6379/0
 ENV FRONTEND_ROOT_URL       http://localhost:9090
+ENV MAIL_USERNAME           user@example.com 
 
 # Install Node.js, npm, Yarn, Python, and build-essential
 RUN apt-get update -qq && \
