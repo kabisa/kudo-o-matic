@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '2.7.0'
 
 gem "activerecord-typedstore", "~> 1.1.1"
-gem "actionpack", "~> 5.2", ">= 5.2.1"
+gem "actionpack", "~> 6.1"
 gem "acts_as_votable", "~> 0.10.0"
 gem "autoprefixer-rails", "~> 9.3", ">= 9.3.1"
 gem 'aws-sdk-s3', '~> 1.67', '>= 1.67', require: false
@@ -16,7 +16,7 @@ gem 'devise-async', '~> 1.0'
 gem "doorkeeper", "~> 4.3"
 gem "delayed_paperclip", "~> 3.0.1"
 gem "daemons"
-gem "draper", "~> 3.0", ">= 3.0.1"
+gem "draper", "~> 4.0", ">= 4.0.2"
 gem "fcm", "~> 0.0.2"
 gem 'file_validators', '~> 2.3'
 gem "friendly_id", "~> 5.2.4"
@@ -24,7 +24,7 @@ gem "google-id-token", "~> 1.4"
 gem "graphql", "~> 1.8", ">= 1.8.10"
 gem "graphql-batch", "~> 0.3.10"
 gem 'graphql-guard', '~> 1.2', '>= 1.2.1'
-gem 'graphql_playground-rails', '~> 2.0', '>= 2.0.1'
+gem 'graphql-playground', "0.1.2"
 gem "haml-rails", "~> 1.0"
 gem "jbuilder", "~> 2.0"
 gem 'json', '~> 2.7', '>= 2.7.2'
@@ -38,11 +38,11 @@ gem "premailer-rails", "~> 1.9.7"
 gem "puma", "~> 3.12"
 gem "rabl", "~> 0.13.1"
 gem "rack-cors", "~> 1.0.5"
-gem "rails", "~> 5.2", ">= 5.2.1"
-gem "rails-controller-testing", "~> 1.0.2"
+gem "rails", "~> 6.1"
+gem "rails-controller-testing", "~> 1.0.5"
 gem "rails-html-sanitizer", "~> 1.0.4"
 gem "rails_autolink", "~> 1.1.6"
-gem "railties", "~> 5.2", ">= 5.2.1"
+gem "railties", "~> 6.1"
 gem 'rmagick', '~> 5.3.0'
 gem "rubocop", "~> 0.83.0", require: false
 gem "rubyzip", "~> 1.3.0", require: "zip"
@@ -61,7 +61,7 @@ group :development, :staging, :test do
 end
 
 group :development, :test do
-  gem 'dotenv-rails', '~> 2.5'
+  gem 'dotenv-rails', '~> 3.1', '>= 3.1.4'
   gem 'factory_bot_rails', '~> 4.8', '>= 4.8.2'
   gem 'graphlient', '~> 0.3.3'
   gem 'pry', '~> 0.11.3'
