@@ -1,5 +1,5 @@
 # Use an official Ruby runtime as a parent image
-FROM ruby:2.7.0
+FROM ruby:2.7.8
 
 ENV NODE_ENV                development
 ENV RAILS_ENV               development
