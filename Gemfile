@@ -3,7 +3,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.7.0'
+ruby '2.7.8'
 
 # gem "activerecord-typedstore", "~> 1.1.1"
 gem "acts_as_votable", "~> 0.10.0"
@@ -52,6 +52,7 @@ gem 'sidekiq', '~> 6.0'
 gem 'slack-ruby-client', '~> 0.14.6'
 gem 'apollo_upload_server', '~> 2.1.0'
 gem 'image_processing', '1.12.2'
+gem "sassc-rails"
 
 group :development, :staging, :test do
   gem 'database_cleaner', '~> 1.7'
@@ -71,5 +72,8 @@ group :development, :test do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'timecop', '~> 0.9.1'
+end
+
+group :development do
   gem 'web-console', '>= 3.3.0'
 end
