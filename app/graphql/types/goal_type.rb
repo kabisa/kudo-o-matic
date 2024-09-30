@@ -11,7 +11,7 @@ module Types
     field :amount, Int,
           null: false,
           description: 'The amount of kudos that is required to reach the goal'
-    field :achieved_on, Types::Date,
+    field :achieved_on,  GraphQL::Types::ISO8601DateTime,
           null: true,
           description: 'The date the goal is achieved'
     field :kudosMeter, Types::KudosMeterType,
