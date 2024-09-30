@@ -7,6 +7,11 @@ module Types
     field :self, UserType,
           null: false,
           description: 'The current user',
-          resolve: ->(obj, _args, _ctx) { obj }
+          resolver_method: :resolve_current_user
+          # resolve: ->(obj, _args, _ctx) { obj }
+
+    def resolve_current_user
+      context[:current_user]
+    end
   end
 end
