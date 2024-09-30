@@ -35,4 +35,5 @@ COPY --chown=app:app Gemfile.lock Gemfile.lock
 RUN gem install bundler -v 2.2.15
 
 # Install Ruby dependencies
+RUN bundle config set force_ruby_platform true
 RUN bundle install
