@@ -7,7 +7,7 @@ ruby '2.7.8'
 
 # gem "activerecord-typedstore", "~> 1.1.1"
 gem "acts_as_votable", "~> 0.10.0"
-gem "autoprefixer-rails", "~> 9.3", ">= 9.3.1"
+gem "autoprefixer-rails", "~> 10.4", ">= 10.4.7.0"
 gem 'aws-sdk-s3', '~> 1.67', '>= 1.67', require: false
 gem "chronic", "~> 0.10.2"
 gem "coffee-rails", "~> 4.2", ">= 4.2.2"
@@ -23,7 +23,7 @@ gem "friendly_id", "~> 5.2.4"
 gem "google-id-token", "~> 1.4"
 gem "graphql", "~> 1.10"
 gem "graphql-batch", "~> 0.6.0"
-# gem 'graphql-guard', '~> 1.2', '>= 1.2.1'
+# gem 'graphql-guard', '~> 2.0', '>= 2.0.0'
 gem 'graphql-playground', "0.1.2"
 gem "haml-rails", "~> 2.1"
 gem "jbuilder", "~> 2.0"
