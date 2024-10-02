@@ -45,8 +45,6 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.deliveries = []
 
-  config.active_record.dump_schema_after_migration = false
-
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 

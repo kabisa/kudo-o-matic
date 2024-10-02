@@ -22,8 +22,8 @@ gem 'file_validators', '~> 2.3'
 gem "friendly_id", "~> 5.2.4"
 gem "google-id-token", "~> 1.4"
 gem "graphql", "~> 1.10"
-gem "graphql-batch", "~> 0.3.10"
-gem 'graphql-guard', '~> 1.2', '>= 1.2.1'
+gem "graphql-batch", "~> 0.6.0"
+# gem 'graphql-guard', '~> 1.2', '>= 1.2.1'
 gem 'graphql-playground', "0.1.2"
 gem "haml-rails", "~> 2.1"
 gem "jbuilder", "~> 2.0"
@@ -52,7 +52,6 @@ gem 'sidekiq', '~> 6.0'
 gem 'slack-ruby-client', '~> 0.14.6'
 gem 'apollo_upload_server', '~> 2.1.0'
 gem 'image_processing', '1.12.2'
-gem "sassc-rails"
 
 group :development, :staging, :test do
   gem 'database_cleaner', '~> 1.7'
