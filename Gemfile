@@ -65,7 +65,7 @@ group :development, :test do
   gem 'listen', '~> 3.2'
   gem 'pry', '~> 0.13'
   gem 'pry-rails'
-  gem 'rspec-rails', '~> 3.8'
+  gem 'rspec-rails', '~> 4.0'
   gem 'shoulda-matchers', '~> 5.3'
   gem 'simplecov', '~> 0.16.1'
   gem 'spring'
