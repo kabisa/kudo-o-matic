@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.8'
 
-# gem "activerecord-typedstore", "~> 1.1.1"
+gem "activerecord-typedstore", "~> 1.6"
 gem "acts_as_votable", "~> 0.10.0"
 gem "autoprefixer-rails", "~> 10.4", ">= 10.4.7.0"
 gem 'aws-sdk-s3', '~> 1.67', '>= 1.67', require: false

@@ -36,12 +36,11 @@ class User < ApplicationRecord
   has_many :exports, foreign_key: "user_id"
   has_many :fcm_tokens
 
-  # Commented out 'typed_store' method call, as it is not supported in Rails 6.1
-  # typed_store :preferences, coder: PreferencesCoder do |p|
-  #   p.boolean :post_received_mail, default: true
-  #   p.boolean :goal_reached_mail, default: true
-  #   p.boolean :summary_mail, default: true
-  # end
+  typed_store :preferences, coder: PreferencesCoder do |p|
+    p.boolean :post_received_mail, default: true
+    p.boolean :goal_reached_mail, default: true
+    p.boolean :summary_mail, default: true
+  end
 
   def member_of?(team)
     memberships.find_by_team_id(team.id).present?

@@ -24,10 +24,9 @@ class Team < ApplicationRecord
 
   has_one_attached :logo
 
-  # Commented out 'typed_store' method call, as it is not supported in Rails 6.1
-  # typed_store :preferences, coder: PreferencesCoder do |p|
-  #   p.string :primary_color, default: nil
-  # end
+  typed_store :preferences, coder: PreferencesCoder do |p|
+    p.string :primary_color, default: nil
+  end
 
   def active_kudos_meter
     kudos_meters.where(is_active: true).take
