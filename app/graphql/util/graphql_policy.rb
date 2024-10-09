@@ -149,7 +149,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = TeamInvite.find(args[:team_lnvite_id]).team
+          team = TeamInvite.find(args[:team_invite_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -193,7 +193,7 @@ module Util
 
         ### Vote
         toggleLikePost: ->(_obj, args, ctx) do
-          team = Post.find(args[:postId]).team
+          team = Post.find(args[:post_id]).team
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
@@ -273,7 +273,8 @@ module Util
     }.freeze
 
     def self.guard(type, field)
-      RULES.dig(type.metadata[:type_class], field)
+      # RULES.dig(type.metadata[:type_class], field)
+      RULES.dig(type.type_class, field.name.to_sym)
     end
   end
 end

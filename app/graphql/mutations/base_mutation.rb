@@ -9,13 +9,12 @@ module Mutations
       # this method should return `true` if the user is authorized, and `false` if they are not
       # it should return `true` by default
 
-      field = self.field.name
       type = "Mutation"
-      policy = Util::GraphqlPolicy::RULES[self.field.owner.type_class][field.to_sym]
+      policy = Util::GraphqlPolicy.guard(self.field.owner, self.field)
       return true if policy.nil?
       authorized = policy.call(self.object, args, self.context)
       
-      raise GraphQL::ExecutionError.new("Not authorized to access #{type}.#{field}") unless authorized
+      raise GraphQL::ExecutionError.new("Not authorized to access #{type}.#{field.name}") unless authorized
       true
     end
   end
