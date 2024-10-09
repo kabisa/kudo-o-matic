@@ -13,7 +13,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -21,7 +21,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Guideline.find(args[:guidelineId]).team
+          team = Guideline.find(args[:guideline_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -29,7 +29,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Guideline.find(args[:guidelineId]).team
+          team = Guideline.find(args[:guideline_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -39,7 +39,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = KudosMeter.find(args[:kudosMeterId]).team
+          team = KudosMeter.find(args[:kudos_meter_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -47,7 +47,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Goal.find(args[:goalId]).kudos_meter.team
+          team = Goal.find(args[:goal_id]).kudos_meter.team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -55,7 +55,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Goal.find(args[:goalId]).kudos_meter.team
+          team = Goal.find(args[:goal_id]).kudos_meter.team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -65,7 +65,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -73,7 +73,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = KudosMeter.find(args[:kudosMeterId]).team
+          team = KudosMeter.find(args[:kudos_meter_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -81,7 +81,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = KudosMeter.find(args[:kudosMeterId]).team
+          team = KudosMeter.find(args[:kudos_meter_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -89,14 +89,14 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
 
         ### Post
         createPost: ->(_obj, args, ctx) do
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
           current_user = ctx[:current_user]
 
           return false unless current_user.present?
@@ -123,7 +123,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         },
@@ -131,7 +131,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -141,7 +141,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -149,12 +149,12 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = TeamInvite.find(args[:teamInviteId]).team
+          team = TeamInvite.find(args[:team_lnvite_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
         acceptTeamInvite: ->(_obj, args, ctx) do
-          team_invite = TeamInvite.find(args[:teamInviteId])
+          team_invite = TeamInvite.find(args[:team_invite_id])
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
@@ -164,7 +164,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team_invite = TeamInvite.find(args[:teamInviteId])
+          team_invite = TeamInvite.find(args[:team_invite_id])
 
           current_user.admin? || team_invite.email == current_user.email
         end,
@@ -182,7 +182,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,

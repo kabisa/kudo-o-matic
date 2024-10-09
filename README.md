@@ -60,7 +60,6 @@ Running tests:
 ```sh
 docker exec -it kudo-o-matic_web bash
 # in the shell of the docker container:
-RAILS_ENV=test bundle exec rake db:migrate
 RAILS_ENV=test bundle exec rspec
 ```
 
