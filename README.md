@@ -50,7 +50,7 @@ open http://localhost:3000/graphql/playground
 To seed the database:
 
 ```sh
-docker exec -it kudo-o-matic_web sh
+docker exec -it kudo-o-matic_web bash
 # in the shell of the docker container:
 bundle exec rake db:seed
 ```
