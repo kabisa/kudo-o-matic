@@ -1,14 +1,18 @@
 class Types::BaseField < GraphQL::Schema::Field
   def initialize(*args, **kwargs, &block)
-    super(*args, **kwargs, &block)
-
+    
     # If the field has a :resolve key,
     # add a custom resolver to the field owner, executing the provided Proc.
     if kwargs[:resolve]
-      owner.send(:define_method, name.underscore.to_sym) do
+      resolver_name = "resolve_#{kwargs[:name]}".to_sym
+      kwargs[:resolver_method] = resolver_name
+
+      kwargs[:owner].send(:define_method, resolver_name) do
         kwargs[:resolve].call(object, args, context)
       end
     end
+
+    super(*args, **kwargs, &block)
   end
 
   # Authorisation policy model, based on GraphQL-Guard gem. Uses Util::GraphqlPolicy for policy definitions.
