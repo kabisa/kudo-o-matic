@@ -241,10 +241,10 @@ module Util
       # Post Type
       #################
       Types::PostType => {
-        '*': ->(team, _args, ctx) do
+        '*': ->(post, _args, ctx) do
           current_user = ctx[:current_user]
 
-          current_user.member_of?(team) ||
+          current_user.member_of?(post.team) ||
             current_user.admin?
         end
       },
