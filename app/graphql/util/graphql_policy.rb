@@ -204,24 +204,21 @@ module Util
       # Team Type
       #################
       Types::TeamType => {
-        '*': ->(obj, _args, ctx) do
+        '*': ->(team, _args, ctx) do
           current_user = ctx[:current_user]
-          team = obj.object
 
           current_user.member_of?(team) ||
             current_user.admin?
         end,
-        id: ->(obj, _args, ctx) do
+        id: ->(team, _args, ctx) do
           current_user = ctx[:current_user]
-          team = obj.object
 
           TeamInvite.where(team: team, email: current_user.email).any? ||
             current_user.member_of?(team) ||
             current_user.admin?
         end,
-        name: ->(obj, _args, ctx) do
+        name: ->(team, _args, ctx) do
           current_user = ctx[:current_user]
-          team = obj.object
 
           TeamInvite.where(team: team, email: current_user.email).any? ||
             current_user.member_of?(team) ||
@@ -232,9 +229,8 @@ module Util
       # TeamInvite Type
       #################
       Types::TeamInviteType => {
-        '*': ->(obj, _args, ctx) do
+        '*': ->(team_invite, _args, ctx) do
           current_user = ctx[:current_user]
-          team_invite = obj.object
 
           current_user.email == team_invite.email ||
             current_user.admin_of?(team_invite.team) ||
@@ -245,9 +241,8 @@ module Util
       # Post Type
       #################
       Types::PostType => {
-        '*': ->(obj, _args, ctx) do
+        '*': ->(team, _args, ctx) do
           current_user = ctx[:current_user]
-          team = obj.object.team
 
           current_user.member_of?(team) ||
             current_user.admin?
@@ -257,10 +252,8 @@ module Util
       # User Type
       #################
       Types::UserType => {
-        'email': ->(obj, _args, ctx) do
+        'email': ->(user, _args, ctx) do
           current_user = ctx[:current_user]
-          user = obj.object
-
           same_teams = (user.teams && current_user.teams)
 
           if same_teams.any?
@@ -269,12 +262,16 @@ module Util
             current_user.id == user.id || current_user.admin?
           end
         end
+      },
+      Types::QueryType => {
+        '*': ->(_obj, _args, ctx) do
+          ctx[:current_user].present?
+        end
       }
     }.freeze
 
     def self.guard(type, field)
-      # RULES.dig(type.metadata[:type_class], field)
-      RULES.dig(type.type_class, field.name.to_sym)
+      RULES.dig(type.type_class, field)
     end
   end
 end

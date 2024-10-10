@@ -55,6 +55,11 @@ module Types
           null: false,
           description: 'All goals that belong to the team and are part of the active KudosMeter',
           resolve: ->(obj, _args, _ctx) { Util::RecordLoader.for(Goal).load_many(obj.active_kudos_meter.goal_ids) }
+
+    def active_goals
+      object.active_kudos_meter.goals
+    end
+
     field :memberships, [Types::TeamMemberType],
           null: false,
           description: 'The members of the team' do
