@@ -13,7 +13,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -21,7 +21,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Guideline.find(args[:guidelineId]).team
+          team = Guideline.find(args[:guideline_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -29,7 +29,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Guideline.find(args[:guidelineId]).team
+          team = Guideline.find(args[:guideline_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -39,7 +39,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = KudosMeter.find(args[:kudosMeterId]).team
+          team = KudosMeter.find(args[:kudos_meter_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -47,7 +47,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Goal.find(args[:goalId]).kudos_meter.team
+          team = Goal.find(args[:goal_id]).kudos_meter.team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -55,7 +55,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Goal.find(args[:goalId]).kudos_meter.team
+          team = Goal.find(args[:goal_id]).kudos_meter.team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -65,7 +65,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -73,7 +73,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = KudosMeter.find(args[:kudosMeterId]).team
+          team = KudosMeter.find(args[:kudos_meter_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -81,7 +81,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = KudosMeter.find(args[:kudosMeterId]).team
+          team = KudosMeter.find(args[:kudos_meter_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -89,14 +89,14 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
 
         ### Post
         createPost: ->(_obj, args, ctx) do
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
           current_user = ctx[:current_user]
 
           return false unless current_user.present?
@@ -123,7 +123,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         },
@@ -131,7 +131,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -141,7 +141,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -149,12 +149,12 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = TeamInvite.find(args[:teamInviteId]).team
+          team = TeamInvite.find(args[:team_invite_id]).team
 
           current_user.admin? || current_user.admin_of?(team)
         end,
         acceptTeamInvite: ->(_obj, args, ctx) do
-          team_invite = TeamInvite.find(args[:teamInviteId])
+          team_invite = TeamInvite.find(args[:team_invite_id])
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
@@ -164,7 +164,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team_invite = TeamInvite.find(args[:teamInviteId])
+          team_invite = TeamInvite.find(args[:team_invite_id])
 
           current_user.admin? || team_invite.email == current_user.email
         end,
@@ -182,7 +182,7 @@ module Util
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
-          team = Team.find(args[:teamId])
+          team = Team.find(args[:team_id])
 
           current_user.admin? || current_user.admin_of?(team)
         end,
@@ -193,7 +193,7 @@ module Util
 
         ### Vote
         toggleLikePost: ->(_obj, args, ctx) do
-          team = Post.find(args[:postId]).team
+          team = Post.find(args[:post_id]).team
           current_user = ctx[:current_user]
           return false unless current_user.present?
 
@@ -204,24 +204,21 @@ module Util
       # Team Type
       #################
       Types::TeamType => {
-        '*': ->(obj, _args, ctx) do
+        '*': ->(team, _args, ctx) do
           current_user = ctx[:current_user]
-          team = obj.object
 
           current_user.member_of?(team) ||
             current_user.admin?
         end,
-        id: ->(obj, _args, ctx) do
+        id: ->(team, _args, ctx) do
           current_user = ctx[:current_user]
-          team = obj.object
 
           TeamInvite.where(team: team, email: current_user.email).any? ||
             current_user.member_of?(team) ||
             current_user.admin?
         end,
-        name: ->(obj, _args, ctx) do
+        name: ->(team, _args, ctx) do
           current_user = ctx[:current_user]
-          team = obj.object
 
           TeamInvite.where(team: team, email: current_user.email).any? ||
             current_user.member_of?(team) ||
@@ -232,9 +229,8 @@ module Util
       # TeamInvite Type
       #################
       Types::TeamInviteType => {
-        '*': ->(obj, _args, ctx) do
+        '*': ->(team_invite, _args, ctx) do
           current_user = ctx[:current_user]
-          team_invite = obj.object
 
           current_user.email == team_invite.email ||
             current_user.admin_of?(team_invite.team) ||
@@ -245,11 +241,10 @@ module Util
       # Post Type
       #################
       Types::PostType => {
-        '*': ->(obj, _args, ctx) do
+        '*': ->(post, _args, ctx) do
           current_user = ctx[:current_user]
-          team = obj.object.team
 
-          current_user.member_of?(team) ||
+          current_user.member_of?(post.team) ||
             current_user.admin?
         end
       },
@@ -257,10 +252,8 @@ module Util
       # User Type
       #################
       Types::UserType => {
-        'email': ->(obj, _args, ctx) do
+        'email': ->(user, _args, ctx) do
           current_user = ctx[:current_user]
-          user = obj.object
-
           same_teams = (user.teams && current_user.teams)
 
           if same_teams.any?
@@ -269,11 +262,16 @@ module Util
             current_user.id == user.id || current_user.admin?
           end
         end
+      },
+      Types::QueryType => {
+        '*': ->(_obj, _args, ctx) do
+          ctx[:current_user].present?
+        end
       }
     }.freeze
 
     def self.guard(type, field)
-      RULES.dig(type.metadata[:type_class], field)
+      RULES.dig(type.type_class, field)
     end
   end
 end

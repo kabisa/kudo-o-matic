@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount GraphqlPlayground::Rails::Engine, at: "/graphql/playground", graphql_path: "/graphql"
+  if Rails.env.development?
+    mount GraphQL::Playground::Engine, at: "/graphql/playground", graphql_path: "/graphql"
+  end
 
   root 'application#index'
 
