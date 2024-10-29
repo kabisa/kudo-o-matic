@@ -26,7 +26,7 @@ module Types
 
     def posts(order_by:)
       result = object.posts
-      result = result.where(kudos_meter_id: active_kudos_meter.id)
+      result = result.where(kudos_meter_id: object.active_kudos_meter.id)
       result = result.order(order_by) unless order_by.blank?
       result
     end
@@ -55,6 +55,7 @@ module Types
           null: false,
           description: 'All goals that belong to the team and are part of the active KudosMeter',
           resolve: ->(obj, _args, _ctx) { Util::RecordLoader.for(Goal).load_many(obj.active_kudos_meter.goal_ids) }
+
     field :memberships, [Types::TeamMemberType],
           null: false,
           description: 'The members of the team' do

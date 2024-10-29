@@ -8,5 +8,6 @@ module Types
           null: false,
           description: 'The current user',
           resolve: ->(obj, _args, _ctx) { obj }
+
   end
 end
