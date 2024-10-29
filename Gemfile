@@ -52,6 +52,7 @@ gem 'sidekiq', '~> 6.0'
 gem 'slack-ruby-client', '~> 0.14.6'
 gem 'apollo_upload_server', '~> 2.1.0'
 gem 'image_processing', '1.12.2'
+gem 'ffi', '~> 1.14.2'
 
 group :development, :staging, :test do
   gem 'database_cleaner', '~> 1.7'
