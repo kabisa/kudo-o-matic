@@ -13,14 +13,11 @@
 *.log
 /tmp
 
-# Configuration
-config/database.yml
-
 # User data exports
 /exports
+dockerfiles/development/db/data
 
 *.swp
-.*
 !/.gitignore
 
 /public/system/*

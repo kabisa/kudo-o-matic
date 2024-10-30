@@ -9,8 +9,8 @@ module Mutations
     field :goal, Types::GoalType, null: true
 
     def resolve(name:, amount:, kudos_meter_id:)
-      goal = ::Goal.new(name: name, amount: amount, kudos_meter_id: kudos_meter_id)
-
+      kudos_meter = ::KudosMeter.find(kudos_meter_id)
+      goal = kudos_meter.goals.build(name: name, amount: amount)
       if goal.save
         { goal: goal }
       else

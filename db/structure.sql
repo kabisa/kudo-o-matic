@@ -69,7 +69,8 @@ CREATE TABLE public.active_storage_blobs (
     metadata text,
     byte_size bigint NOT NULL,
     checksum character varying NOT NULL,
-    created_at timestamp without time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    service_name character varying NOT NULL
 );
 
 
@@ -93,6 +94,36 @@ ALTER SEQUENCE public.active_storage_blobs_id_seq OWNED BY public.active_storage
 
 
 --
+-- Name: active_storage_variant_records; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.active_storage_variant_records (
+    id bigint NOT NULL,
+    blob_id bigint NOT NULL,
+    variation_digest character varying NOT NULL
+);
+
+
+--
+-- Name: active_storage_variant_records_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.active_storage_variant_records_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: active_storage_variant_records_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.active_storage_variant_records_id_seq OWNED BY public.active_storage_variant_records.id;
+
+
+--
 -- Name: activities; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -109,6 +140,7 @@ CREATE TABLE public.activities (
 --
 
 CREATE SEQUENCE public.activities_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -147,7 +179,7 @@ CREATE TABLE public.exports (
     updated_at timestamp without time zone NOT NULL,
     zip_file_name character varying,
     zip_content_type character varying,
-    zip_file_size integer,
+    zip_file_size bigint,
     zip_updated_at timestamp without time zone
 );
 
@@ -157,6 +189,7 @@ CREATE TABLE public.exports (
 --
 
 CREATE SEQUENCE public.exports_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -189,6 +222,7 @@ CREATE TABLE public.fcm_tokens (
 --
 
 CREATE SEQUENCE public.fcm_tokens_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -222,6 +256,7 @@ CREATE TABLE public.friendly_id_slugs (
 --
 
 CREATE SEQUENCE public.friendly_id_slugs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -256,6 +291,7 @@ CREATE TABLE public.goals (
 --
 
 CREATE SEQUENCE public.goals_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -289,6 +325,7 @@ CREATE TABLE public.guidelines (
 --
 
 CREATE SEQUENCE public.guidelines_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -322,6 +359,7 @@ CREATE TABLE public.kudos_meters (
 --
 
 CREATE SEQUENCE public.kudos_meters_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -358,6 +396,7 @@ CREATE TABLE public.oauth_access_grants (
 --
 
 CREATE SEQUENCE public.oauth_access_grants_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -395,6 +434,7 @@ CREATE TABLE public.oauth_access_tokens (
 --
 
 CREATE SEQUENCE public.oauth_access_tokens_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -430,6 +470,7 @@ CREATE TABLE public.oauth_applications (
 --
 
 CREATE SEQUENCE public.oauth_applications_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -488,7 +529,7 @@ CREATE TABLE public.posts (
     updated_at timestamp without time zone NOT NULL,
     image_file_name character varying,
     image_content_type character varying,
-    image_file_size integer,
+    image_file_size bigint,
     image_updated_at timestamp without time zone,
     slack_reaction_created_at character varying,
     slack_transaction_updated_at character varying,
@@ -503,6 +544,7 @@ CREATE TABLE public.posts (
 --
 
 CREATE SEQUENCE public.posts_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -533,7 +575,7 @@ CREATE TABLE public.schema_migrations (
 CREATE TABLE public.team_invites (
     id integer NOT NULL,
     team_id integer,
-    sent_at timestamp without time zone DEFAULT now(),
+    sent_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     accepted_at timestamp without time zone,
     declined_at timestamp without time zone,
     email character varying
@@ -545,6 +587,7 @@ CREATE TABLE public.team_invites (
 --
 
 CREATE SEQUENCE public.team_invites_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -581,6 +624,7 @@ CREATE TABLE public.team_members (
 --
 
 CREATE SEQUENCE public.team_members_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -607,7 +651,7 @@ CREATE TABLE public.teams (
     updated_at timestamp without time zone NOT NULL,
     logo_file_name character varying,
     logo_content_type character varying,
-    logo_file_size integer,
+    logo_file_size bigint,
     logo_updated_at timestamp without time zone,
     slug character varying,
     preferences json,
@@ -623,6 +667,7 @@ CREATE TABLE public.teams (
 --
 
 CREATE SEQUENCE public.teams_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -685,6 +730,7 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -712,8 +758,8 @@ CREATE TABLE public.votes (
     vote_flag boolean,
     vote_scope character varying,
     vote_weight integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -722,6 +768,7 @@ CREATE TABLE public.votes (
 --
 
 CREATE SEQUENCE public.votes_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -748,6 +795,13 @@ ALTER TABLE ONLY public.active_storage_attachments ALTER COLUMN id SET DEFAULT n
 --
 
 ALTER TABLE ONLY public.active_storage_blobs ALTER COLUMN id SET DEFAULT nextval('public.active_storage_blobs_id_seq'::regclass);
+
+
+--
+-- Name: active_storage_variant_records id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_variant_records ALTER COLUMN id SET DEFAULT nextval('public.active_storage_variant_records_id_seq'::regclass);
 
 
 --
@@ -886,6 +940,14 @@ ALTER TABLE ONLY public.active_storage_blobs
 
 
 --
+-- Name: active_storage_variant_records active_storage_variant_records_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_variant_records
+    ADD CONSTRAINT active_storage_variant_records_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: activities activities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -990,6 +1052,14 @@ ALTER TABLE ONLY public.posts
 
 
 --
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
 -- Name: team_invites team_invites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1048,6 +1118,13 @@ CREATE UNIQUE INDEX index_active_storage_attachments_uniqueness ON public.active
 --
 
 CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_blobs USING btree (key);
+
+
+--
+-- Name: index_active_storage_variant_records_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_active_storage_variant_records_uniqueness ON public.active_storage_variant_records USING btree (blob_id, variation_digest);
 
 
 --
@@ -1233,6 +1310,13 @@ CREATE INDEX index_votes_on_votable_id_and_votable_type_and_vote_scope ON public
 
 
 --
+-- Name: index_votes_on_votable_type_and_votable_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_votes_on_votable_type_and_votable_id ON public.votes USING btree (votable_type, votable_id);
+
+
+--
 -- Name: index_votes_on_voter_id_and_voter_type_and_vote_scope; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1240,10 +1324,10 @@ CREATE INDEX index_votes_on_voter_id_and_voter_type_and_vote_scope ON public.vot
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+-- Name: index_votes_on_voter_type_and_voter_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
+CREATE INDEX index_votes_on_voter_type_and_voter_id ON public.votes USING btree (voter_type, voter_id);
 
 
 --
@@ -1276,6 +1360,14 @@ ALTER TABLE ONLY public.post_receivers
 
 ALTER TABLE ONLY public.oauth_access_tokens
     ADD CONSTRAINT fk_rails_732cb83ab7 FOREIGN KEY (application_id) REFERENCES public.oauth_applications(id);
+
+
+--
+-- Name: active_storage_variant_records fk_rails_993965df05; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_variant_records
+    ADD CONSTRAINT fk_rails_993965df05 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
 
 
 --
@@ -1390,6 +1482,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181128140306'),
 ('20200415130431'),
 ('20200506135043'),
-('20200515050516');
+('20200515050516'),
+('20241010140417'),
+('20241010140418');
 
 
