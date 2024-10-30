@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PostMailer < ApplicationMailer
-  add_template_helper(ApplicationHelper)
-  add_template_helper(GoalHelper)
+  helper ApplicationHelper
+  helper GoalHelper
 
   def self.new_post(post)
     return if post.receivers.nil?

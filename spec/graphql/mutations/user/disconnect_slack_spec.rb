@@ -14,7 +14,7 @@ RSpec.describe Mutations::User::DisconnectSlack do
   end
 
   let(:mutation_string) do
-    %( mutation { disconnectSlack() { user { id } } } )
+    %( mutation { disconnectSlack { user { id } } } )
   end
 
   context 'authenticated' do
