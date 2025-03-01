@@ -119,14 +119,21 @@ bin/rails s
 Congratulations, you did just set up the Kudos-o-Matic!  
 You can optionally set up the dependencies listed below to get the most out of your Kudos-o-Matic.
 
-### Amazon AWS S3 setup
+### Amazon AWS and Terraform
 
-Follow these instructions to setup the Amazon AWS S3 cloud storage service for images attached to Kudo posts:
+The Kudos-o-Matic project uses Amazon AWS S3 buckets for storage. The following S3 buckets are created and managed via Terraform:
 
-- [Create an AWS S3 account](https://aws.amazon.com/resources/create-account/).
-- Setup a Amazon S3 Bucket.
-- Set the `AWS_S3_HOST_NAME`, `AWS_S3_REGION`, `AWS_S3_BUCKET`, `AWS_S3_BUCKET` and `AWS_SECRET_ACCESS_KEY` environment variables.
-- Restart the server.
+- kudo-o-matic-production
+- kudo-o-matic-development
+- kudo-o-matic-staging
+
+These buckets are used to store assets and application-related data. The setup and configuration of these S3 buckets are defined in the Terraform configuration within the terraform folder of this project.
+
+Additionally, an AWS IAM user is created with a policy that grants access to these S3 buckets. The IAM policy ensures that the necessary permissions are in place for managing objects within these buckets securely.
+
+For more details on the exact implementation, refer to the Terraform configuration in the terraform folder.
+
+The required S3 environment variables have been configured in Heroku to ensure seamless integration with the application. These variables are set in the Heroku environment and automatically applied during deployment or restart.
 
 ### Mail setup
 
