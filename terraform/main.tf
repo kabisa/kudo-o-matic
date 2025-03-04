@@ -46,3 +46,8 @@ resource "aws_iam_user_policy_attachment" "kudo_user_policy_attachment" {
   user       = aws_iam_user.kudo_user.name
   policy_arn = aws_iam_policy.kudo_policy.arn
 }
+
+resource "aws_iam_access_key" "kudo_user_iam_access_key" {
+  user = aws_iam_user.kudo_user.name
+}
+
