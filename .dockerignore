@@ -1,0 +1,36 @@
+# Docker
+/dockerfiles
+tempscript.sh
+/vendor
+
+# Git
+.git
+.github
+.gitignore
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+*.log
+/tmp
+
+# User data exports
+/exports
+
+*.swp
+!/.gitignore
+
+/public/system/*
+
+coverage
+
+tmp/storage
+storage
+
+# redis
+dump.rdb
+
+**/.terraform/
