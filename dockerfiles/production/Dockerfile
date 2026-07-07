@@ -79,7 +79,7 @@ FROM base AS web
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
 
 FROM base AS worker
-CMD ["bundle", "exec", "sidekiq", "-c", "3", "-q", "default", "-q" "mailers"]
+CMD ["bundle", "exec", "sidekiq", "-c", "3", "-q", "default", "-q", "mailers"]
 
 FROM base AS release
 CMD ["bundle", "exec", "rake", "db:migrate"]
