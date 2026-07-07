@@ -75,6 +75,9 @@ RUN gem install bundler -v 2.3.22
 RUN bundle config set force_ruby_platform true
 RUN bundle install
 
+# Precompile assets so premailer can inline email.css when rendering mail
+RUN SECRET_KEY_BASE=dummy bundle exec rake assets:precompile
+
 FROM base AS web
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
 
