@@ -31,3 +31,6 @@ storage
 dump.rdb
 
 **/.terraform/
+
+# AWS SES credentials (local only, never commit)
+cred
